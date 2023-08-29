@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function checkBrowser() {
+var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+if (!isChrome) {
+alert("Доступ на сайт запрещен. Пожалуйста, воспользуйтесь браузером Google Chrome.");
+}
+}
+</script>
+</head>
+<body onload="checkBrowser()">
+</body>
+</html>
