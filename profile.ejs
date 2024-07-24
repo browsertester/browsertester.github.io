@@ -1,0 +1,2058 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><%= user.username %> - Профиль</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet" href="/views/imgf/css.css">
+    <style>
+        /* Стили для элементов отображения информации о подписчиках и друзьях */
+        .follower-friend-info {
+
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+
+display: block;
+float: right;
+padding: 20px;
+
+height: 100%;
+
+        }
+
+/* Стили для числа подписчиков и друзей */
+.follower-count,
+.friend-count {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.button-container {
+    margin: 0px;
+  margin-top: 70px;
+  font-size: 13px;
+}
+
+.block-panel {
+   display: flex;
+}
+
+.panel-friend {
+    display: flex;
+}
+
+.panel-status {
+    display: flex;
+    justify-content: center;
+}
+    </style>
+    <style>
+    main{
+        width: 100vw;
+        min-height: 100vh;
+        background: #191927;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .form__imgUploader{
+        width: 300px;
+        text-align: center;
+        padding-top: 30px;
+    }
+    .form__content.active .form__imgUploader{
+        display: block;
+    }
+    .form__wrapper{
+        position: relative;
+        height: 300px;
+        width: 100%;
+        border: 2px dashed #8a8888;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all .3s ease;
+    }
+    .form__image{
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .form__image, .form__img{
+        width: 101%;
+        height: 101%;
+        object-fit: cover;
+    }
+    .formUploader__icon{
+        font-size: 72px;
+        padding-bottom: 15px;
+    }
+    .formUploader__text{
+        font-size: 18px;
+        font-weight: 500;
+        color: #ccc;
+    }
+    .formUploader__cancel, .formUploader__icon{
+        background: linear-gradient(135deg, #fdd269, #f24d77, #9f3dc8);
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+    .formUploader__cancel{
+        position: absolute;
+        top: 0;
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 24px;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: all .3s ease;
+    }
+    .formUploader__fileName{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 8px 0 15px;
+        background: linear-gradient(135deg, #fdd269, #f24d77, #9f3dc8);
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+        transform: translateY(+100%);
+        opacity: 0;
+        transition: all .3s ease;
+    }
+    .form__wrapper.active:hover .formUploader__cancel, .form__wrapper.active:hover .formUploader__fileName{
+        transform: translateY(0);
+        opacity: 1;
+    }
+    .form__wrapper:hover{
+        border-color: #f24d77;
+    }
+    .form__wrapper.active{
+        border: none;
+    }
+    .form__wrapper.active .formUploader__content{
+        display: none;
+    }
+    .formUploader__fileName p{
+        width: 60%;
+        margin: 0 auto;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        display: -webkit-box;
+    }
+    .form__btn, .customBtn{
+        background: #fff;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        font-size: 18px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        outline: none;
+        transition: 0.3s;
+    }
+    .customBtn{
+        margin: 15px 0;
+        background: linear-gradient(135deg, #fdd269, #f24d77, #9f3dc8);
+        color: #fff;
+    }
+    .form__buttons{
+        width: 300px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .form__btn a{
+        color: #000;
+    }
+    .form__btn:hover {
+        background: #14a4ad;
+        color: #fff;
+    }
+    .form__btn:focus {
+        background: #14a4ad;
+        color: #fff;
+    }
+    .form__btn:disabled {
+        background: grey;
+        color: #000;
+        cursor: default;
+    }
+    
+    
+    /* Стили модального окна */
+    /* Стили модального окна */
+    .modal-avatar {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Прозрачность фона */
+    }
+    
+    .modal-avatar-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    
+    .form__btn.skipBtn {
+    align-self: flex-start;
+}
+
+    
+    
+    </style>
+    <style>
+ #cookieBanner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px;
+            background-color: #f0f0f0;
+            text-align: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #cookieBanner button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<% if (isBanned) { %>
+    <% if (user.username === currentUser.username) { %>
+<body>
+    <header>
+        <h1>Ошибка входа в аккаунт</h1>
+        <nav>
+            <ul>
+                <li><a href="/logout">Выйти из аккаунта</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="profile">
+        
+        <h1 style="color: brown;">Аккаунт был заблокирован!</h1>
+        <p>Данный аккаунт был забанен за нарушение правил использования нашей социальной сети.</p>
+        <p>Был забанен: <%= new Date(banDate).toLocaleString() %></p>
+        <p>Кто забанил: <%= bannedBy %></p>
+        <p>Время бана: <%= timeBan %></p>
+        <% if (timeBan === '30 минут') { %>
+            <p>Пожалуйста, используйте это время для размышлений и прочтите еще раз наше <a href="/policy" style="font-weight: bold; color: #000;">пользовательское соглашение</a>, а также избегайте нарушений правил сообщества в будущем</p>
+          <% } %>
+          <% if (timeBan === '12 часов') { %>
+            <p>Это временное наказание из-за нарушения правил платформы. Просим вас внимательно ознакомиться с <a href="/policy" style="font-weight: bold; color: #000;">пользовательским соглашением</a> и соблюдать их в дальнейшем.</p>
+          <% } %>
+          <% if (timeBan === '3 дня') { %>
+            <p>Это временное наказание из-за более серьезной степени нарушений правил платформы. Просим вас внимательно ознакомиться с <a href="/policy" style="font-weight: bold; color: #000;">пользовательским соглашением</a> и соблюдать их в дальнейшем.</p>
+          <% } %>
+          <% if (timeBan === '30 дней') { %>
+            <p>Из-за серьезного нарушения правил, ваш аккаунт был забанен на такой долгий срок. В это время мы рекомендуем вам пересмотреть свои действия и обратить внимание на соблюдение правил сообщества.</p>
+          <% } %>
+          <% if (timeBan === 'Навсегда') { %>
+            <p>К сожалению, из-за многократных или серьезных нарушений, ваш аккаунт был заблокирован навсегда. Это возможно окончательное решение, и вы больше не сможете использовать наши услуги. Пожалуйста, обратите внимание на соблюдение правил в других онлайн-сообществах.</p>
+          <% } %>
+          <% if (timeBan === 'Навсегдa') { %>
+            <p>Ваш аккаунт был заблокирован за нарушения условий его создания. Этому может быть множество причин, вот из них некоторые: некорректный никнейм, создание твинков для нарушения условий использования или нарушение возрастных ограничений. Это вы можете уточнить в тех.поддержке.</p>
+          <% } %>
+          <% if (timeBan === 'Навсегда, без возможности восстановления') { %>
+            <p>Это решение было принято старшей Администрацией платформы и оно никак не может быть опровергнуто, потому как вы совершили серьезнейшее нарушение, о котором вы, скорей всего, должны знать и понимать.</p>
+          <% } else { %>
+        <p>Если вы считаете, что вы были заблокированы неверно или ошибочно, то вы можете подать аппеляцию по восстановлению в нашу поддержку <b>securmailsupp@gmail.com</b>.</p>
+        <% } %>
+    </div>
+    <script>
+$(document).on('submit', 'form', function(event) {
+  event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
+
+  // Получаем данные формы
+  const formData = $(this).serialize();
+
+  // Сохраняем текущую прокрутку в sessionStorage
+  sessionStorage.setItem('scrollPosition', window.scrollY);
+
+  // Отправляем данные на сервер асинхронно
+  $.ajax({
+    type: 'POST',
+    url: $(this).attr('action'),
+    data: formData,
+    success: function(response) {
+      // Обработка успешного ответа от сервера
+      console.log(response);
+
+      // Выполните дополнительные действия, если необходимо
+
+      // Например, обновите список постов на странице без перезагрузки
+      // ...
+
+      // После успешного ответа можно выполнить редирект
+      window.location.href = response.refererURL;
+    },
+    error: function(error) {
+      // Обработка ошибки при взаимодействии с сервером
+      console.error('Error:', error);
+    }
+  });
+});
+
+// Восстанавливаем прокрутку из sessionStorage
+const scrollPosition = sessionStorage.getItem('scrollPosition');
+if (scrollPosition !== null) {
+  window.scrollTo(0, parseInt(scrollPosition));
+  sessionStorage.removeItem('scrollPosition'); // Очищаем значение после использования
+}
+
+
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const likeForms = document.querySelectorAll('form[action^="/like-post/"]');
+    const unlikeForms = document.querySelectorAll('form[action^="/unlike-post/"]');
+
+    likeForms.forEach(form => {
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const likeCountSpan = document.getElementById(`likeCount_${form.action.split('/').pop()}`);
+          const likedUsersSpan = document.getElementById(`likedUsers_${form.action.split('/').pop()}`);
+          
+          likeCountSpan.textContent = data.likeCount;
+          likedUsersSpan.textContent = data.likedUsers.join(', ');
+        } else {
+          console.error('Failed to like the post:', response.status, response.statusText);
+        }
+      });
+    });
+
+    unlikeForms.forEach(form => {
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const likeCountSpan = document.getElementById(`likeCount_${form.action.split('/').pop()}`);
+          const likedUsersSpan = document.getElementById(`likedUsers_${form.action.split('/').pop()}`);
+          
+          likeCountSpan.textContent = data.likeCount;
+          likedUsersSpan.textContent = data.likedUsers.join(', ');
+        } else {
+          console.error('Failed to unlike the post:', response.status, response.statusText);
+        }
+      });
+    });
+  });
+</script>
+
+
+
+</body>
+
+<% } else { %>
+  <header>
+    <h1>Профиль</h1>
+    <nav>
+      <div class="burger-menu">                
+        <div class="burger-bar">               
+        </div>
+            </div>
+            <div class="burger-menu">                
+              <div class="burger-bar">               
+              </div>
+            </div>
+            <div class="burger-menu">                
+              <div class="burger-bar">               
+              </div>
+            </div>
+            
+            <div class="side-panel" id="sidePanel">
+              <!-- Здесь разместите элементы категорий, которые должны появляться в боковой панели -->
+              <div class="side-padding">
+                
+                <a class="li-side" href="#">Лента</a>
+                <br>
+                <a class="li-side" href="#">Игры</a>
+                <br>
+                <a class="li-side" href="#">Сообщения</a>
+                <br>
+                <a class="li-side" href="#">Профиль</a>
+                </div>
+              </div>
+              
+              
+              <!-- Здесь разместите элементы категорий, которые должны появляться в боковой панели -->
+              <div class="navbar-mai">
+                
+                <ul>
+                  <li><a href="/news">Лента</a></li>
+                  <li><a href="games.html">Игры</a></li>
+                  <li><a href="chat-mark.html">Сообщения</a></li>
+                  <li><a href="/settings">Моя страница</a></li>
+                </ul>
+              </div>
+              
+              
+            </header>
+            
+            <div class="profile">
+              <h1>Пользователь <%= user.username %> <span>
+                
+                <% if (user.isVerified) { %>
+                    <span class="verification-icon">
+                        <img src="/views/imgf/verify-svgrepo-com.svg" alt="Аккаунт верифицирован">
+                        <span class="tooltip">Аккаунт верифицирован</span>
+                      </span>
+                      
+                  <% } %>
+                </span></h1>
+            <p>Вы находитесь на странице профиля <%= user.username %>.</p>
+            <p style="color: brown; font-weight: bold;">Этот пользователь был забанен за нарушение правил социальной сети LiftLink.</p>
+           
+    </div>
+
+    <form method="post" action="/unbanUser" class="form-left">
+        <input type="hidden" name="username" value="<%= user.username %>">
+        <button type="submit" class="non-buttons">Разбанить пользователя</button>
+      </form>
+    
+    <% } %>
+<% } else { %>
+<body>
+    <div id="myModal-avatar" class="modal-avatar">
+        <div class="modal-avatar-content">
+            <main class="main">
+                <form action="/upload-avatar" method="post" enctype="multipart/form-data" class="form" id="avatarForm">
+                    <div class="form__imgUploader">
+                        <div class="form__wrapper">
+                            <div class="form__image">
+                                <img src="" alt="" class="form__img">
+                            </div>
+                            <div class="formUploader__content">
+                                <div class="formUploader__icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                                <div class="formUploader__text">Фото не выбрано!</div>
+                            </div>
+                            <div class="formUploader__cancel"><i class="fas fa-times"></i></div>
+                            <div class="formUploader__fileName"><p>file name</p></div>
+                        </div>
+                        <input type="file" class="imgUploader" accept=".jpg, .jpeg, .png, .gif" name="avatar" hidden id="avatarInput">
+                        <button type="button" class="customBtn">Выбрать фото</button>
+                        <div class="form__buttons">
+                            <button class="form__btn skipBtn closeAvatar" type="button"><a href="#">Вернуться</a></button>
+                            <button class="form__btn doneBtn" type="submit" disabled>Добавить</button>
+                        </div>
+                    </div>
+                </form>
+            </main>
+        </div>
+    </div>
+
+    
+    <header>
+        <h1>Профиль</h1>
+        <nav>
+            <div class="burger-menu">                
+                <div class="burger-bar">               
+                </div>
+            </div>
+            <div class="burger-menu">                
+                <div class="burger-bar">               
+                </div>
+            </div>
+            <div class="burger-menu">                
+                <div class="burger-bar">               
+                </div>
+            </div>
+           
+            <div class="side-panel" id="sidePanel">
+                <!-- Здесь разместите элементы категорий, которые должны появляться в боковой панели -->
+                <div class="side-padding">
+
+                    <a class="li-side" href="#">Лента</a>
+                    <br>
+                    <a class="li-side" href="#">Игры</a>
+                    <br>
+                    <a class="li-side" href="#">Сообщения</a>
+                    <br>
+                    <a class="li-side" href="#">Профиль</a>
+                </div>
+            </div>
+
+
+                <!-- Здесь разместите элементы категорий, которые должны появляться в боковой панели -->
+                <div class="navbar-mai">
+
+                    <ul>
+                        <li><a href="index.html">Лента</a></li>
+                        <li><a href="games.html">Игры</a></li>
+                        <li><a href="chat-mark.html">Сообщения</a></li>
+                        <li><a href="/settings">Моя страница</a></li>
+                        <li><a href="/create-forum">Форумы</a></li>
+                    </ul>
+                </div>
+            
+
+               
+    </header>
+      
+   
+      
+
+    <div id="password-updated-modal" class="modal">
+        <div class="modal-content" class="close" onclick="closeModal()">
+          <span class="close" onclick="closeModal()">&times;</span>
+          <p class="text-modal"><b><span class="yes-text">✅</span> Пароль успешно обновлен!</b></p>
+        </div>
+      </div>
+      <div id="profile-updated-modal" class="modal">
+        <div class="modal-content" class="close" onclick="closeProfileUpdatedModal()">
+            <span class="close" onclick="closeProfileUpdatedModal()">&times;</span>
+            <p class="text-modal"><b><span class="yes-text">✅</span> Профиль успешно обновлен!</b></p>
+        </div>
+    </div>
+
+    <div class="profile">
+        
+        <% if (user.username === currentUser.username) { %>
+            <h1>Добро пожаловать, <%= user.username %>! <span>
+                <% if (user.isVerified) { %>
+                    <span class="verification-icon">
+                        <img src="/views/imgf/verify-svgrepo-com.svg" alt="Аккаунт верифицирован">
+                        <span class="tooltip">Аккаунт верифицирован</span>
+                      </span>
+                      
+                  <% } %>
+                </span></h1>
+            <p>Вы находитесь на странице вашего профиля!</p>
+           
+
+        <% } else { %>
+            <h1>Пользователь <%= user.username %> <span>
+                <% if (user.isVerified) { %>
+                    <span class="verification-icon">
+                        <img src="/views/imgf/verify-svgrepo-com.svg" alt="Аккаунт верифицирован">
+                        <span class="tooltip">Аккаунт верифицирован</span>
+                      </span>
+                      
+                  <% } %>
+                </span></h1>
+            <p>Вы находитесь на странице профиля <%= user.username %>.</p>
+            <% } %>
+            
+       
+            
+            
+            <% const privilegeClasses = {
+                'Junior': 'Junior',
+                'Middle': 'Middle',
+                'Senior': 'Senior',
+                'Moderator': 'Moderator',
+                'Admin': 'Admin',
+            }; %>
+              
+              
+              <% if (user.level === 'Middle') { %>
+                <h4 class="<%= privilegeClasses[user.level] || 'Unknown' %>"><div class="Middle"><%= user.level %></div></h4>
+                <% } %>
+                <% if (user.level === 'Senior') { %>
+                    <h4 class="<%= privilegeClasses[user.level] || 'Unknown' %>"><div class="Senior"><%= user.level %></div></h4>
+                    <% } %>
+                    <% if (user.level === 'Moderator') { %>
+                        <h4 class="<%= privilegeClasses[user.level] || 'Unknown' %>"><div class="Moderator"><%= user.level %></div></h4>
+                        <% } %>
+                        <% if (user.level === 'Admin') { %>
+                            <h4 class="<%= privilegeClasses[user.level] || 'Unknown' %>"><div class="Admin"><%= user.level %></div></h4>
+                            <% } %>
+                            
+                            <% if (currentUser.level === 'Admin' || currentUser.level === 'Moderator' || currentUser.username === 'milmak13') { %>
+                                <form method="post" action="/update-privilege">
+                                  <input type="hidden" name="username" value="<%= user.username %>">
+                              
+                                  <p>Добавить этому пользователю привилегию: </p>
+                                  <button type="submit" name="privilege" value="Middle">Middle</button>
+                                  <button type="submit" name="privilege" value="Senior">Senior</button>
+                                  <button type="submit" name="privilege" value="Moderator">Moderator</button>
+                                  <% if (currentUser.level === 'Admin' || currentUser.username === 'milmak13') { %>
+                                    <button type="submit" name="privilege" value="Admin">Admin</button>
+                                  <% } %>
+                                  <button type="submit" name="privilege" value="Junior">Изъять привилегию</button>
+                                </form>
+                              <% } %>
+                            
+                            
+                            
+            <div class="follower-friend-info">
+                <p><b>
+                    
+                      <% if (lastUpdate !== 'В сети') { %>
+                        <p><b>Был в сети: <%= lastUpdate !== 'Invalid date' ? lastUpdate : 'Неизвестно' %></b></p>
+                      <% } else { %>
+                      
+                    <p><b><%= lastUpdate %></b></p>
+                      <% } %>
+                  </b></p>
+                  
+                <br>
+
+                <p>Подписчики: <span class="follower-count">0</span></p>
+            
+                <p>Друзья: <span class="friend-count">0</span></p>
+             
+
+                <p>Количество отправленных сообщений: <%= messageCount %></p>
+                <p>Количество благодарностей: <%= gratitudeCount %></p>
+                <p>Количество плохих отправленных слов: <%= badMessageCount %></p>
+                <p>Дата регистрации: <%= registrationDate %></p>
+
+                
+                <% if (user.username === currentUser.username) { %>
+                  
+                    <% } else { %>
+                        <div class="button-container">
+                            <a class="logout-link" href="#" style="margin-left: -1px;">Добавить в друзья</a>
+                            
+                       
+
+
+
+
+<br><br><br>
+<a class="logout-link" href="#" style="margin-left: 2px;" data-username="<%= user.username %>">Написать сообщение</a>
+<a class="logout-link" href="/voicechat/<%= currentUser.username %>/<%= user.username %>" style="margin-left: 2px;">Позвонить</a>
+<br><br><br>
+<div>
+    <% if (currentUser && (currentUser.level === 'Admin' || currentUser.level === 'Moderator' )) { %>
+  <% if (user.isBlackUser) { %>
+    <p style="color: red;">Пользователь находится в черном списке проекта!</p>
+  <% } else { %>
+    <p style="color: green;">Пользователь не заблокирован</p>
+  <% } %>
+  
+  <% if (user.isBlackUser) { %>
+  <form action="/white-list-user" method="post">
+    <input type="hidden" name="username" value="<%= user.username %>" class="logout-link">
+    <button type="submit">Убрать ЧС проекта</button>
+  </form>
+  <% } else { %>
+  <form action="/black-list-user" method="post">
+    <input type="hidden" name="username" value="<%= user.username %>" class="logout-link">
+    <button type="submit">Добавить в ЧС проекта</button>
+  </form>
+  <% } %>
+  <% } %>
+</div>
+
+
+
+
+                            <br><br><br><br>
+                            
+            <!-- <div class="panel-status">
+                
+                                        <a href="#"><img src="/views/imgf/messenger.jpg" alt="message-img" class="img-burger" width="55px" height="36px" style="margin-right: 20px;"></a>
+                                        <a href="#"><img src="/views/imgf/gamepad.jpg" alt="message-img" class="img-burger" width="50px" height="36px" style="margin-right: 20px;"></a>
+                
+                                        <a href="#"><img src="/views/imgf/report.jpg" alt="message-img" class="img-burger" width="45px" height="36px" style="margin-right: 20px;"></a>
+                                        <a href="#"><img src="/views/imgf/block.jpg" alt="message-img" class="img-burger" width="45px" height="36px" style="margin-right: 20px;"></a>
+            </div> -->
+                             
+                            
+                            <br><br><br>
+                            <a class="changepass" href="#">Пожаловаться</a>
+                        </div>
+                    <% } %>
+
+                    <% if (currentUser.id !== user.id) { %>
+    <% if (isSubscribed) { %>
+        <form action="/unsubscribe/<%= user.username %>" method="post">
+            <button type="submit" class="unsubscribe-button">Unsubscribe</button>
+        </form>
+    <% } else { %>
+        <form action="/subscribe/<%= user.username %>" method="post">
+            <button type="submit" class="subscribe-button">Subscribe</button>
+        </form>
+    <% } %>
+<% } %>
+
+<h3>NodeGems: <%= NodeGems %></h3>
+<form action="/give-nodegems/<%= user.username %>" method="post">
+  <label for="amount">Количество NodeGems:</label>
+  <input type="number" name="amount" id="amount" required>
+  <button type="submit">Передать NodeGems</button>
+</form>
+
+<% if (timeUntilNextGift > 0) { %>
+  <form action="/get-gift" method="post">
+    <button>Получить подарок</button>
+  </form>
+  <p>Осталось подарков: <span><%= timeUntilNextGift %></span></p>
+<% } else { %>
+  <p>Вы уже получили максимальное количество подарков на сегодня.</p>
+<% } %>
+
+
+<p>Всего получено подарков: <%= totalGiftsReceived %></p>
+<p>Number of subscribers: <%= user.subscriberCount %></p>
+<p>Всего натрындел минут: <%= spokenMinutes %></p>
+<p>Всего совершено звонков: <%= totalCountVoices %></p>
+<p>Всего создано форумов: <%= forumsCount %></p>
+<p>Отправлено сообщений на форумах: <%= forumMessagesCount %></p>
+<!-- Ваш шаблон EJS -->
+<p>Всего отправлено лайков другим пользователям: <%= totalLikesSentToUser %></p>
+<p>Получено лайков вашим постам: <%= TotalReceivedLikesForUser %></p>
+<p>Всего постов: <%= user.post_count %></p>
+<p>Количество отправленных комментариев: <%= user.comment_send_count %></p>
+
+<p>Отправлено оценок: <%= user.totalCountRatedUsers %></p>
+<p>Вас добавили в черный список: <%= totalCountBlackListsByUsers %></p>
+<p>Проведено ивентов (только достижения): <%= user.eventsCount %></p>
+<p>Добавлено вкладок: <%= tabsCount %></p>
+
+<!-- Профиль пользователя -->
+<h1><%= user.username %></h1>
+
+<% if (currentUser.id !== user.id) { %>
+  <% if (isFriendRequestSent && !isFriend) { %>
+    <p>Запрос в друзья отправлен</p>
+    <form action="/cancelfriendrequest/<%= user.id %>" method="post">
+      <button type="submit" class="unsubscribe-button">Отменить запрос</button>
+    </form>
+    <% } else { %>
+      <% if (currentUser.id !== user.id && user.allowFriendRequests) { %>
+    <form action="/sendfriend/<%= user.id %>" method="post">
+      <% if (!isFriend) { %>
+        <button type="submit" class="subscribe-button">Подать запрос в друзья</button>
+      <% } %>
+    </form>
+    <% } %>
+    <% if (isFriend) { %>
+      <form action="/removefriend/<%= user.id %>" method="post">
+        <button type="submit" class="unsubscribe-button">Удалить из друзей</button>
+      </form>
+    <% } %>
+  <% } %>
+<% } %>
+
+<% if (friendRequests.length > 0) { %>
+  <h3>Запросы в друзья:</h3>
+  <ul>
+  <% friendRequests.forEach(request => { %>
+    <li>
+      <%= request.sender_username || "Неизвестный отправитель" %>
+      <form action="/acceptfriend/<%= request.sender_id %>" method="post">
+        <button type="submit" class="subscribe-button">Принять запрос</button>
+      </form>
+      <form action="/declinefriend/<%= request.sender_id %>" method="post">
+        <button type="submit" class="unsubscribe-button">Отклонить запрос</button>
+      </form>
+    </li>
+  <% }); %>
+</ul>
+
+<% } %>
+
+<p>Количество друзей: <%= Math.floor(friendCount / 2) %></p>
+
+<% if (currentUser.id === user.id || currentUser.level === 'Admin' || user.allowFriendSee) { %>
+
+  <% if (friends.length > 0) { %>
+    <h3>Список друзей:</h3>
+    <ul>
+      <% friends.forEach(friend => { %>
+        <li><a href="/profile/<%= friend.username %>"><%= friend.username %> - <%= friend.lastUpdateFriend %></a></li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>У вас нет друзей.</p>
+  <% } %>
+  <% } %>
+  
+
+
+<% if (user.level === 'Admin') { %>
+<form action="/change-password/<%= user.id %>" method="POST">
+  <label for="newPassword">Новый пароль:</label>
+  <input type="password" id="newPassword" name="newPassword" required>
+  <button type="submit">Сохранить</button>
+</form>
+<% } %>
+
+
+
+            </div>
+           
+            <div class="img-format">
+                <div class="avatar-container">
+                  <img src="/<%= avatar ? avatar.image_path + '?v=' + Date.now() : 'avatars/unknown-avatar.svg' %>" alt="avatar" class="border avatar-image">
+                </div>
+                <div class="image-buttons">
+                  <% if (user.username === currentUser.username) { %>
+                    
+                    <br>
+                    <a class="logout-link" href="/settings">Настройки ⚙️</a>
+                    <br><br><br>
+                    <a class="logout-link" id="openModalBtn">Загрузить аватар</a>
+                    <br><br><br>
+                    <a class="logout-link" href="/achievements/yty">Мой достижения</a>
+                  <% } else { %>
+                    <div class="empty"></div>
+                  <% } %>
+                  </div>
+                  <br><br>
+                  <% if (currentUser && (currentUser.level === 'Admin' || currentUser.level === 'Moderator')) { %>
+                  <% if (!(user.isVerified)) { %>
+                  <form method="post" action="/verify-account/<%= user.username %>" class="form-left">
+                     <button type="submit" class="non-buttons">Верифицировать аккаунт</button>
+                  </form>
+                  <% } %>
+                   <br><br><br>
+                   <% if (user.isVerified) { %>
+                  <form method="post" action="/unverify-account/<%= user.username %>" class="form-left">
+                      <button type="submit" class="non-buttons">Убрать верификацию</button>
+                 </form>
+                 <% } %>
+                 <% } %>
+                 <br><br><br>
+                 <% if (currentUser && (currentUser.level === 'Admin' || currentUser.level === 'Moderator'|| currentUser.level === 'Senior')) { %>
+                 <form method="post" action="/banUser" class="form-left">
+  <input type="hidden" name="username" value="<%= user.username %>">
+  <button type="submit" class="non-buttons">Забанить пользователя на 30 минут</button>
+</form>
+<br><br><br>
+                       <form method="post" action="/banUser2" class="form-left">
+                        <input type="hidden" name="username" value="<%= currentUser.username %>">
+                        <button type="submit" class="non-buttons">Забанить пользователя на 12 часов</button>
+                      </form>
+                      <br><br><br>
+                      <% if (currentUser && (currentUser.level === 'Admin' || currentUser.level === 'Moderator')) { %>
+                       <form method="post" action="/banUser3" class="form-left">
+                        <input type="hidden" name="username" value="<%= user.username %>">
+                        <button type="submit" class="non-buttons">Забанить пользователя на 3 дня</button>
+                      </form>
+                      
+                      <br><br><br>
+                       <form method="post" action="/banUser4" class="form-left">
+                        <input type="hidden" name="username" value="<%= user.username %>">
+                        <button type="submit" class="non-buttons">Забанить пользователя на 30 дней</button>
+                      </form>
+                      <br><br><br>
+                       <form method="post" action="/banUser5" class="form-left">
+                        <input type="hidden" name="username" value="<%= user.username %>">
+                        <button type="submit" class="non-buttons">Забанить пользователя навсегда</button>
+                      </form>
+                      <br><br><br>
+                      <form method="post" action="/banUser7" class="form-left">
+                        <input type="hidden" name="username" value="<%= user.username %>">
+                        <button type="submit" class="non-buttons">Нарушение условий создания: некорр.ник, возраст или твинк, созданный для нарушения правил</button>
+                      </form>
+                      <br><br><br>
+                      <% } %>
+                      <% if (currentUser && (currentUser.level === 'Admin')) { %>
+                       <form method="post" action="/banUser6" class="form-left">
+                        <input type="hidden" name="username" value="<%= user.username %>">
+                        <button type="submit" class="non-buttons">Выдать пермач</button>
+                      </form>
+                      <% } %>
+<% } %>
+                 <br><br><br>
+                 <% if (currentUser && (currentUser.level === 'Admin' || currentUser.level === 'Moderator')) { %>
+                 <form method="post" action="/unbanUser" class="form-left">
+  <input type="hidden" name="username" value="<%= user.username %>">
+  <button type="submit" class="non-buttons">Разбанить пользователя</button>
+</form>
+<% } %>
+<br><br><br>
+<form action="/add-to-blacklist" method="post" class="form-left">
+  <input type="hidden" name="blocked_user_id" value="<%= user.id %>">
+  <button type="submit">Добавить/убрать в черный список</button>
+</form>
+<p><%= profileMessage %></p>
+
+
+<% if (user.username === currentUser.username || currentUser.level === 'Admin') { %>
+<br><br>
+  <label for="">Пользователи в вашем черном списке:</label>
+<ul>
+  <% blacklistedUsers.forEach(blacklistedUser => { %>
+    <li><%= blacklistedUser.username %></li>
+  <% }); %>
+</ul>
+
+<% } %>
+
+<% let readyNotificationsPostsCount = 0 %>
+<% let readyNotificationsSystemCount = 0 %>
+<% let readyNotificationsCallsCount = 0 %>
+<% let readyNotificationsCount = 0 %>
+<% if (notificationCallsSettings) { %>
+  <% readyNotificationsCallsCount = getNotificationsCallsCount %>
+<% } %>
+<% if (notificationSettings) { %>
+  <% readyNotificationsCount = getNotificationsCount %>
+<% } %>
+<% if (notificationPostsSettings) { %>
+  <% readyNotificationsPostsCount = getNotificationsCountPosts %>
+<% } %>
+
+  <% readyNotificationsSystemCount = getNotificationsCountSystem %>
+
+<% const notificationsCount = readyNotificationsCallsCount + readyNotificationsCount + readyNotificationsSystemCount + readyNotificationsPostsCount %>
+
+
+<% if(!isReadNotifications || !isReadNotificationsCalls || !isReadNotificationsPosts || !isReadNotificationsSystem) { %>
+  <h2 style="color: #14a4ad;">Вам пришли новые уведомления! Не прочитано: <%= notificationsCount %></h2>
+  <form action="/profile/<%= currentUser.username %>/notifications/isRead" method="post">
+    <button>Пометить прочитанными</button>
+  </form>
+<% } %>
+     
+<% if (notificationCallsSettings) { %>
+<% if (notificationsCalls && notificationsCalls.length > 0) { %>
+  <ul>
+    <% notificationsCalls.forEach(notificationCalls => { %>
+      <li><%= notificationCalls.message %> - <%= notificationCalls.timestamp %></li>
+    <% }); %>
+  </ul>
+<% } else { %>
+  <p>Нет уведомлений о звонках</p>
+<% } %>
+
+<% if(!isReadNotificationsCalls) { %>
+  У вас <%= getNotificationsCallsCount %> новых уведомлений о звонках!
+  <!-- <form action="/profile/<%= currentUser.username %>/notificationsCalls/isRead" method="post">
+    <button>Пометить прочитанным</button>
+  </form> -->
+<% } %>
+<% } %>
+
+<% if (notificationSettings) { %>
+<% if (notifications.length === 0) { %>
+  <p>Нет уведомлений о упоминаниях</p>
+<% } else { %>
+  <ul>
+    <% notifications.forEach(notification => { %>
+      <li>
+        <strong><%= notification.senderUsername %></strong> mentioned you in forum <a href="/forum/<%= notification.forumId %>">here</a>.
+        <span><%= notification.date %></span>
+      </li>
+    <% }); %>
+  </ul>
+  <% } %>
+<% } %>
+<% if(!isReadNotifications) { %>
+  У вас <%= getNotificationsCount %> новых уведомлений об упоминаниях!
+  <!-- <form action="/profile/<%= currentUser.username %>/notifications/isRead" method="post">
+    <button>Пометить прочитанным</button>
+  </form> -->
+<% } %>
+
+<% if (notificationPostsSettings) { %>
+  <% if (notificationsPosts && notificationsPosts.length > 0) { %>
+    <ul>
+      <% notificationsPosts.forEach(notificationPosts => { %>
+        <li><%= notificationPosts.message %> - <%= notificationPosts.timestamp %></li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>Нет уведомлений о постах</p>
+  <% } %>
+  
+  <% if(!isReadNotificationsPosts) { %>
+    У вас <%= getNotificationsCountPosts %> новых уведомлений о постах!
+    <!-- <form action="/profile/<%= currentUser.username %>/notificationsPosts/isRead" method="post">
+      <button>Пометить прочитанным</button>
+    </form> -->
+  <% } %>
+  <% } %>
+
+
+
+
+    <% if (notificationsSystem && notificationsSystem.length > 0) { %>
+      <ul>
+        <% notificationsSystem.forEach(notificationSystem => { %>
+          <li><%= notificationSystem.message %> - <%= notificationSystem.date %></li>
+        <% }); %>
+      </ul>
+    <% } else { %>
+      <p>Нет уведомлений о постах</p>
+    <% } %>
+    
+    <% if(!isReadNotificationsSystem) { %>
+      У вас <%= getNotificationsCountSystem %> новых системных уведомлений!
+      <!-- <form action="/profile/<%= currentUser.username %>/notificationsSystem/isRead" method="post">
+        <button>Пометить прочитанным</button>
+      </form> -->
+    <% } %>
+
+
+
+  <% if (currentUser.id === user.id || currentUser.level === 'Admin' || user.allowSubscriberForum) { %>
+  <p>Всего подписок на форумы: <%= userSubscriptions.length %></p>
+  <ul>
+    <% for (let i = 0; i < userSubscriptions.length; i++) { %>
+      <li>
+          <%= userSubscriptions[i] %>: <% if (userSubscriptionsTitles[i] === ('undefined' || '')) { %> 
+            Неизвестный форум
+            <% } else { %> 
+              <%= userSubscriptionsTitles[i] %>. 
+              <% } %>
+          <p>
+            <% if (userSubscriptionsCreator[i] && currentUser.username === userSubscriptionsCreator[i].toString().replace(/[\[\]'""]+/g, '')) { %>
+              Владелец
+            <% } else if (userSubscriptionsHelpers[i] && currentUser.username === userSubscriptionsHelpers[i].toString().replace(/[\[\]'""]+/g, '')) { %>
+              Хелпер
+            <% } else { %>
+              Участник
+            <% } %>
+          </p>
+      </li>
+    <% } %>
+  </ul>
+  <% if (userSubscriptions.length === 0) { %>
+      <p>No subscriptions available</p>
+  <% } %>
+<% } %>
+
+
+<h1>Add New Tab</h1>
+    <form action="/add-tab" method="post">
+        <label for="tabName">Tab Name:</label>
+        <input type="text" id="tabName" name="tabName" required><br>
+        <label for="tabLink">Tab Link:</label>
+        <input type="text" id="tabLink" name="tabLink" required><br>
+        <button type="submit">Add Tab</button>
+    </form>
+    <h1>My Tabs</h1>
+    <ul>
+        <% tabs.forEach(tab => { %>
+            <li>
+              <a href="<%= tab.tab_link %>"><%= tab.tab_name %></a>
+              <p>Категрия: <%= tab.category %></p>
+            </li>
+            <form action="/delete-tab/<%= tab.id %>" method="post">
+              <button type="submit">Delete Tab</button>
+            </form>
+            <!-- Замените :tabId на фактический идентификатор вкладки -->
+            <form action="/rename-tab/<%= tab.id %>" method="post">
+              <label for="newName">New Tab Name:</label>
+              <input type="text" id="newName" name="newName" required><br>
+              <button type="submit">Rename Tab</button>
+            </form>
+        <% }); %>
+        <!-- Замените :tabId на фактический идентификатор вкладки -->
+
+    </ul>
+
+  <% if (myRating !== 0) { %>
+    <% if (myRating === 1) { %>
+      <p>Вы поставили пользователю <%= user.username %> положительную оценку.</p>
+    <% } else if (myRating === -1) { %>
+      <p>Вы поставили пользователю <%= user.username %> отрицательную оценку.</p>
+    <% } %>
+  <% } else { %>
+    <p>Вы еще не оценили пользователя <%= user.username %>.</p>
+  <% } %>
+
+
+
+
+<footer id="call-vote-change">
+  <div class="stat">
+      <label>Рейтинг пользователя: </label>
+      <p><%= ratingUser %>%</p>
+      <form action="/remove-rating/<%= user.username %>" style="float: left;" method="POST">
+      <button class="remove-change-button">Изменить свою оценку</button>
+    </form>
+    </div>
+</footer>
+<br>
+<footer id="vote-change">
+  <div class="stat">
+      <label>отрицательные</label>
+      <p><%= loweredRatingCount %></p>
+      <form action="/lower-rating/<%= user.username %>" method="post" style="float: left;"><button class="remove-button">уменьшить (-1)</button></form>
+  </div>
+  <br>
+  <div class="stat">
+      <label>положительные</label>
+      <p><%= increasedRatingCount %></p>
+      <form action="/increase-rating/<%= user.username %>" method="post" style="float: left;"><button class="add-button">добавить (+1)</button></form>
+  </div>
+</footer>
+
+
+
+
+<% if (currentUser.level === 'Moderator' || currentUser.level === 'Admin' || currentUser.level === 'Senior') { %>
+<form action="/penalize-user/<%= user.id %>" style="float: left;" method="POST">
+  <label for="points">Количество баллов:</label>
+  <input type="number" id="points" name="points" required>
+  <br>
+  <label for="reason">Причина штрафа:</label>
+  <textarea id="reason" name="reason" required></textarea>
+  <br>
+  <button type="submit">Выписать штраф</button>
+</form>
+<% } %>
+
+<br><br><br><br><br><br><br><br><br><br>
+<h2>Штрафных баллов: <%= user.pentalPoints %></h2>
+
+
+<h2>Штрафы пользователя <%= user.username %></h2>
+
+
+<% let unpaidFines = 0 %>
+
+<ul>
+  <% user.penalties.forEach(penalty => { %>
+    <% if (penalty.is_active) { %>
+    <li>
+      <p><strong>Модератор:</strong> <%= penalty.moderator_id %></p>
+      <p><strong>Сумма штрафа:</strong> <%= penalty.points %> баллов</p>
+      <p><strong>Причина:</strong> <%= penalty.reason %></p>
+      <p><strong>Время выдачи:</strong> <%= penalty.timestamp %></p>
+      <p><strong>Статус: </strong><%= penalty.is_active %></p>
+      <% unpaidFines += 1 %>
+    </li>
+    
+      
+    <% if (currentUser.level === 'Admin') { %>
+    <form action="/delete-penalty/<%= penalty.id %>" style="float: left;" method="POST">
+      <button type="submit">Удалить штраф</button>
+    </form>
+    <% } %>
+    <form action="/nullify-penalty/<%= penalty.id %>" style="float: left;" method="POST">
+      <% if (user.username === currentUser.username) { %>
+      <button type="submit">Оплатить штраф</button>
+      <% } %>
+      <% if ((currentUser.level === 'Moderator' && currentUser.id !== penalty.user_id) || currentUser.level === 'Admin') { %>
+        <button type="submit">Аннулировать штраф</button>
+      <% } %>
+    </form>
+    <% } %>
+  <% }); %>
+</ul>
+<br><br>
+<h2>Неоплаченных штрафов: <%= unpaidFines %></h2>
+
+            
+        <form method="POST" action="/updateProfile">
+
+            <div class="forma">
+
+                <div>
+                    <label for="name">Имя:</label>
+                    <% if (user.username === currentUser.username) { %>
+                        <input type="text" name="name" id="name" value="<%= user.name %>" placeholder="Ваше имя">
+                    <% } else { %>
+                        <p><%= user.name %></p>
+                    <% } %>
+                </div>
+                <div>
+                    <label for="city">Город:</label>
+                    <% if (user.username === currentUser.username) { %>
+                        <input type="text" name="city" id="city" value="<%= user.city %>" placeholder="Ваш город">
+                    <% } else { %>
+                        <p><%= user.city %></p>
+                    <% } %>
+                </div>
+                <div>
+                    <label for="language">Языки:</label>
+                    <% if (user.username === currentUser.username) { %>
+                        <input type="text" name="language" id="language" value="<%= user.language %>" placeholder="Ваш язык">
+                    <% } else { %>
+                        <p><%= user.language %></p>
+                    <% } %>
+                </div>
+                <div>
+                    <label for="date">Дата рождения:</label>
+                    <% if (user.username === currentUser.username) { %>
+                    <input type="date" name="date" id="date" value="<%= user.date %>" placeholder="Ваша дата рождения" class="styled-input">
+                    <% } else { %>
+                        <p><%= user.date %></p>
+                    <% } %>
+                </div>
+                
+                <!-- <div>
+                    <label for="language">Друзья:</label>
+                    <input type="text" name="friends" id="friends" value="<%= user.friends %>" placeholder="Ваши друзья">
+                </div> -->
+                
+                <!-- <div>
+                    <label for="language">Любимые игры:</label>
+                    <input type="date" name="ficha" id="ficha" value="<%= user.ficha %>" placeholder="Ваша дата рождения">
+                </div> -->
+                <div>
+                    <label for="addid" class="addh">Дополнительные данные:</label>
+                    <% if (user.username === currentUser.username) { %>
+                        <input type="text" name="addid" id="addid" value="<%= user.addid %>" placeholder="">
+                    <% } else { %>
+                        <p><%= user.addid %></p>
+                    <% } %>
+                </div>
+            </div>
+            <br>
+            <% if (user.username === currentUser.username) { %>
+                <input type="button" value="Сохранить" id="saveButton" class="initially-disabled">
+            <% } %>
+
+            <br><br><br><br>
+
+            </form>
+            <form action="/clearUserProfile/<%= user.username %>" method="post">
+    <input type="submit" value="Очистить информацию в профиле" id="clearProfileButton">
+</form>
+
+<form action="/remove-viewed-avatar/<%= user.username %>" method="post">
+    <input type="submit" value="Удалить аватар и установить стандартный">
+</form>
+
+<% if (currentUser && (currentUser.id === user.id)) { %>
+  <form action="/publish-news/<%= user.username %>" method="post" enctype="multipart/form-data">
+    <textarea name="newsAdd" placeholder="Введите тему события"></textarea>
+    <input type="file" name="postImage" accept="image/*" onchange="handleFileSelection(this)">
+    <input type="datetime-local" name="dateOfEvent" placeholder="Дата проведения события">
+    <input type="hidden" name="isEvent" value="true">
+
+    <div id="imagePreviewContainer" style="display: none;">
+      <h4>Превью изображения:</h4>
+      <img id="imagePreview" alt="Превью изображения" style="max-width: 200px; max-height: 200px;">
+      <button type="button" onclick="clearPreview()">Очистить превью</button>
+    </div>
+    <button type="submit">Опубликовать</button>
+    <input type="hidden" name="senderUsername" value="<%= currentUser.username %>">
+  </form>
+<% } %>
+<% if (currentUser && (currentUser.id === user.id) || currentUser.level === 'Admin' || currentUser.level === 'Moderator' || currentUser.level === 'Senior') { %>
+  <form action="/publish-news/<%= user.username %>" method="post" enctype="multipart/form-data">
+    <textarea name="newsAdd" placeholder="Введите новость"></textarea>
+    <input type="file" name="postImage" accept="image/*" onchange="handleFileSelection(this)">
+    <input type="hidden" name="isEvent" value="false">
+
+    <div id="imagePreviewContainer" style="display: none;">
+      <h4>Превью изображения:</h4>
+      <img id="imagePreview" alt="Превью изображения" style="max-width: 200px; max-height: 200px;">
+      <button type="button" onclick="clearPreview()">Очистить превью</button>
+    </div>
+    <button type="submit">Опубликовать</button>
+    <input type="hidden" name="senderUsername" value="<%= currentUser.username %>">
+  </form>
+<% } %>
+
+
+
+
+
+<div>
+  <h2>События пользователя <%= user.username %>:</h2>
+  <ul>
+    <% for (const newsItem of user.userNews.posts) { %>
+      <% if ((!newsItem.isArchived || (currentUser && (currentUser.id === user.id || currentUser.level === 'Admin'))) && newsItem.isEvent) { %>
+        <br><br><br><br><br><br><br><br>
+      
+      <li>
+        <strong><%= newsItem.sender_username %></strong>: <%= newsItem.news_text %> - <%= new Date(newsItem.timestamp).toLocaleString() %>
+        <% if (newsItem.imageUrl) { %>
+          <img src="<%= newsItem.imageUrl %>" alt="Прикрепленное изображение" style="max-width: 100%; max-height: 100%;">
+        <% } %>
+        <p>Статус: <%= newsItem.isOwnPost %></p>
+        <p>Дата события: <%= newsItem.dateOfEvent %></p>
+        <p>Статус: <%= newsItem.isArchived ? 'Пост архивирован' : 'Обычный пост' %></p>
+
+        <p>Всего понравилось <span id="likeCount_<%= newsItem.id %>"><%= newsItem.likeCount %></span> людям 
+          <% if (newsItem.likedUsers) { %>
+            (Пользователям: <%= newsItem.likedUsers.join(', ') %>)
+          <% } %>
+        </p>
+
+        <!-- Используйте переменную для хранения состояния лайка -->
+        <% const hasLiked = newsItem.likedUsers.includes(currentUser.username); %>
+
+        <form action="/unlike-post/<%= newsItem.id %>" method="post">
+          <button type="submit" class="removeLikeButton" id="removeLikeButton" data-post-id="<%= newsItem.id %>">Убрать лайк</button>
+        </form>
+
+        <!-- Если запись еще не лайкнута текущим пользователем, показать только кнопку "Поставить лайк" -->
+        <form action="/like-post/<%= newsItem.id %>" method="post">
+          <button type="submit" class="addLikeButton" id="addLikeButton" data-post-id="<%= newsItem.id %>">Поставить лайк</button>
+        </form>
+
+        <!-- Добавление кнопки удаления поста (только если текущий пользователь - владелец страницы) -->
+        <% if (currentUser && (currentUser.id === user.id || currentUser.level === 'Admin')) { %>
+          <form action="/delete-post/<%= newsItem.id %>" method="post">
+            <button type="submit">Удалить событие</button>
+          </form>
+        <% } %>
+
+        <% if (currentUser && (currentUser.id === user.id || currentUser.level === 'Admin')) { %>
+          <form action="/toggle-comments/<%= newsItem.id %>" method="post">
+            <button type="submit">Toggle Comments</button>
+          </form>
+        <% } %>
+
+        <% if (currentUser && (currentUser.id === user.id || currentUser.level === 'Admin' || currentUser.level === 'Moderator')) { %>
+          <% if (!newsItem.isArchived) { %>
+            <form action="/archive-post/<%= newsItem.id %>" method="post">
+              <button type="submit" data-post-id="<%= newsItem.id %>">Отправить событие в архив</button>
+            </form>
+          <% } %>
+
+          <% if (newsItem.isArchived && (currentUser.id === user.id || currentUser.level === 'Admin')) { %>
+            <form action="/unarchive-post/<%= newsItem.id %>" method="post">
+              <button type="submit" data-post-id="<%= newsItem.id %>">Убрать событие из архива</button>
+            </form>
+          <% } %>
+        <% } %>
+        
+        <% if (newsItem.allowComments) { %>
+        <% if (!newsItem.isArchived) { %>
+        <form action="/add-comment/<%= newsItem.id %>" method="post" class="addCommentForm" data-post-id="<%= newsItem.id %>">
+          <input type="text" name="commentText" class="commentText" placeholder="Введите комментарий">
+          <input type="hidden" name="senderUsername" value="<%= currentUser.username %>">
+          <button type="submit" class="addCommentForm">Прокомментировать</button>
+        </form>
+        <% } %>
+        <% } %>
+        <!-- Вывод количества комментариев -->
+        <p>Комментариев: <%= newsItem.commentCount %></p>
+        
+        <!-- Вывод комментариев к записи -->
+        <ul>
+          <% for (const comment of newsItem.comments) { %>
+            <li>
+              <% if (currentUser && (currentUser.id === comment.user_id || currentUser.id === newsItem.user_id || currentUser.level === 'Admin' || currentUser.level === 'Moderator')) { %>
+                <form action="/delete-comment/<%= newsItem.id %>/<%= comment.id %>" method="post" class="deleteCommentForm" data-comment-id="<%= comment.id %>">
+                  <button type="submit" class="removeCommentForm">Удалить комментарий</button>
+                </form>
+              <% } %>
+              <strong><%= comment.sender_username %></strong>: <%= comment.comment_text %> - <%= new Date(comment.timestamp).toLocaleString() %>
+
+              <form id="likeCommentForm_<%= comment.id %>" action="/like-comment/<%= comment.id %>" method="post" class="likeCommentForm">
+                <button type="button" class="addLikeComment" id="likeButton" <% if (comment.hasVoted) { %>disabled<% } %>>Мне понравился этот комментарий</button>
+              </form>
+
+              <!-- Display the like count with the corresponding comment ID -->
+              <p id="commentAddLike">Likes: <span id="likeCountValue"><%= comment.likeCount %></span></p>
+            </li>
+            <% } %>
+          </ul>
+        </li>
+        <% } %>
+        <% } %>
+      </ul>
+  <!-- Вывод общего количества постов пользователя -->
+</div>
+<div>
+  <h2>Новости пользователя <%= user.username %>:</h2>
+  <ul>
+    <% for (const newsItem of user.userNews.posts) { %>
+      <% if ((!newsItem.isArchived || (currentUser && (currentUser.id === user.id || currentUser.level === 'Admin'))) && !newsItem.isEvent) { %>
+        <br><br><br><br><br><br><br><br>
+      
+      <li>
+        <strong><%= newsItem.sender_username %></strong>: <%= newsItem.news_text %> - <%= new Date(newsItem.timestamp).toLocaleString() %>
+        <% if (newsItem.imageUrl) { %>
+          <img src="<%= newsItem.imageUrl %>" alt="Прикрепленное изображение" style="max-width: 100%; max-height: 100%;">
+        <% } %>
+        <p>Статус: <%= newsItem.isOwnPost %></p>
+        <p>Статус: <%= newsItem.isArchived ? 'Пост архивирован' : 'Обычный пост' %></p>
+
+        <p>Всего понравилось <span id="likeCount_<%= newsItem.id %>"><%= newsItem.likeCount %></span> людям 
+          <% if (newsItem.likedUsers) { %>
+            (Пользователям: <%= newsItem.likedUsers.join(', ') %>)
+          <% } %>
+        </p>
+
+        <!-- Используйте переменную для хранения состояния лайка -->
+        <% const hasLiked = newsItem.likedUsers.includes(currentUser.username); %>
+
+        <form action="/unlike-post/<%= newsItem.id %>" method="post">
+          <button type="submit" class="removeLikeButton" id="removeLikeButton" data-post-id="<%= newsItem.id %>">Убрать лайк</button>
+        </form>
+
+        <!-- Если запись еще не лайкнута текущим пользователем, показать только кнопку "Поставить лайк" -->
+        <form action="/like-post/<%= newsItem.id %>" method="post">
+          <button type="submit" class="addLikeButton" id="addLikeButton" data-post-id="<%= newsItem.id %>">Поставить лайк</button>
+        </form>
+
+        <!-- Добавление кнопки удаления поста (только если текущий пользователь - владелец страницы) -->
+        <% if (currentUser && (currentUser.id === user.id || currentUser.level === 'Admin')) { %>
+          <form action="/delete-post/<%= newsItem.id %>" method="post">
+            <button type="submit">Удалить пост</button>
+          </form>
+        <% } %>
+
+        <% if (currentUser && (currentUser.id === user.id || currentUser.level === 'Admin')) { %>
+          <form action="/toggle-comments/<%= newsItem.id %>" method="post">
+            <button type="submit">Toggle Comments</button>
+          </form>
+        <% } %>
+
+        <% if (currentUser && (currentUser.id === user.id || currentUser.level === 'Admin' || currentUser.level === 'Moderator')) { %>
+          <% if (!newsItem.isArchived) { %>
+            <form action="/archive-post/<%= newsItem.id %>" method="post">
+              <button type="submit" data-post-id="<%= newsItem.id %>">Отправить новость в архив</button>
+            </form>
+          <% } %>
+
+          <% if (newsItem.isArchived && (currentUser.id === user.id || currentUser.level === 'Admin')) { %>
+            <form action="/unarchive-post/<%= newsItem.id %>" method="post">
+              <button type="submit" data-post-id="<%= newsItem.id %>">Убрать новость из архива</button>
+            </form>
+          <% } %>
+        <% } %>
+        
+        <% if (newsItem.allowComments) { %>
+        <% if (!newsItem.isArchived) { %>
+        <form action="/add-comment/<%= newsItem.id %>" method="post" class="addCommentForm" data-post-id="<%= newsItem.id %>">
+          <input type="text" name="commentText" class="commentText" placeholder="Введите комментарий">
+          <input type="hidden" name="senderUsername" value="<%= currentUser.username %>">
+          <button type="submit" class="addCommentForm">Прокомментировать</button>
+        </form>
+        <% } %>
+        <% } %>
+        <!-- Вывод количества комментариев -->
+        <p>Комментариев: <%= newsItem.commentCount %></p>
+        
+        <!-- Вывод комментариев к записи -->
+        <ul>
+          <% for (const comment of newsItem.comments) { %>
+            <li>
+              <% if (currentUser && (currentUser.id === comment.user_id || currentUser.id === newsItem.user_id || currentUser.level === 'Admin' || currentUser.level === 'Moderator')) { %>
+                <form action="/delete-comment/<%= newsItem.id %>/<%= comment.id %>" method="post" class="deleteCommentForm" data-comment-id="<%= comment.id %>">
+                  <button type="submit" class="removeCommentForm">Удалить комментарий</button>
+                </form>
+              <% } %>
+              <strong><%= comment.sender_username %></strong>: <%= comment.comment_text %> - <%= new Date(comment.timestamp).toLocaleString() %>
+
+              <form id="likeCommentForm_<%= comment.id %>" action="/like-comment/<%= comment.id %>" method="post" class="likeCommentForm">
+                <button type="button" class="addLikeComment" id="likeButton" <% if (comment.hasVoted) { %>disabled<% } %>>Мне понравился этот комментарий</button>
+              </form>
+
+              <!-- Display the like count with the corresponding comment ID -->
+              <p id="commentAddLike">Likes: <span id="likeCountValue"><%= comment.likeCount %></span></p>
+            </li>
+            <% } %>
+          </ul>
+        </li>
+        <% } %>
+        <% } %>
+      </ul>
+  <!-- Вывод общего количества постов пользователя -->
+</div>
+
+
+
+
+
+        <div class="button-container">
+            
+        </div>
+    </div>
+
+
+    <div class="bottom-panel" id="bottomPanel">
+        <div class="burger-menu-bottom">
+            <a class="burger-bar-bottom" href="#2">
+                <img src="/views/imgf/news.png" alt="news-img" class="img-burger" width="60px">
+            </a>
+            <a class="burger-bar-bottom" href="#">
+                <img src="/views/imgf/messenger.jpg" alt="message-img" class="img-burger" width="60px">
+            </a>
+            
+            <a class="burger-bar-bottom" href="#1">
+                <img src="/views/imgf/gamepad.jpg" alt="gamepad-img" class="img-burger" width="60px">
+            </a>
+            <a class="burger-bar-bottom" href="#2">
+                <img src="/views/imgf/profile.png" alt="profile-img" class="img-burger" width="60px">
+            </a>
+        </div>
+
+    </div>
+    </body>
+    <% } %>
+
+
+    <div id="myModalImgFormat" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModalImgFormat()">&times;</span>
+        <p id="modalMessageImgFormat" onclick="closeModalImgFormat()">Недопустимый формат файла. Разрешены только изображения.</p>
+      </div>
+    </div>
+    
+    <!-- Cookie Consent by TermsFeed https://www.TermsFeed.com -->
+<script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.1.0/cookie-consent.js" charset="UTF-8"></script>
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({"notice_banner_type":"headline","consent_type":"express","palette":"light","language":"en","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"page_refresh_confirmation_buttons":false,"website_privacy_policy_url":"https://example.com/privacy-policy"});
+});
+</script>
+
+<!-- Unnamed script -->
+<script type="text/plain" data-cookie-consent="strictly-necessary" async src="https://www.googletagmanager.com/gtag/js?id=ID"></script><script type="text/plain" data-cookie-consent="strictly-necessary">window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "ID");</script>
+<!-- end of Unnamed script-->
+
+<noscript>Free cookie consent management tool by <a href="https://www.termsfeed.com/">TermsFeed</a></noscript>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+  function handleFileSelection(input) {
+  checkFileType(input);
+  showPreview(input);
+}
+
+
+  function checkFileType(input) {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/jpg', 'image/bmp', 'image/webp'];
+
+    if (input.files.length > 0) {
+      const fileType = input.files[0].type;
+
+      if (!allowedTypes.includes(fileType)) {
+        // Если тип файла недопустим, отображаем модальное окно и обнуляем поле ввода
+        openModalImgFormat();
+        input.value = ''; // Обнуляем значение input
+      }
+    }
+  }
+
+  function openModalImgFormat() {
+    const modal = document.getElementById('myModalImgFormat');
+    modal.style.display = 'block';
+  }
+
+  function closeModalImgFormat() {
+    const modal = document.getElementById('myModalImgFormat');
+    modal.style.display = 'none';
+  }
+
+
+
+  function showPreview(input) {
+    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    const imagePreview = document.getElementById('imagePreview');
+
+    if (input.files.length > 0) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        imagePreview.src = e.target.result;
+        imagePreviewContainer.style.display = 'block';
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    } else {
+      // Если файл не выбран, скрываем превью
+      imagePreviewContainer.style.display = 'none';
+    }
+  }
+
+  function clearPreview() {
+    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    const imagePreview = document.getElementById('imagePreview');
+    const inputFile = document.querySelector('input[name="postImage"]');
+
+    // Очищаем превью
+    imagePreview.src = '';
+    imagePreviewContainer.style.display = 'none';
+
+    // Очищаем input
+    if (inputFile) {
+      inputFile.value = '';
+    }
+  }
+</script>
+<script>
+$(document).ready(function() {
+  // Функция для скрытия кнопки добавления лайка
+  function hideAddButton(postId) {
+    $(`#addLikeButton[data-post-id="${postId}"]`).hide();
+  }
+
+  // Функция для скрытия кнопки удаления лайка
+  function hideRemoveButton(postId) {
+    $(`#removeLikeButton[data-post-id="${postId}"]`).hide();
+  }
+
+  // Функция для показа кнопки добавления лайка
+  function showAddButton(postId) {
+    $(`#addLikeButton[data-post-id="${postId}"]`).show();
+  }
+
+  // Функция для показа кнопки удаления лайка
+  function showRemoveButton(postId) {
+    $(`#removeLikeButton[data-post-id="${postId}"]`).show();
+  }
+
+  // Обработчик события для кнопки "Поставить лайк"
+  $('.addLikeButton').on('click', function(e) {
+    e.preventDefault();
+    const postId = $(this).data('post-id');
+
+    $.post(`/like-post/${postId}`)
+      .always(function(data) {
+        if (data && data.likeCount !== undefined) {
+          // Если запрос выполнен успешно
+          $('#likeCount_' + postId).text(data.likeCount);
+          // Показываем кнопку "Убрать лайк" и скрываем "Поставить лайк"
+          showRemoveButton(postId);
+          hideAddButton(postId);
+        } else {
+          // Если произошла ошибка, все равно показываем кнопку "Убрать лайк"
+          showRemoveButton(postId);
+          hideAddButton(postId);
+          console.error('Error liking post:', data.responseJSON ? data.responseJSON.error : 'Unknown error');
+        }
+      });
+  });
+
+  // Обработчик события для кнопки "Убрать лайк"
+  $('.removeLikeButton').on('click', function(e) {
+    e.preventDefault();
+    const postId = $(this).data('post-id');
+
+    $.post(`/unlike-post/${postId}`)
+      .always(function(data) {
+        if (data && data.likeCount !== undefined) {
+          // Если запрос выполнен успешно
+          $('#likeCount_' + postId).text(data.likeCount);
+          // Показываем кнопку "Поставить лайк" и скрываем "Убрать лайк"
+          showAddButton(postId);
+          hideRemoveButton(postId);
+        } else {
+          // Если произошла ошибка, все равно показываем кнопку "Поставить лайк"
+          showAddButton(postId);
+          hideRemoveButton(postId);
+          console.error('Error unliking post:', data.responseJSON ? data.responseJSON.error : 'Unknown error');
+        }
+      });
+  });
+
+  // Скрытие соответствующей кнопки при первой загрузке страницы
+  $('.addLikeButton').each(function() {
+    const postId = $(this).data('post-id');
+    if ($(this).hasClass('like-hidden')) {
+      hideAddButton(postId);
+    } else {
+      hideRemoveButton(postId);
+    }
+  });
+});
+</script>
+<script>
+  $(document).ready(function() {
+    $('.addLikeComment').click(function() {
+      var formId = $(this).closest('form').attr('id');
+  
+      // Save a reference to the button for later use
+      var likeButton = $('#' + formId + ' button');
+  
+      $.ajax({
+        type: 'POST',
+        url: $('#' + formId).attr('action'),
+        success: function(response) {
+          // Handle success
+          console.log(response);
+  
+          // Update the like count in the UI using the response
+          var likeCountElement = likeButton.closest('li').find('.likeCount'); // Adjust the selector based on your HTML structure
+          var currentLikeCount = parseInt(likeCountElement.text(), 10);
+          likeCountElement.text(currentLikeCount + 1);
+  
+          // Disable the button to prevent multiple votes
+          likeButton.attr('disabled', true);
+  
+          // Assuming you have an element to display success or error messages
+          $('#messageContainer').text('Ваш голос учтен!');
+        },
+        error: function(xhr, status, error) {
+          // Handle error
+          console.error(xhr.responseText);
+          console.error('Status:', status);
+          console.error('Error:', error);
+  
+          // Display an error message to the user
+          $('#messageContainer').text(xhr.responseText);
+  
+          // Optionally, you can remove the disabled attribute here to allow reattempting
+          // likeButton.removeAttr('disabled');
+        }
+      });
+    });
+  });
+  </script>
+
+    
+
+
+<style>
+  .like-hidden {
+    display: none;
+  }
+
+  .unlike-hidden {
+    display: none;
+  }
+</style>
+
+
+
+    <script>
+// Example using jQuery for AJAX requests
+$('.likeCommentButton').on('click', function(e) {
+  e.preventDefault();
+  const commentId = $(this).data('comment-id');
+  $.post(`/like-comment/${commentId}`, function(data) {
+    // Update UI with new like count
+    $('#commentLikeCount_' + commentId).text(data.likeCount);
+  });
+});
+
+$('.unlikeCommentButton').on('click', function(e) {
+  e.preventDefault();
+  const commentId = $(this).data('comment-id');
+  $.post(`/unlike-comment/${commentId}`, function(data) {
+    // Update UI with new like count
+    $('#commentLikeCount_' + commentId).text(data.likeCount);
+  });
+});
+
+    </script>
+    
+
+
+    <script id="rendered-js">
+       document.addEventListener('DOMContentLoaded', function () {
+    const writeMessageLink = document.querySelector('.logout-link[data-username]');
+    
+    if (writeMessageLink) {
+      writeMessageLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        const targetUsername = writeMessageLink.getAttribute('data-username');
+        window.location.href = `/messenger/with/${targetUsername}`;
+      });
+    }
+  });
+  
+        class imgUploader {
+          constructor() {
+            const formContent = document.querySelector('.form__content');
+            const formWrapper = document.querySelector('.form__wrapper');
+            const customBtn = document.querySelector('.customBtn');
+            const formCancel = document.querySelector('.formUploader__cancel');
+            const imgUploader = document.querySelector('.imgUploader');
+            const formImg = document.querySelector('.form__img');
+            const formImgName = document.querySelector('.formUploader__fileName p');
+            const doneBtn = document.querySelector('.doneBtn');
+            const skipBtn = document.querySelector('.skipBtn');
+            const nextBtn = document.querySelector('.nextBtn');
+            let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+            customBtn.addEventListener('click', function () {
+              imgUploader.click();
+            });
+            formImg.addEventListener('click', function () {
+              imgUploader.click();
+            });
+            imgUploader.addEventListener('change', function () {
+                const formFile = this.files[0];
+          if (formFile) {
+            const reader = new FileReader();
+            reader.onload = function () {
+              let result = reader.result;
+              formImg.src = result;
+              formWrapper.classList.add('active');
+              // skipBtn.disabled = true; // Уберите или закомментируйте эту строку
+              doneBtn.disabled = false;
+            };
+            formCancel.addEventListener('click', function () {
+              formImg.src = "";
+              formWrapper.classList.remove('active');
+              // skipBtn.disabled = false; // Уберите или закомментируйте эту строку
+              doneBtn.disabled = true;
+            });
+            reader.readAsDataURL(formFile);
+          }
+          if (this.value) {
+            let valueStore = this.value.match(regExp);
+            formImgName.innerHTML = valueStore;
+          }
+            });
+          }}
+        
+        const imguploader = new imgUploader();
+        //# sourceURL=pen.js
+            </script>
+            <script>
+                // Находим кнопку и модальное окно по их идентификаторам
+        var openModalBtn = document.getElementById("openModalBtn");
+        var modalAvatar = document.getElementById("myModal-avatar");
+        
+        // Находим элемент для закрытия модального окна (крестик)
+        var closeBtn = document.getElementsByClassName("closeAvatar")[0];
+        
+        // Открываем модальное окно при клике на кнопку
+        openModalBtn.onclick = function () {
+          modalAvatar.style.display = "block";
+        };
+        
+        // Закрываем модальное окно при клике на крестик
+        closeBtn.onclick = function () {
+          modalAvatar.style.display = "none";
+        };
+        
+        // Закрываем модальное окно при клике вне его области
+        window.onclick = function (event) {
+          if (event.target == modalAvatar) {
+            modalAvatar.style.display = "none";
+          }
+        };
+        
+            </script>
+    <script>
+
+
+        // Находим поля ввода по их id
+        const nameInput = document.getElementById('name');
+        const cityInput = document.getElementById('city');
+        const lengInput = document.getElementById('language')
+        const addidInput = document.getElementById('addid');
+        const dateInput = document.getElementById('date');
+        const leng = document.getElementById('language');
+        const maxChars1 = 35; // Максимальное количество символов
+    
+        // Добавляем обработчик события для поля "Имя"
+        nameInput.addEventListener('input', () => {
+      
+            if (nameInput.value.length > maxChars1) {
+                // Если введено больше символов, чем разрешено, обрезаем значение
+                nameInput.value = nameInput.value.slice(0, maxChars1);
+            }
+        });
+    
+        // Добавляем обработчик события для поля "Город"
+        cityInput.addEventListener('input', () => {
+            if (cityInput.value.length > maxChars1) {
+                // Если введено больше символов, чем разрешено, обрезаем значение
+                cityInput.value = cityInput.value.slice(0, maxChars1);
+            }
+        });
+
+        leng.addEventListener('input', () => {
+            if (leng.value.length > maxChars1) {
+                // Если введено больше символов, чем разрешено, обрезаем значение
+               leng.value = leng.value.slice(0, maxChars1);
+            }
+        });
+
+
+        const saveButton = document.getElementById('saveButton');
+const initiallyDisabled = document.querySelector('.initially-disabled');
+
+// Функция для обработки изменений в полях ввода
+function handleInputChange() {
+    // Проверяем, изменилось ли хотя бы одно поле ввода
+    if (
+    nameInput.value !== "<%= user.name %>" ||
+    cityInput.value !== "<%= user.city %>" ||
+    lengInput.value !== "<%= user.language %>" ||
+    addidInput.value !== "<%= user.addid %>"
+) {
+    saveButton.removeAttribute('disabled');
+    initiallyDisabled.setAttribute('type', 'submit');
+} else {
+    saveButton.setAttribute('disabled', 'true');
+    initiallyDisabled.setAttribute('type', 'button');
+}
+}
+
+// Добавляем обработчики событий input для каждого поля ввода
+nameInput.addEventListener('input', handleInputChange);
+cityInput.addEventListener('input', handleInputChange);
+lengInput.addEventListener('input', handleInputChange);
+addidInput.addEventListener('input', handleInputChange);
+dateInput.addEventListener('input', handleInputChange);
+
+
+
+        
+        
+const maxChars2 = 150; // Максимальное общее количество символов
+
+addidInput.addEventListener('input', () => {
+    const text = addidInput.value;
+    const words = text.split(' '); // Разделяем введенный текст на слова
+
+    // Проверяем каждое слово
+    for (const word of words) {
+        if (word.length > 20) {
+            // Если слово превышает 20 символов, блокируем дальний ввод
+            addidInput.value = text.substring(0, text.length - (word.length - 20));
+            break; // Выходим из цикла после первого длинного слова
+        }
+    }
+
+    if (addidInput.value.length > maxChars2) {
+        // Если общая длина текста превышает максимальное значение, обрезаем текст
+        addidInput.value = addidInput.value.slice(0, maxChars2);
+    }
+});
+    
+        
+    </script>
+<script>
+    // Получаем параметры URL
+const urlParams = new URLSearchParams(window.location.search);
+
+// Проверяем, есть ли параметр "success" и он равен 1
+if (urlParams.has("success") && urlParams.get("success") === "1") {
+    openModal();
+    setTimeout(closeModal, 6000); // Закрываем модальное окно через 5 секунд
+}
+
+function openModal() {
+    var modal = document.getElementById('password-updated-modal');
+    modal.style.display = 'block'; // Показываем модальное окно
+}
+
+function closeModal() {
+    var modal = document.getElementById('password-updated-modal');
+    modal.style.display = 'none'; // Скрываем модальное окно
+}
+</script>
+<script src="imgf/scriptprofile.js">
+    
+</script>
+
+<script>
+    // Получаем параметры URL
+    function openProfileUpdatedModal() {
+        var modal1 = document.getElementById('profile-updated-modal');
+        modal1.style.display = 'block';
+    }
+
+    function closeProfileUpdatedModal() {
+        var modal1 = document.getElementById('profile-updated-modal');
+        modal1.style.display = 'none';
+    }
+
+    // Получаем параметры URL
+    const urlParams1 = new URLSearchParams(window.location.search);
+
+    // Проверяем, есть ли параметр "profileUpdated" и он равен 1
+    if (urlParams1.has("profileUpdated") && urlParams1.get("profileUpdated") === "1") {
+        openProfileUpdatedModal();
+        setTimeout(closeProfileUpdatedModal, 6000); // Закрываем модальное окно через 5 секунд
+    }
+</script>
+<script>
+    // JavaScript для бургер-меню и боковой панели
+const burgerMenu = document.querySelector('.burger-menu');
+const sidePanel = document.getElementById('sidePanel');
+
+burgerMenu.addEventListener('click', () => {
+    if (sidePanel.style.left === '0px') {
+        sidePanel.style.left = '-300px'; // Скрываем боковую панель
+    } else {
+        sidePanel.style.left = '0px'; // Показываем боковую панель
+    }
+});
+
+</script>
+<script>
+
+function updateProfileFields(isAnonymous) {
+const profileFields = document.querySelectorAll('.profile .hidden');
+profileFields.forEach((field) => {
+if (isAnonymous) {
+  field.classList.add('hidden');
+} else {
+  field.classList.remove('hidden');
+}
+});
+}
+
+// Функция для отправки запроса на сервер и получения состояния режима анонимности
+function updateProfileFields(isAnonymous) {
+  const profileFields = document.querySelectorAll('.hidden');
+  profileFields.forEach((field) => {
+    if (isAnonymous) {
+      field.classList.add('hidden');
+    } else {
+      field.classList.remove('hidden');
+    }
+  });
+}
+
+// Функция для отправки запроса на сервер и получения состояния режима анонимности
+function fetchAnonymitySettings() {
+  fetch('/getAnonymitySettings', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Обновите поля профиля на основе полученного состояния
+    updateProfileFields(data.isAnonymous);
+  })
+  .catch(error => {
+    // Обработка ошибки
+  });
+}
+
+// Вызовите функцию при загрузке страницы
+fetchAnonymitySettings();
+
+</script>
+
+</body>
+</html>
