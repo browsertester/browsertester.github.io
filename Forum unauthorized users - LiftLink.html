@@ -1,0 +1,1632 @@
+
+<!-- saved from url=(0034)http://localhost:3000/forum-noauth -->
+<html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="форум, LiftLink, социальная сеть, обсуждения, авторизация, для неавторизованных, помощь, поддержка">
+    <link rel="canonical" href="https://liftlink.link/forum-noauth">
+    
+    <script src="./Forum unauthorized users - LiftLink_files/alpine.js.Без названия"></script>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+      
+    
+    
+      
+    
+  
+    
+      
+    
+    
+
+  <title>Forum unauthorized users - LiftLink</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:3000/default-lg/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:3000/default-lg/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:3000/default-lg/icons/favicon-16x16.png">
+<link rel="manifest" href="http://localhost:3000/manifest.json">
+  
+  
+  <style>
+    .account-button:not(.right-side-button) + .account-button:before {
+    content: "1";
+  }
+  </style>
+  
+  
+<link rel="stylesheet" href="./Forum unauthorized users - LiftLink_files/main.css">
+
+  
+    <script>
+    window.console = window.console || function(t) {};
+  </script>
+  <script src="./Forum unauthorized users - LiftLink_files/ratingPanel.js.Без названия"></script>
+  <link rel="stylesheet" href="./Forum unauthorized users - LiftLink_files/ratingPanel.css">
+  <link rel="stylesheet" href="./Forum unauthorized users - LiftLink_files/forum.css">
+    
+  </head>
+  
+  
+  <body translate="no" id="body" onload="createCaptcha()" style="overflow: hidden;">
+    
+    
+
+    
+    <style>
+      .modal-rules {
+            display: none; /* Скрыть модальное окно по умолчанию */
+            position: fixed; /* Оставаться на одном месте */
+            z-index: 1; /* На переднем плане */
+            left: 0;
+            top: 0;
+            width: 100%; /* Полная ширина */
+            height: 100%; /* Полная высота */
+            overflow: auto; /* Включить прокрутку, если необходимо */
+            background-color: rgba(0, 0, 0, 0.7); /* Темный фон с прозрачностью */
+            align-items: center; /* Центрирование по вертикали */
+            justify-content: center; /* Центрирование по горизонтали */
+        }
+
+        /* Модальное содержимое */
+        .modal-rules-content {
+            background-color: #222;
+            margin: auto;
+            margin-top: 20vh;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #444;
+            width: 50%; /* Ширина модального окна */
+            max-width: 600px; /* Максимальная ширина */
+            color: #fff; /* Белый текст */
+            max-height: 70vh; /* Максимальная высота */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Тень */
+        }
+
+        /* Адаптивные стили */
+        @media (max-width: 768px) {
+            .modal-rules-content {
+                width: 90%; /* Изменение ширины для мобильных устройств */
+            }
+        }
+
+        /* Кнопка закрытия (крестик) */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-rules {
+            background-color: #007bff; /* Синий цвет */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s; /* Плавное изменение цвета */
+        }
+
+        .btn-rules:hover {
+            background-color: #0056b3; /* Темно-синий цвет при наведении */
+        }
+
+        .modal-rules-content h2 {
+            margin-top: 0;
+        }
+
+        .modal-rules-content ul {
+          
+            list-style-type: none; /* Убираем маркеры списка */
+            padding: 0;
+        }
+
+        .modal-rules-content li {
+            margin: 10px 0;
+            line-height: 1.5; /* Увеличиваем межстрочный интервал для читаемости */
+        }
+        .content-modal {
+          height: 30%;
+          overflow-y: auto; /* Вертикальная прокрутка */
+        }
+    </style>
+<div id="rulesModal" class="modal-rules">
+  <div class="modal-rules-content">
+      <span class="close" style="display: none;" hidden="">×</span>
+      <h2>Правила чата</h2>
+      <div class="content-modal">
+        <ul>
+            <li>Запрещена ненормативная лексика.</li>
+            <li>Запрещены оскорбления других пользователей.</li>
+            <li>Запрещены спам и реклама.</li>
+            <li>Запрещены угрозы и травля.</li>
+            <li>Запрещены действия, направленные на подрыв работы форума.</li>
+            <li>Запрещены действия, наносящие вред репутации форума.</li>
+            <li>Запрещены любые формы дискриминации.</li>
+        </ul>
+        <p>За все вышеуказанные нарушения предусмотрен бан по IP.</p>
+      </div>
+      <button id="acceptRulesBtn" class="btn-rules">Принять правила</button>
+  </div>
+</div>
+
+
+    <section id="section">
+    <div class="container" x-data="{ rightSide: false, leftSide: false }">
+    <div class="left-side" :class="{&#39;active&#39; : leftSide}">
+      <div class="left-side-button" @click="leftSide = !leftSide">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <svg stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+    <path d="M19 12H5M12 19l-7-7 7-7"></path>
+  </svg>
+      </div>
+      <div class="logotype">LIFTLINK</div>
+      <div class="side-wrap">
+        <div class="side-title">MENU</div>
+        <div class="side-menu">
+          
+          <link rel="stylesheet" href="./Forum unauthorized users - LiftLink_files/main.css">
+<script>
+  const currentUsername = '';
+</script>
+
+<script src="./Forum unauthorized users - LiftLink_files/WebSocket.js.Без названия"></script>
+
+<a href="http://localhost:3000/profile" class="nav-menu" data-tab-link="profile">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+      <path d="M9 22V12h6v10"></path>
+    </svg>
+    Мой профиль
+  </a>
+<a href="http://localhost:3000/news" class="nav-menu" data-tab-link="news"> 
+    <svg stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+    </svg>
+    Новости
+  </a>
+  <a href="http://localhost:3000/messenger" class="nav-menu" data-tab-link="messenger" id="nav-menu-messenger">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+      <path d="M7.76953 4.58009C8.57706 3.74781 9.54639 3.08958 10.6178 2.64588C11.6892 2.20219 12.84 1.98233 13.9995 2.00001C18.4195 2.00001 21.9995 5.10005 21.9995 8.92005C21.9792 9.98209 21.7021 11.0234 21.1919 11.9551C20.6817 12.8867 19.9535 13.681 19.0696 14.27V16.75"></path>
+      <path d="M16 13.64C16 10.29 12.87 7.58008 9 7.58008C5.13 7.58008 2 10.29 2 13.64C2.01941 14.5684 2.26227 15.4785 2.70789 16.2931C3.1535 17.1077 3.78881 17.803 4.56006 18.3201V20.49C4.55903 20.7858 4.64489 21.0755 4.80701 21.3229C4.96912 21.5703 5.20032 21.7647 5.47192 21.8818C5.74353 21.999 6.04362 22.0338 6.33484 21.9819C6.62606 21.9301 6.89553 21.7938 7.10999 21.5901L9.10999 19.6901C12.94 19.6201 16 16.94 16 13.64Z"></path>
+    </svg>
+    Сообщения
+    <span class="message-badge" id="unread-chats-count" style="display: none;">0</span>
+  </a>
+  
+  <a href="http://localhost:3000/create-forum" class="nav-menu" data-tab-link="forums">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle class="cls-1" cx="14.39" cy="10.52" r="1.43"></circle><path class="cls-2" d="M22.5,10.05v10.5l-2.86-2.87H11.05a3.81,3.81,0,0,1-3.7-2.86,3.77,3.77,0,0,1-.12-1V10.05a3.82,3.82,0,0,1,3.82-3.82h7.63A3.82,3.82,0,0,1,22.5,10.05Z"></path><path class="cls-2" d="M16.77,5.27v1H11.05a3.82,3.82,0,0,0-3.82,3.82v2.86H4.36L1.5,15.77V5.27A3.82,3.82,0,0,1,5.32,1.45H13A3.82,3.82,0,0,1,16.77,5.27Z"></path><path class="cls-1" d="M14.39,12h0a2.39,2.39,0,0,1,2.39,2.39v.48a0,0,0,0,1,0,0H12a0,0,0,0,1,0,0v-.48A2.39,2.39,0,0,1,14.39,12Z"></path></svg>
+    Форум
+  </a>
+  <a href="http://localhost:3000/stories" class="nav-menu" data-tab-link="stories">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+      <path d="M4 19V6.2C4 5.0799 4 4.51984 4.21799 4.09202C4.40973 3.71569 4.71569 3.40973 5.09202 3.21799C5.51984 3 6.0799 3 7.2 3H16.8C17.9201 3 18.4802 3 18.908 3.21799C19.2843 3.40973 19.5903 3.71569 19.782 4.09202C20 4.51984 20 5.0799 20 6.2V17H6C4.89543 17 4 17.8954 4 19ZM4 19C4 20.1046 4.89543 21 6 21H20M9 7H15M9 11H15M19 17V21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+     Сюжеты
+  </a>
+  <a href="http://localhost:3000/games" class="nav-menu" data-tab-link="games">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 44 44"><line class="c" x1="14.25" y1="23.6948" x2="14.25" y2="18.2679"></line><line class="c" x1="11.5366" y1="20.9814" x2="16.9634" y2="20.9814"></line><path class="c" d="m17.1869,13.6919v-1.6128c0-.581-.471-1.052-1.052-1.052h-3.7698c-.581,0-1.052.471-1.052,1.052v1.7708"></path><path class="c" d="m29.0435,27.7355l4.5534,6.83c1.485,2.2276,4.377,3.0323,6.7991,1.8919,2.2669-1.0672,3.5041-3.5476,2.9874-5.9993-.9842-4.6705-1.7692-9.0259-2.5726-11.9826-.8457-3.1124-3.8836-5.2804-7.2842-5.2804-2.0521,0-3.9114.8108-5.2876,2.1236h-8.4779c-1.3763-1.3128-3.2355-2.1236-5.2876-2.1236-3.4006,0-6.4386,2.1681-7.2842,5.2804-.8034,2.9567-1.5884,7.3122-2.5726,11.9826-.5167,2.4517.7205,4.9321,2.9874,5.9993,2.4221,1.1404,5.3141.3357,6.7991-1.8919l4.5534-6.83h10.087Z"></path><path class="c" d="m30.8131,13.6919v-1.6128c0-.581.471-1.052,1.052-1.052h3.7698c.581,0,1.052.471,1.052,1.052v1.7708"></path><circle class="b" cx="31.03" cy="20.9814" r=".75"></circle><circle class="b" cx="36.4634" cy="20.9814" r=".75"></circle><circle class="b" cx="33.75" cy="18.2679" r=".75"></circle><circle class="b" cx="33.75" cy="23.6948" r=".785"></circle></svg>  
+     Игры
+  </a>
+  <a href="http://localhost:3000/" class="nav-menu" data-tab-link="index" id="nav-menu-ad" style="display: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+      <path d="M21.9348 15.6583L18.6383 3.37924C18.2799 2.0442 16.6391 1.55235 15.603 2.46935L13.5253 4.30818C11.2132 6.35446 8.45556 7.83537 5.47068 8.63362C2.97216 9.30181 1.49142 11.8725 2.16089 14.3662C2.83037 16.8599 5.40053 18.3472 7.89906 17.679C10.8839 16.8807 14.014 16.787 17.0415 17.4054L19.762 17.961C21.1187 18.2381 22.2932 16.9933 21.9348 15.6583Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M7.71747 8L11.5 22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    Объявления
+    <span class="message-badge" id="unread-ads-count" style="display: none;">0</span>
+  </a>
+<!-- Add this in your HTML body where you want the install button to appear -->
+<!-- <button id="installButton" style="display: none;">Install LiftLink</button> -->
+
+
+  <!-- <a href="/news" class="nav-menu" data-tab-link="events">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+      <path d="M16 2v4M8 2v4M3 10h18"></path>
+    </svg>
+    События
+  </a> -->
+  <script src="./Forum unauthorized users - LiftLink_files/main.js.Без названия"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const unreadChatsCountElement = document.getElementById('unread-chats-count');
+  const unreadAdsCountElement = document.getElementById('unread-ads-count');
+  const currentUsername = '';
+  const currentUserId = '';
+
+  function updateUnreadChatsCount() {
+    fetch('/unread-chats-count')
+      .then(response => response.json())
+      .then(data => {
+        unreadChatsCountElement.textContent = data.unreadChatsCount;
+        if (data.unreadChatsCount > 0) {
+          unreadChatsCountElement.style.display = 'block'
+          document.getElementById('nav-menu-messenger').style.marginTop = '-10px'
+          document.getElementById('nav-menu-messenger').style.marginBottom = '10px'
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching unread chats count:', error);
+      });
+  }
+  function updateUnreadAdsCount() {
+    fetch('/unread-ads-count')
+      .then(response => response.json())
+      .then(data => {
+        unreadAdsCountElement.textContent = data.unreadAdsCount;
+        if (data.unreadAdsCount > 0) {
+          unreadAdsCountElement.style.display = 'block'
+          document.getElementById('nav-menu-ad').style.display = 'flex'
+          document.getElementById('nav-menu-ad').style.marginTop = '-10px'
+          document.getElementById('nav-menu-ad').style.marginBottom = '10px'
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching unread chats count:', error);
+      });
+  }
+
+  updateUnreadChatsCount();
+  updateUnreadAdsCount();
+  
+})
+  </script>
+          
+        </div>
+      </div>
+      
+      
+      <div class="side-wrap">
+        <div class="side-title">YOUR FAVOURITE <svg xmlns="http://www.w3.org/2000/svg" id="svg-favourite" width="17px" height="17px" viewBox="0 0 24 24" fill="none" style="float: right; cursor: pointer; margin-top: 2px">
+          <path d="M4 12H20M12 4V20" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+      </div>
+  
+         
+      <form action="http://localhost:3000/add-tab" method="post">
+        <div class="favourite-menu right-search-favourite" style="display: none;">
+          <input type="text" placeholder="Название вкладки" id="input" style="max-width: 130px;" name="tabName" required="">
+        </div>
+        <div class="favourite-menu right-search-favourite" style="display: none;">
+          <input type="text" placeholder="Ссылка" id="input" style="max-width: 130px;" name="tabLink" required="">
+        </div>
+        <button type="submit" class="status-share-favourite" id="favourite-btn" style="display: none;">Добавить</button>
+      </form>
+      <form id="rename-form" method="post" style="display: none;">
+        <div class="favourite-menu right-search-favourite" id="rename-fav">
+          <input type="text" placeholder="Новое название" id="input" style="max-width: 130px;" name="newName" required="">
+        </div>
+        <button type="submit" class="status-share-favourite" id="rename-fav-btn">Изменить</button>
+      </form>
+  
+        <div class="side-menu">
+          
+            <a href="http://localhost:3000/forum-noauth" data-tab-id="10" class="tab-link" title="ПКМ для действия">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle class="cls-1" cx="14.39" cy="10.52" r="1.43"></circle><path class="cls-2" d="M22.5,10.05v10.5l-2.86-2.87H11.05a3.81,3.81,0,0,1-3.7-2.86,3.77,3.77,0,0,1-.12-1V10.05a3.82,3.82,0,0,1,3.82-3.82h7.63A3.82,3.82,0,0,1,22.5,10.05Z"></path><path class="cls-2" d="M16.77,5.27v1H11.05a3.82,3.82,0,0,0-3.82,3.82v2.86H4.36L1.5,15.77V5.27A3.82,3.82,0,0,1,5.32,1.45H13A3.82,3.82,0,0,1,16.77,5.27Z"></path><path class="cls-1" d="M14.39,12h0a2.39,2.39,0,0,1,2.39,2.39v.48a0,0,0,0,1,0,0H12a0,0,0,0,1,0,0v-.48A2.39,2.39,0,0,1,14.39,12Z"></path></svg>  
+                
+                
+                
+                
+                
+                
+              <span>Для неавторизованных</span>
+    
+            </a>
+          
+            <a href="http://localhost:3000/shop" data-tab-id="11" class="tab-link" title="ПКМ для действия">
+                
+                
+                
+                
+                
+              <svg xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 28 28"><g id="shop-cart"><g><circle cx="9" cy="21" r="2"></circle></g><g><circle cx="19" cy="21" r="2"></circle></g><g><path d="M21,18H7.2l-4-16H0V0h4.8l0.8,3H24l-3.2,11H8.3l0.5,2H21V18z M7.8,12h11.5l2-7H6L7.8,12z"></path></g></g></svg>  
+                
+              <span>Магазин</span>
+    
+            </a>
+          
+            <a href="http://localhost:3000/create-report-forum" data-tab-id="12" class="tab-link" title="ПКМ для действия">
+                
+                
+                
+                
+                
+                
+              <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.197 3.35462C16.8703 1.67483 19.4476 1.53865 20.9536 3.05046C22.4596 4.56228 22.3239 7.14956 20.6506 8.82935L18.2268 11.2626M10.0464 14C8.54044 12.4882 8.67609 9.90087 10.3494 8.22108L12.5 6.06212"></path><path d="M13.9536 10C15.4596 11.5118 15.3239 14.0991 13.6506 15.7789L11.2268 18.2121L8.80299 20.6454C7.12969 22.3252 4.55237 22.4613 3.0464 20.9495C1.54043 19.4377 1.67609 16.8504 3.34939 15.1706L5.77323 12.7373"></path></svg>  
+              <span>Тех.поддержка</span>
+    
+            </a>
+          
+        </div>
+      </div>
+      
+      <a href="http://localhost:3000/create-report-forum" class="following-me" target="_blank">
+        <span class="following-text">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="supportIconTitle" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" color="#000000"> <title id="supportIconTitle">Support</title> <path d="M18,9 L16,9 C14.8954305,9 14,9.8954305 14,11 L14,13 C14,14.1045695 14.8954305,15 16,15 L16,15 C17.1045695,15 18,14.1045695 18,13 L18,9 C18,4.02943725 13.9705627,0 9,0 C4.02943725,0 0,4.02943725 0,9 L0,13 C1.3527075e-16,14.1045695 0.8954305,15 2,15 L2,15 C3.1045695,15 4,14.1045695 4,13 L4,11 C4,9.8954305 3.1045695,9 2,9 L0,9" transform="translate(3 3)"></path> <path d="M21,14 L21,18 C21,20 20.3333333,21 19,21 C17.6666667,21 16,21 14,21"></path> </svg>   Тех.поддержка
+       </span>
+        <span class="develop">
+          <svg xmlns="http://www.w3.org/2000/svg" width="400px" height="400px" viewBox="0 0 24 24" role="img" aria-labelledby="supportIconTitle" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" color="#000000"> <title id="supportIconTitle">Support</title> <path d="M18,9 L16,9 C14.8954305,9 14,9.8954305 14,11 L14,13 C14,14.1045695 14.8954305,15 16,15 L16,15 C17.1045695,15 18,14.1045695 18,13 L18,9 C18,4.02943725 13.9705627,0 9,0 C4.02943725,0 0,4.02943725 0,9 L0,13 C1.3527075e-16,14.1045695 0.8954305,15 2,15 L2,15 C3.1045695,15 4,14.1045695 4,13 L4,11 C4,9.8954305 3.1045695,9 2,9 L0,9" transform="translate(3 3)"></path> <path d="M21,14 L21,18 C21,20 20.3333333,21 19,21 C17.6666667,21 16,21 14,21"></path> </svg>
+          Наши контакты — securmailsupp@gmail.com
+        </span>
+      </a>
+    </div>
+  
+  
+    <div class="main">
+      <div id="settingsModal" class="modal" onclick="closeSettingsModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+          <span class="close" onclick="closeSettingsModal()">×</span>
+          <div class="settings-categories">
+            <button class="settings-category" onclick="showCategory(&#39;general&#39;)">Общие</button>
+            
+          </div>
+          <div class="settings-content">
+            <div id="general" class="category-content active">
+              <h2>Общие настройки</h2>
+              <p>Ваша привилегия: Junior</p>
+              <div>
+                <p>ID форума: NoAuth</p>
+                <form>
+                  <button type="button" onclick="copyLink(&#39;&#39;)">Скопировать ссылку</button>
+                </form>
+              </div>
+              <div>
+                
+              </div>
+              <div>
+                    </div>
+                </div>
+                <!-- <div id="roles" class="category-content">
+                    <h2>Управление ролями</h2>
+                </div> -->
+                <div id="users" class="category-content">
+                    <h2>Управление пользователями</h2>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+         <div class="main-container" id="main-container" style="margin-bottom: -5px;">
+          <div class="c1">
+           <div id="lovely-things-list" style="margin-bottom: 20px;">
+             <div class="search-menu" style="background-color: rgba(0, 0, 0, 0); margin-bottom: -80px; position: absolute;"><input type="text" placeholder="Search" id="search-users" class="search-att" style="margin-top: -45px;"></div>
+           
+            
+             <ul class="list lf34sq" style="margin-left: -30px;"><li> 
+                <div class="message-container" id="message-0" data-delete-id="0" sender-delete="milmak13">
+                  <div class="message-header">
+                    <img src="./Forum unauthorized users - LiftLink_files/milmak13.png" class="status-img" alt="milmak13">
+                    <span class="message-username friends clickable">milmak13</span>
+                    <span class="message-role">Admin</span>
+                    <span class="message-date">2024-07-02, 12:46</span>
+                      <form id="deleteForm0" class="delete-form">
+                        <input type="hidden" name="forumId" value="no-auth">
+                        <input type="hidden" name="id" value="0">
+                      </form>
+                  </div>
+                  <div class="message-content description">Это чат для гостей нашей соц.сети, давайте общаться!</div>
+                </div>
+              </li><li> 
+                  <div class="message-container" id="message-1" data-delete-id="1" sender-delete="milmak13">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/milmak13.png" class="status-img" alt="milmak13">
+                      <span class="message-username friends clickable" data-username="milmak13" data-friend-name="milmak13" title="ПКМ для действия">milmak13</span>
+                      <span class="message-role">Admin</span>
+                      <span class="message-date">2024-07-28, 13:15</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">Привет!</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-2" data-delete-id="2" sender-delete="9023f0320f">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="9023f0320f">
+                      <span class="message-username friends clickable" data-username="9023f0320f" data-friend-name="9023f0320f" title="ПКМ для действия">9023f0320f</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 13:51</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">Привет всем!</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-3" data-delete-id="3" sender-delete="milmak13">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/milmak13.png" class="status-img" alt="milmak13">
+                      <span class="message-username friends clickable" data-username="milmak13" data-friend-name="milmak13" title="ПКМ для действия">milmak13</span>
+                      <span class="message-role">Admin</span>
+                      <span class="message-date">2024-07-28, 14:43</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">аа</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-4" data-delete-id="4" sender-delete="9023f0320f">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="9023f0320f">
+                      <span class="message-username friends clickable" data-username="9023f0320f" data-friend-name="9023f0320f" title="ПКМ для действия">9023f0320f</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 14:44</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">qwfqwfwfq</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-5" data-delete-id="5" sender-delete="9023f0320f">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="9023f0320f">
+                      <span class="message-username friends clickable" data-username="9023f0320f" data-friend-name="9023f0320f" title="ПКМ для действия">9023f0320f</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 14:45</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">qwdqwdd</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-6" data-delete-id="6" sender-delete="9023f0320f">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="9023f0320f">
+                      <span class="message-username friends clickable" data-username="9023f0320f" data-friend-name="9023f0320f" title="ПКМ для действия">9023f0320f</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 14:47</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">asdasdadasdas</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-7" data-delete-id="7" sender-delete="fsdfsdfsdffsdf">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="fsdfsdfsdffsdf">
+                      <span class="message-username friends clickable" data-username="fsdfsdfsdffsdf" data-friend-name="fsdfsdfsdffsdf" title="ПКМ для действия">fsdfsdfsdffsdf</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 21:03</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">asdasdasd</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-8" data-delete-id="8" sender-delete="fsdfsdfsdffsdf">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="fsdfsdfsdffsdf">
+                      <span class="message-username friends clickable" data-username="fsdfsdfsdffsdf" data-friend-name="fsdfsdfsdffsdf" title="ПКМ для действия">fsdfsdfsdffsdf</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 21:04</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">asdasdasd</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-9" data-delete-id="9" sender-delete="fsdfsdfsdffsdf">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="fsdfsdfsdffsdf">
+                      <span class="message-username friends clickable" data-username="fsdfsdfsdffsdf" data-friend-name="fsdfsdfsdffsdf" title="ПКМ для действия">fsdfsdfsdffsdf</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 21:07</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">фывфывфыв</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-10" data-delete-id="10" sender-delete="fsdfsdfsdffsdf">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="fsdfsdfsdffsdf">
+                      <span class="message-username friends clickable" data-username="fsdfsdfsdffsdf" data-friend-name="fsdfsdfsdffsdf" title="ПКМ для действия">fsdfsdfsdffsdf</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 21:09</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">qwdqwdqwd</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-11" data-delete-id="11" sender-delete="fsdfsdfsdffsdf">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="fsdfsdfsdffsdf">
+                      <span class="message-username friends clickable" data-username="fsdfsdfsdffsdf" data-friend-name="fsdfsdfsdffsdf" title="ПКМ для действия">fsdfsdfsdffsdf</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 21:09</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">qwdqwdqwd</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-12" data-delete-id="12" sender-delete="fsdfsdfsdffsdf">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="fsdfsdfsdffsdf">
+                      <span class="message-username friends clickable" data-username="fsdfsdfsdffsdf" data-friend-name="fsdfsdfsdffsdf" title="ПКМ для действия">fsdfsdfsdffsdf</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 21:10</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">qwdqwdqw</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-13" data-delete-id="13" sender-delete="fsdfsdfsdffsdf">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="fsdfsdfsdffsdf">
+                      <span class="message-username friends clickable" data-username="fsdfsdfsdffsdf" data-friend-name="fsdfsdfsdffsdf" title="ПКМ для действия">fsdfsdfsdffsdf</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 21:11</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">qwdqwd</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-14" data-delete-id="14" sender-delete="fsdfsdfsdffsdf">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="fsdfsdfsdffsdf">
+                      <span class="message-username friends clickable" data-username="fsdfsdfsdffsdf" data-friend-name="fsdfsdfsdffsdf" title="ПКМ для действия">fsdfsdfsdffsdf</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 21:11</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">asfsdfsdf</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-15" data-delete-id="15" sender-delete="fsdfsdfsdffsdf">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="fsdfsdfsdffsdf">
+                      <span class="message-username friends clickable" data-username="fsdfsdfsdffsdf" data-friend-name="fsdfsdfsdffsdf" title="ПКМ для действия">fsdfsdfsdffsdf</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 21:11</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">asdasdsa</div>
+                  </div>
+                </li><li> 
+                  <div class="message-container" id="message-16" data-delete-id="16" sender-delete="fsdfsdfsdffsdf">
+                    <div class="message-header">
+                      <img src="./Forum unauthorized users - LiftLink_files/unknown-avatar.svg" class="status-img" alt="fsdfsdfsdffsdf">
+                      <span class="message-username friends clickable" data-username="fsdfsdfsdffsdf" data-friend-name="fsdfsdfsdffsdf" title="ПКМ для действия">fsdfsdfsdffsdf</span>
+                      <span class="message-role">Гость</span>
+                      <span class="message-date">2024-07-28, 21:11</span>
+                      
+                    </div>
+                    <div class="message-content description no-translate">qwdqwd</div>
+                  </div>
+                </li></ul>
+            
+
+        <!-- <script>
+          document.addEventListener('DOMContentLoaded', function() {
+    // Получаем параметры запроса из URL
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Проверяем наличие параметра с id сообщения в запросе
+    if (urlParams.has('messageId')) {
+        // Получаем id сообщения из параметра запроса
+        const messageId = urlParams.get('messageId');
+        
+        // Находим элемент сообщения с соответствующим id
+        const messageElement = document.getElementById(`message-${messageId}`);
+        
+        // Проверяем, найден ли элемент сообщения
+        if (messageElement) {
+            // Прокручиваем страницу к элементу сообщения
+            messageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+});
+
+        </script> -->
+            <div id="user-menu" class="user-menu hidden">
+              <div class="user-menu-header">
+                  <img id="header-avatar" class="header-avatar" src="http://localhost:3000/forum-noauth" alt="">
+                  <div class="user-info">
+                      <img id="user-avatar" class="user-avatar" src="http://localhost:3000/forum-noauth" alt="">
+                      <p id="user-username" class="user-username"></p>
+                      <p id="user-last-online" class="user-last-online"></p>
+                  </div>
+              </div>
+              <div class="user-menu-body">
+                  <div class="user-info-block">
+                      <p class="user-info-title">Был в сети</p>
+                      <p id="user-status" class="user-info-content"></p>
+                  </div>
+                  <div class="user-info-block">
+                      <p class="user-info-title">Привилегия</p>
+                      <p id="user-privilege" class="user-info-content"></p>
+                  </div>
+                  <div class="user-info-block">
+                      <p class="user-info-title">Дата регистрации</p>
+                      <p id="user-registration-date" class="user-info-content"></p>
+                  </div>
+                  <div style="display: flex;">
+                    <div id="profile-link-container" class="dynamic-link-container" style="flex: 1;"></div>
+                    <!--  <style>.ban{display: none;}</style>  -->
+                    <!-- <div id="profile-ban-container" class="dynamic-link-container ban" style="flex: 1;"></div> -->
+                  </div>
+                  <div id="messenger-link-container" class="dynamic-link-container"></div>
+                  <div id="send-friend-container" class="dynamic-link-container"></div>
+              </div>
+          </div>
+          
+          
+            
+            
+        
+        
+        <script>
+          function submitForm(action) {
+          var form = document.createElement('form');
+          form.setAttribute('method', 'post');
+          form.setAttribute('action', action);
+          document.body.appendChild(form);
+          form.submit();
+        }
+        </script>
+          
+          
+            
+          <div id="socketMessage" style="margin-left: 10px;"></div>
+
+    <div id="captchaConfirmationMessage"></div>
+          
+        </div></div>
+          
+          
+        
+        
+        
+        
+          <div class="profile-pages boxing message-form" style="padding-top: 10px; float: inline-start;  margin-left: 20px; min-width: 95%;">
+                  <form id="messageForm" action="http://localhost:3000/forum-noauth/add-message" method="post">
+                    <div class="status-main" style="padding: 0 0;">
+                        <img src="./Forum unauthorized users - LiftLink_files/tester2.png" class="status-img no-mobile" style="width: 35px; height: 35px;">
+                        <label for="nick"></label>
+                        <textarea class="status-textarea" style="margin-left: 7px;" name="textMessage" id="textMessage" onchange="saveToLocalStorage(&#39;no-auth&#39;)" placeholder="Введите ваше сообщение.."></textarea>
+                
+                    
+
+                      <button type="submit" class="status-share" onclick="clearLocalStorage(&#39;no-auth&#39;)" style="padding: 0 10px;">
+<svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" viewBox="0 0 24 24" fill="none">
+<path d="M20.7639 12H10.0556M3 8.00003H5.5M4 12H5.5M4.5 16H5.5M9.96153 12.4896L9.07002 15.4486C8.73252 16.5688 8.56376 17.1289 8.70734 17.4633C8.83199 17.7537 9.08656 17.9681 9.39391 18.0415C9.74792 18.1261 10.2711 17.8645 11.3175 17.3413L19.1378 13.4311C20.059 12.9705 20.5197 12.7402 20.6675 12.4285C20.7961 12.1573 20.7961 11.8427 20.6675 11.5715C20.5197 11.2598 20.059 11.0295 19.1378 10.5689L11.3068 6.65342C10.2633 6.13168 9.74156 5.87081 9.38789 5.95502C9.0808 6.02815 8.82627 6.24198 8.70128 6.53184C8.55731 6.86569 8.72427 7.42461 9.05819 8.54246L9.96261 11.5701C10.0137 11.7411 10.0392 11.8266 10.0493 11.9137C10.0583 11.991 10.0582 12.069 10.049 12.1463C10.0387 12.2334 10.013 12.3188 9.96153 12.4896Z" stroke="#ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+                      </button>
+                  </div>
+          <div id="emojies" style="display: none;">
+            <span class="emoji-list">
+              <span class="emoji" id="😂">😂</span><span class="emoji" id="😍">😍</span><span class="emoji" id="🔥">🔥</span><span class="emoji" id="👍">👍</span><span class="emoji" id="😢">😢</span><span class="emoji" id="😍">😍</span><span class="emoji" id="🚀">🚀</span><span class="emoji" id="🙂">🙂</span><span class="emoji" id="👏">👏</span><span class="emoji" id="🤙">🤙</span><span class="emoji" id="🎉">🎉</span><span class="emoji" id="🤔">🤔</span><span class="emoji" id="👎">👎</span><span class="emoji" id="👍">👍</span><span class="emoji" id="😠">😠</span><span class="emoji" id="😔">😔</span><span class="emoji" id="😀">😀</span><span class="emoji" id="😡">😡</span><span class="emoji" id="😲">😲</span><span class="emoji" id="👻">👻</span><span class="emoji" id="⭐">⭐</span><span class="emoji" id="💰">💰</span><span class="emoji" id="🔊">🔊</span><span class="emoji" id="✌">✌</span><span class="emoji" id="💙">💙</span><span class="emoji" id="💤">💤</span><span class="emoji" id="👽">👽</span><span class="emoji" id="💪">💪</span><span class="emoji" id="⚡">⚡</span><span class="emoji" id="☀">☀</span><span class="emoji" id="🌙">🌙</span><span class="emoji" id="🌈">🌈</span><span class="emoji" id="🔥">🔥</span><span class="emoji" id="💧">💧</span><span class="emoji" id="🌊">🌊</span><span class="emoji" id="🌍">🌍</span><span class="emoji" id="☕">☕</span><span class="emoji" id="📕">📕</span><span class="emoji" id="✍">✍</span><span class="emoji" id="💬">💬</span><span class="emoji" id="📷">📷</span><span class="emoji" id="☔">☔</span><span class="emoji" id="🆗">🆗</span><span class="emoji" id="🕔">🕔</span><span class="emoji" id="🎁">🎁</span><span class="emoji" id="🔑">🔑</span><span class="emoji" id="✉">✉</span><span class="emoji" id="☎">☎</span><span class="emoji" id="🛠">🛠</span><span class="emoji" id="🛡">🛡</span><span class="emoji" id="🔨">🔨</span><span class="emoji" id="⚖">⚖</span><span class="emoji" id="🌐">🌐</span><span class="emoji" id="⚑">⚑</span><span class="emoji" id="💻">💻</span><span class="emoji" id="📣">📣</span><span class="emoji" id="👄">👄</span><span class="emoji" id="✋">✋</span><span class="emoji" id="🔼">🔼</span><span class="emoji" id="🔽">🔽</span><span class="emoji" id="🔺">🔺</span><span class="emoji" id="🔻">🔻</span><span class="emoji" id="🔄">🔄</span><span class="emoji" id="➡">➡</span><span class="emoji" id="⚠">⚠</span><span class="emoji" id="ℹ">ℹ</span><span class="emoji" id="🛈">🛈</span><span class="emoji" id="🛑">🛑</span><span class="emoji" id="⚫">⚫</span><span class="emoji" id="►">►</span><span class="emoji" id="⏸">⏸</span><span class="emoji" id="⏹">⏹</span><span class="emoji" id="⏪">⏪</span><span class="emoji" id="⏩">⏩</span><span class="emoji" id="⏏">⏏</span><span class="emoji" id="⏎">⏎</span><span class="emoji" id="😸">😸</span><span class="emoji" id="😹">😹</span><span class="emoji" id="😺">😺</span><span class="emoji" id="😻">😻</span><span class="emoji" id="😼">😼</span><span class="emoji" id="😽">😽</span><span class="emoji" id="😾">😾</span><span class="emoji" id="😿">😿</span><span class="emoji" id="🙀">🙀</span><span class="emoji" id="🙁">🙁</span><span class="emoji" id="🙂">🙂</span><span class="emoji" id="🙃">🙃</span><span class="emoji" id="🙄">🙄</span><span class="emoji" id="🙅">🙅</span><span class="emoji" id="🙆">🙆</span><span class="emoji" id="🙇">🙇</span><span class="emoji" id="🙈">🙈</span><span class="emoji" id="🙉">🙉</span><span class="emoji" id="🙊">🙊</span><span class="emoji" id="🙋">🙋</span><span class="emoji" id="🙌">🙌</span><span class="emoji" id="🙍">🙍</span><span class="emoji" id="🙎">🙎</span><span class="emoji" id="🙏">🙏</span><span class="emoji" id="🙐">🙐</span><span class="emoji" id="🙑">🙑</span><span class="emoji" id="🙒">🙒</span><span class="emoji" id="🙓">🙓</span><span class="emoji" id="🙔">🙔</span><span class="emoji" id="🙕">🙕</span><span class="emoji" id="🙖">🙖</span><span class="emoji" id="🙗">🙗</span><span class="emoji" id="🙘">🙘</span><span class="emoji" id="🙙">🙙</span><span class="emoji" id="🙚">🙚</span><span class="emoji" id="🙛">🙛</span><span class="emoji" id="🙜">🙜</span><span class="emoji" id="🙝">🙝</span><span class="emoji" id="🙞">🙞</span><span class="emoji" id="🙟">🙟</span><span class="emoji" id="🙠">🙠</span><span class="emoji" id="🙡">🙡</span><span class="emoji" id="🙢">🙢</span><span class="emoji" id="🙣">🙣</span><span class="emoji" id="🙤">🙤</span><span class="emoji" id="🙥">🙥</span><span class="emoji" id="🙦">🙦</span><span class="emoji" id="🙧">🙧</span><span class="emoji" id="🙨">🙨</span><span class="emoji" id="🙩">🙩</span><span class="emoji" id="🙪">🙪</span><span class="emoji" id="🙫">🙫</span><span class="emoji" id="🙬">🙬</span><span class="emoji" id="🙭">🙭</span><span class="emoji" id="🙮">🙮</span><span class="emoji" id="🙯">🙯</span><span class="emoji" id="🙰">🙰</span><span class="emoji" id="🙱">🙱</span><span class="emoji" id="🙲">🙲</span><span class="emoji" id="🙳">🙳</span><span class="emoji" id="🙴">🙴</span><span class="emoji" id="🙵">🙵</span><span class="emoji" id="🙶">🙶</span><span class="emoji" id="🙷">🙷</span><span class="emoji" id="🙸">🙸</span><span class="emoji" id="🙹">🙹</span><span class="emoji" id="🙺">🙺</span><span class="emoji" id="🙻">🙻</span><span class="emoji" id="🙼">🙼</span><span class="emoji" id="🙽">🙽</span><span class="emoji" id="🙾">🙾</span><span class="emoji" id="🙿">🙿</span>
+          </span>
+          <div id="captcha" hidden=""><canvas id="captcha" width="120" height="50"></canvas></div>
+          
+          
+          
+        
+      </div></form>
+        
+    
+              </div>
+        <br>
+  
+  <style>
+    .chat-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    color: #bbb;
+}
+
+.input-group input,
+.input-group textarea {
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #2e2e2e;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.nick-captcha-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.nick-container {
+    width: 40%;
+}
+
+.captcha-container {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.buttons-container button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3e3e3e;
+    color: #ccc;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.buttons-container button:hover {
+    background-color: #575757;
+}
+
+#emojies {
+    margin-top: 10px;
+}
+
+.emoji-list .emoji {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.emoji-list .emoji:hover {
+    background-color: #575757;
+    border-radius: 5px;
+}
+
+</style>
+
+  <script>
+     let inputHistory = [];
+    let historyIndex = -1;
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const urlParams = new URLSearchParams(window.location.search);
+  const errorMessage = urlParams.get('error');
+  if (errorMessage) {
+    document.getElementById('nickError').textContent = errorMessage;
+  }
+
+      const messageInput = document.getElementById('textMessage');
+
+      messageInput.addEventListener('input', (e) => {
+        // Add the current value to the history
+        inputHistory.push(messageInput.value);
+        historyIndex = inputHistory.length - 1;
+      });
+
+      messageInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          // document.getElementById('myForm').submit();
+          // clearLocalStorage('no-auth')
+        } else if (e.key === 'Enter' && e.shiftKey) {
+          e.preventDefault();
+          // insertNewLine(messageInput);
+          
+        } else if (e.key === 'z' && e.shiftKey) {
+          e.preventDefault();
+          undoLastAction(messageInput);
+        }
+      });
+    });
+
+    function insertNewLine(textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+
+      // Insert a newline at the cursor position
+      textarea.value = textarea.value.substring(0, start) + '\n' + textarea.value.substring(end);
+
+      // Move the cursor to the new position
+      textarea.selectionStart = textarea.selectionEnd = start + 1;
+    }
+
+    function undoLastAction(textarea) {
+      if (historyIndex > 0) {
+        historyIndex--;
+        textarea.value = inputHistory[historyIndex];
+      }
+    }
+
+</script>
+
+<script>
+  
+
+document.addEventListener('DOMContentLoaded', () => {
+    const userMenu = document.getElementById('user-menu');
+    const usernameElements = document.querySelectorAll('.clickable');
+    const languageUser = 'ru'
+    const userTimezone = 'Africa/Lagos';
+
+    function formatLastUpdateWithTimezone(lastUpdate, timezone) {
+    return moment(lastUpdate).tz(timezone).format('YYYY-MM-DD HH:mm');
+  }
+
+    usernameElements.forEach(element => {
+        element.addEventListener('click', async (event) => {
+            const username = event.target.textContent;
+
+
+            // Получение данных пользователя с сервера
+            const userData = await getUserData(username);
+
+            if (!userData) {
+                console.error('User data not found');
+                return;
+            }
+
+            // Обновление данных в меню
+            document.getElementById('header-avatar').src = `/avatars/${userData.username}-header.png`;
+            document.getElementById('user-avatar').src = `/avatars/${userData.username}.png`;
+            document.getElementById('user-username').textContent = userData.username;
+            document.getElementById('user-registration-date').textContent = userData.registrationDate;
+            document.getElementById('user-privilege').textContent = userData.privilege;
+            let statusText;
+    if ((languageUser === 'en') && (userData.status === 'Неизвестно')) {
+      statusText = 'Unknown';
+    } else if ((languageUser === 'es') && (userData.status === 'Неизвестно')) {
+      statusText = 'Desconocido';
+    } else if (['В сети', 'Только что', 'Неизвестно'].includes(userData.status)) {
+      // Если статус - одно из ключевых слов, используем его как есть
+      statusText = userData.status;
+    } else {
+      // Форматируем время с учетом часового пояса текущего пользователя
+      statusText = formatLastUpdateWithTimezone(userData.status, userTimezone);
+    }
+    document.getElementById('user-status').textContent = statusText;
+
+            document.getElementById('profile-link-container').innerHTML = `
+                <a href="/profile/${userData.username}" style="text-decoration: none; color: white; font-weight: 600; display: flex; margin-right: 2px;">
+                    <button>Профиль</button>
+                </a>
+            `;
+            // document.getElementById('profile-ban-container').innerHTML = `
+            //     <a href="/profile/${userData.username}" style="text-decoration: none; color: white; font-weight: 600; margin-left: 2px;">
+            //         <button style='background-color: #d43b44;'> Забанить</button>
+            //     </a>
+            // `;
+
+            document.getElementById('messenger-link-container').innerHTML = `
+                <a href="/messenger/with/${userData.username}" style="position: absolute; bottom: 10px; right: 10px;">
+                    <img src="/svg/messenger.svg" alt="Мессенджер" style="background-color: #36393f; margin-bottom: 160px; padding: 5px; border-radius: 50%; width: 32px; height: 32px;">
+                </a>
+            `;
+
+            document.getElementById('send-friend-container').innerHTML = `
+                <form onclick="submitForm('/sendfriend/${userData.id}')" style="position: absolute; bottom: -6px; right: 50px; cursor: pointer;">
+                    <img src="/svg/add-friend.svg" alt="Добавить в друзья" style="background-color: #36393f; margin-bottom: 160px; padding: 5px; border-radius: 50%; width: 32px; height: 32px;">
+                </form>
+            `;
+
+            // Временное отображение меню для вычисления размеров
+            userMenu.classList.remove('hidden');
+
+            // Позиционирование меню возле элемента
+            const rect = event.target.getBoundingClientRect();
+            const menuHeight = userMenu.offsetHeight;
+            const windowHeight = window.innerHeight;
+
+            // Проверка и корректировка позиции меню
+            if (rect.bottom + menuHeight > windowHeight) {
+                // Если меню не помещается вниз, показываем его сверху
+                userMenu.style.top = `${rect.top + window.scrollY - menuHeight}px`;
+            } else {
+                // В противном случае, показываем его снизу
+                userMenu.style.top = `${rect.bottom + window.scrollY}px`;
+            }
+
+            userMenu.style.left = `${rect.left + window.scrollX}px`;
+
+            // Скрытие меню до подтверждения новой позиции
+            userMenu.classList.add('hidden');
+            // Показ меню с корректной позицией
+            userMenu.classList.remove('hidden');
+        });
+    });
+
+    document.addEventListener('mousedown', (event) => {
+        if (!userMenu.contains(event.target) && !event.target.classList.contains('clickable')) {
+            userMenu.classList.add('hidden');
+        }
+    });
+
+    // Функция получения данных пользователя с сервера
+    async function getUserData(username) {
+        try {
+            const response = await fetch(`/api/users/${username}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('There has been a problem with your fetch operation:', error);
+            return null;
+        }
+    }
+});
+
+
+      window.addEventListener('load', function() {
+        var mainContainer = document.getElementById('main-container');
+        mainContainer.scrollTop = mainContainer.scrollHeight;
+      });
+
+      function openEmojiPanel() {
+        document.getElementById('emojies').style.display = 'block'
+        document.querySelector('.message-form').style.height = 'auto'
+      }
+
+
+      document.addEventListener('DOMContentLoaded', function() {
+  // Находим все эмодзи
+  const emojis = document.querySelectorAll('.emoji');
+
+  // Добавляем обработчик клика для каждого эмодзи
+  emojis.forEach(emoji => {
+    emoji.addEventListener('click', function() {
+      const messageField = document.getElementById('textMessage');
+      messageField.value += emoji.id; // Добавляем id эмодзи в поле сообщения
+    });
+  });
+});
+
+    </script>
+          <link rel="stylesheet" href="./Forum unauthorized users - LiftLink_files/achievements.css">
+
+      </div>
+    </div>
+    <br>
+    
+    <div class="right-side" :class="{ &#39;active&#39;: rightSide }">
+      <div class="account">
+        
+        <button class="account-button">
+          <svg stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1" viewBox="0 0 24 24">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <path d="M22 6l-10 7L2 6"></path>
+          </svg>
+        </button>
+        <button class="account-button account-button-not" onclick="toggleSettings()">
+          <svg stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1" viewBox="0 0 24 24">
+            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"></path>
+          </svg>
+        </button>
+        <button class="account-button" onclick="toggleBurgerAccount()">
+          <span class="account-user">
+              tester2
+              <img src="./Forum unauthorized users - LiftLink_files/tester2.png" alt="" class="account-profile">
+          </span>
+        </button>
+      </div>
+      
+      <div id="burger-account" class="burger-popup">
+        <div class="modal-settings-menu">
+          
+
+
+  
+  <title>Viewport Version Switch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" id="default-viewport">
+  <link rel="stylesheet" href="./Forum unauthorized users - LiftLink_files/main.css">
+  <style>
+@media screen and (width: 1024px) {
+  .for-mobile {
+    display: block !important;
+  }
+  #desktop-version-btn {
+      display: none !important;
+  }
+}
+  </style>
+
+
+
+<a href="http://localhost:3000/profile" class="modal-settings-menu-item"><span class="menu-icon">😊</span> Моя страница</a>
+<a href="http://localhost:3000/settings" class="modal-settings-menu-item"><span class="menu-icon">⚙️</span> Настройки</a>
+<a href="http://localhost:3000/forum-noauth#" class="modal-settings-menu-item for-mobile" id="desktop-version-btn" style="display: block;"><span class="menu-icon">💻</span> Версия для компьютера</a>
+<a href="http://localhost:3000/forum-noauth#" class="modal-settings-menu-item for-mobile" id="mobile-version-btn" style="display: none;"><span class="menu-icon">📱</span> Версия для мобильного телефона</a>
+<a href="http://localhost:3000/shop" class="modal-settings-menu-item"><span class="menu-icon">🛒</span> Покупки</a>
+<a href="http://localhost:3000/logout" class="modal-settings-menu-item"><span class="menu-icon">🚪</span> Выйти</a>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const desktopVersionBtn = document.getElementById('desktop-version-btn');
+  const mobileVersionBtn = document.getElementById('mobile-version-btn');
+
+  desktopVersionBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    setViewportVersion('desktop');
+    applyViewport('desktop');
+  });
+
+  mobileVersionBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    setViewportVersion('mobile');
+    applyViewport('mobile');
+  });
+
+  function setViewportVersion(version) {
+    localStorage.setItem('viewportVersion', version);
+  }
+
+  function applyViewport(version) {
+    const viewportMeta = document.getElementById('default-viewport');
+    if (version === 'desktop') {
+      viewportMeta.setAttribute('content', 'width=1024');
+      localStorage.setItem('viewportVersion', 'desktop');
+    } else if (version === 'mobile') {
+      viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
+      localStorage.setItem('viewportVersion', 'mobile');
+    }
+    toggleVersionButtons();
+  }
+
+  function toggleVersionButtons() {
+    const currentVersion = localStorage.getItem('viewportVersion');
+    if (currentVersion === 'desktop') {
+      document.getElementById('desktop-version-btn').style.display = 'none';
+      document.getElementById('mobile-version-btn').style.display = 'block';
+    } else {
+      document.getElementById('desktop-version-btn').style.display = 'block';
+      document.getElementById('mobile-version-btn').style.display = 'none';
+    }
+  }
+
+  // При загрузке страницы проверяем текущую версию и применяем соответствующий viewport
+  const initialVersion = localStorage.getItem('viewportVersion') || 'mobile';
+  applyViewport(initialVersion);
+  if (window.innerWidth < 360) {
+    const viewportMeta = document.getElementById('default-viewport');
+    viewportMeta.setAttribute('content', 'width=401');
+  }
+});
+
+</script>
+
+
+
+
+      </div>
+    </div>
+      
+      
+  
+      <div class="notification-panel" id="settings-popup" style="display: none;">
+        <div class="notification-category">
+          <a href="http://localhost:3000/notifications" class="notification-link">
+            <span class="category-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none"><path d="M3 18a1 1 0 0 1-.894-1.447L4 12.763V10a8 8 0 1 1 16 0v2.764l1.894 3.789A1 1 0 0 1 21 18H3ZM12 22a4.002 4.002 0 0 1-3.874-3h7.748A4.002 4.002 0 0 1 12 22Z" fill="#ffd700"></path></svg>
+            </span>
+            <span class="category-text">Все уведомления</span>
+          </a>
+        </div>
+        
+        <p style="font-size: 12px;">Нет новых уведомлений</p>
+      
+        
+      
+        
+        
+        
+        
+        
+        
+        <div class="notification-category">
+          <a class="notification-link" style="cursor: default;">
+            <span class="category-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 64 64" stroke-width="3" stroke="#90aa01" fill="none"><path d="M32.39,7.32,14,15a1,1,0,0,0-.61.92V32.23h0A22.87,22.87,0,0,0,24.58,51.9l8.17,4.86,8.06-4.84A22.89,22.89,0,0,0,51.9,32.31V15a1,1,0,0,0-.65-.94L33.12,7.3A1,1,0,0,0,32.39,7.32Z"></path><path d="M32.83,17.92l3.64,7.37a.16.16,0,0,0,.1.08l8.14,1.18a.13.13,0,0,1,.07.23L38.9,32.51a.12.12,0,0,0,0,.12l1.39,8.1a.14.14,0,0,1-.2.15l-7.27-3.83a.15.15,0,0,0-.13,0l-7.27,3.83a.14.14,0,0,1-.2-.15l1.39-8.1a.15.15,0,0,0,0-.12l-5.88-5.73a.13.13,0,0,1,.07-.23l8.13-1.18a.15.15,0,0,0,.11-.08l3.63-7.37A.13.13,0,0,1,32.83,17.92Z" stroke-linecap="round"></path></svg>
+            </span>
+            <span class="category-text">System</span>
+            <span class="notification-badge">1</span>
+          </a>
+          <div class="notification-details">
+              <p>Добрый день, tester2! Рады вам сообщить, что ваша заявка на верификацию аккаунта была рассмотрена и принята! Теперь ваш аккаунт имеет статус верифицированного!</p>
+              
+          </div>
+        </div>
+        
+      </div>
+      
+      
+    <style>
+    </style>
+    
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+
+// Проверяем наличие определенного параметра в запросе
+if (urlParams.has('settingsUsers')) {
+    // Открываем модальное окно
+    openSettingsModal();
+
+    // Показываем категорию "Пользователи"
+    showCategory('users');
+}
+
+  function openSettingsModal() {
+    document.getElementById('settingsModal').style.display = 'block';
+    document.getElementById('search-users').style.display = 'none'
+}
+
+function closeSettingsModal() {
+    document.getElementById('settingsModal').style.display = 'none';
+    document.getElementById('limitModal').style.display = 'none';
+    document.getElementById('videoSizeLimitModal').style.display = 'none';
+    document.getElementById('imageSizeLimitModal').style.display = 'none';
+    document.getElementById('search-users').style.display = 'block'
+}
+
+function showCategory(categoryId) {
+    const contents = document.querySelectorAll('.category-content');
+    contents.forEach(content => content.classList.remove('active'));
+    document.getElementById(categoryId).classList.add('active');
+}
+
+</script>
+
+
+<a class="following-me" target="_blank" style="position: absolute; bottom: -5px; cursor: pointer; padding: 5 35px;">
+    <span class="following-text">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <path d="M21.9348 15.6583L18.6383 3.37924C18.2799 2.0442 16.6391 1.55235 15.603 2.46935L13.5253 4.30818C11.2132 6.35446 8.45556 7.83537 5.47068 8.63362C2.97216 9.30181 1.49142 11.8725 2.16089 14.3662C2.83037 16.8599 5.40053 18.3472 7.89906 17.679C10.8839 16.8807 14.014 16.787 17.0415 17.4054L19.762 17.961C21.1187 18.2381 22.2932 16.9933 21.9348 15.6583Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M7.71747 8L11.5 22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+     Хотите разместить рекламу?
+   </span>
+    <span class="develop">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <path d="M21.9348 15.6583L18.6383 3.37924C18.2799 2.0442 16.6391 1.55235 15.603 2.46935L13.5253 4.30818C11.2132 6.35446 8.45556 7.83537 5.47068 8.63362C2.97216 9.30181 1.49142 11.8725 2.16089 14.3662C2.83037 16.8599 5.40053 18.3472 7.89906 17.679C10.8839 16.8807 14.014 16.787 17.0415 17.4054L19.762 17.961C21.1187 18.2381 22.2932 16.9933 21.9348 15.6583Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M7.71747 8L11.5 22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      По коммерческим вопросам — securmailsupp@gmail.com
+    </span>
+  </a>
+
+</div>
+
+
+    </div>
+    
+
+    <div class="impose-overlay" @click="rightSide = false; leftSide = false" :class="{ &#39;active&#39;: rightSide || leftSide }"></div>
+  
+  
+  </section>
+  <style>
+  </style>
+ <script src="./Forum unauthorized users - LiftLink_files/jquery-3.6.0.min.js.Без названия"></script>
+ <script src="./Forum unauthorized users - LiftLink_files/list.min.js.Без названия"></script>
+ <script>
+
+ </script>
+ <script id="rendered-js">
+  var options = {
+        valueNames: ['name', 'description', 'category']
+      };
+
+
+      var featureList = new List('lovely-things-list', options);
+
+      $('.search-att').on('input', function() {
+  var searchString = $(this).val(); // Получаем значение из поля поиска
+  featureList.search(searchString); // Применяем поиск
+});
+
+
+      $('#filter-games').click(function () {
+        featureList.filter(function (item) {
+          if (item.values().category == "Game") {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        return false;
+      });
+
+      $('#filter-beverages').click(function () {
+        featureList.filter(function (item) {
+          if (item.values().category == "Beverage") {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        return false;
+      });
+      $('#filter-none').click(function () {
+        featureList.filter();
+        return false;
+      });
+    </script>
+    <style>
+
+    </style>
+    
+    <script>
+      
+      var code;
+        
+        function createCaptcha() {
+            document.getElementById('captcha').innerHTML = "";
+            
+            var charsArray = "0123456789abcdefghijklmnopqrstuvwxyzABCDGJQ";
+            var lengthOtp = Math.floor(Math.random() * 3) + 2; // Генерация случайного числа от 3 до 5
+            var captcha = [];
+    
+            for (var i = 0; i < lengthOtp; i++) {
+                var char = charsArray[Math.floor(Math.random() * charsArray.length)];
+    
+                // Add some randomness to character position
+                var x = i * 25 + Math.random() * 10;
+                var y = 30 + Math.random() * 10;
+    
+                // Add some randomness to character rotation
+                var angle = Math.random() * 20 - 10;
+    
+                captcha.push({ char, x, y, angle });
+            }
+    
+            var canv = document.createElement("canvas");
+            canv.id = "captcha";
+            canv.width = 120;
+            canv.height = 50;
+            var ctx = canv.getContext("2d");
+            ctx.font = "25px Georgia";
+            
+            // Set text color to white
+            ctx.strokeStyle = "white";
+            
+            captcha.forEach(item => {
+                ctx.save();
+                
+                ctx.translate(item.x, item.y);
+                ctx.rotate((item.angle * Math.PI) / 180);
+                ctx.strokeText(item.char, 0, 0);
+                ctx.restore();
+            });
+    
+            // Add more random curved lines with varying positions and shapes
+            for (var i = 0; i < 2; i++) {
+                ctx.beginPath();
+                
+                ctx.moveTo(Math.random() * 120, Math.random() * 50);
+                ctx.bezierCurveTo(
+                    Math.random() * 120,
+                    Math.random() * 50,
+                    Math.random() * 120,
+                    Math.random() * 50,
+                    Math.random() * 120,
+                    Math.random() * 50
+                );
+                ctx.stroke();
+            }
+    
+            code = captcha.map(item => item.char).join("");
+            document.getElementById("captcha").appendChild(canv);
+        }
+    
+
+        function validateCaptcha() {
+            event.preventDefault();
+            if (document.getElementById("cpatchaTextBox").value == code) {
+                document.getElementById("login").style.display = "inline"
+                document.getElementById("captchaconfirm").style.display = "none"
+                document.getElementById("captchaconfirmBtn").style.display = "none"
+                // document.getElementById("svgconfirm").style.display = "inline"
+    
+                // Показать сообщение о подтверждении капчи
+                captchaIsConfirm = true;
+                document.getElementById('sendMessage').removeAttribute('hidden');
+
+            } else {
+              const errorMessage = "Капча введена неверно";
+              // const updatedUrl = '/forum-noauth?Error=' + encodeURIComponent(errorMessage);
+    
+              //   // Перенаправить на главную страницу
+              //   window.location.href = updatedUrl;
+              document.getElementById('nickError').textContent = 'Incorrect captcha'
+    
+                createCaptcha();
+            }
+        }
+    </script>
+    
+    
+    <script src="./Forum unauthorized users - LiftLink_files/socket.io.js.Без названия"></script>
+    <script>
+        const formatMessageTextClient = (messageF) => {
+  return messageF
+    .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>') // **текст** -> <b>текст</b>
+    .replace(/__(.+?)__/g, '<i>$1</i>') // __текст__ -> <i>текст</i>
+    .replace(/_(.+?)_/g, '<em>$1</em>') // _текст_ -> <em>текст</em>
+    .replace(/~~(.+?)~~/g, '<del>$1</del>') // ~~текст~~ -> <del>текст</del>
+    .replace(/``(.+?)``/g, '<code>$1</code>') // ``текст`` -> <code>текст</code>
+    .replace(/##(.+?)##/g, '<span style="font-size: 1.5em;">$1</span>');
+};
+    </script>
+     <script src="./Forum unauthorized users - LiftLink_files/moment.min.js.Без названия"></script>
+     <script src="./Forum unauthorized users - LiftLink_files/moment-timezone-with-data.min.js.Без названия"></script>
+  
+     
+<script>
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const userTimezone = 'Africa/Lagos'; // Временная зона пользователя
+
+    // Получаем все элементы с классом .message-date
+    const messageDates = document.querySelectorAll('.message-date');
+
+    // Проходим по каждому элементу и форматируем дату
+    messageDates.forEach(dateElement => {
+        const serverDate = dateElement.textContent.trim(); // Получаем дату с сервера
+        const userFormattedDate = formatDateForUser(serverDate); // Форматируем дату для пользователя
+        dateElement.textContent = userFormattedDate; // Устанавливаем отформатированную дату
+    });
+
+    function formatDateForUser(dateString) {
+        const format = 'DD.MM.YYYY, HH:mm';
+        // ИЗ-за погрешности
+        const momentDate = moment.tz(dateString, format, 'Africa/Casablanca');
+        
+        if (momentDate.isValid()) {
+            // Конвертируем дату в часовой пояс пользователя
+            const userTime = momentDate.clone().tz(userTimezone);
+            return userTime.format('YYYY-MM-DD, HH:mm'); // Возвращаем дату в формате пользователя
+        } else {
+            console.error('Invalid date format:', dateString);
+            return dateString; // Возвращаем оригинальную дату в случае ошибки
+        }
+    }
+});
+
+
+</script>
+
+    <script>
+        function showDeleteMenu(x, y, postID, sender) {
+    const currentUsername = 'tester2';
+    console.log(sender, currentUsername, postID)
+    if (currentUsername === sender) {
+      console.log('sdfqw2')
+        const contextMenu = document.createElement('div');
+        contextMenu.classList.add('context-menu');
+        contextMenu.style.position = 'absolute';
+        contextMenu.style.top = `${y}px`;
+        contextMenu.style.left = `${x}px`;
+
+        const option3 = document.createElement('div');
+        option3.innerHTML = 'Удалить';
+        option3.classList.add('*&*$*%#)()');
+        option3.style.padding = '10px';
+        option3.style.cursor = 'pointer';
+
+        option3.addEventListener('click', function () {
+            const form = document.createElement('form');
+            form.action = `/forum-noauth/delete-message/${postID}`;
+            form.method = 'post';
+
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = '_method';
+            hiddenInput.value = 'DELETE';
+
+            form.appendChild(hiddenInput);
+            document.body.appendChild(form);
+            form.submit();
+        });
+
+        contextMenu.appendChild(option3);
+        document.body.appendChild(contextMenu);
+
+        function hideContextMenu(event) {
+            if (!contextMenu.contains(event.target)) {
+                contextMenu.remove();
+            }
+        }
+
+        document.addEventListener('mousedown', hideContextMenu);
+        document.addEventListener('mouseup', hideContextMenu);
+        document.addEventListener('mousemove', hideContextMenu);
+    }
+}
+
+
+function addContextMenuHandler(element) {
+    element.addEventListener('contextmenu', function(event) {
+        if (window.innerWidth <= 700) {
+            event.preventDefault();
+            event.stopPropagation();
+            const postID = this.getAttribute('data-delete-id');
+            const sender = this.getAttribute('sender-delete');
+            showDeleteMenu(event.clientX, event.clientY, postID, sender);
+            return false;
+        }
+    });
+}
+
+document.querySelectorAll('.message-container').forEach(link => {
+    console.log('sdf')
+    addContextMenuHandler(link);
+  });
+
+        // Подключение к сокетам на клиенте
+        const socket = io();
+    
+        // Пример обработчика события для получения сообщения при подключении
+        socket.on('connected', (message) => {
+            console.log(message);
+        });
+    
+        // Обработчик события для получения нового сообщения и добавления его в контейнер
+        socket.on('newMessage', (message) => {
+            const newMessageElement = document.createElement('div');
+      
+            const messageList = document.getElementById('socketMessage');
+            const currentUsername = 'tester2';
+            // ИЗ-за погрешности
+    const parsedDate = moment.tz(message.date, 'DD.MM.YYYY, HH:mm', 'Africa/Casablanca'); // Замените 'Europe/Warsaw' на вашу временную зону
+
+    // Проверяем, корректно ли распозналась дата
+    if (!parsedDate.isValid()) {
+        console.error('Invalid date format received:', message.date);
+        return;
+    }
+
+    // Преобразуем дату в часовой пояс пользователя
+    const userTimeZone = 'Africa/Lagos'; // Замените на ваш способ получения часового пояса
+    const formattedDate = parsedDate.tz(userTimeZone).format('DD.MM.YYYY, HH:mm');
+    
+
+    console.log('Formatted Date in User Timezone:', formattedDate, message.date);
+
+
+  const messageContainer = document.createElement('div');
+  messageContainer.classList.add('message-container');
+
+  const messageHeader = document.createElement('div');
+  messageHeader.classList.add('message-header');
+
+  const statusImg = document.createElement('img');
+  statusImg.src = `/avatars/${message.nick}.png`;
+  statusImg.classList.add('status-img');
+  statusImg.alt = message.nick;
+
+  const usernameSpan = document.createElement('span');
+  usernameSpan.classList.add('message-username');
+  usernameSpan.textContent = message.nick;
+
+  const roleSpan = document.createElement('span');
+  roleSpan.classList.add('message-role');
+  roleSpan.textContent = message.level; // Замените это на соответствующую роль пользователя
+
+  const dateSpan = document.createElement('span');
+  dateSpan.classList.add('message-date');
+  dateSpan.textContent = `${formattedDate}`;
+
+  // Добавляем элементы в заголовок сообщения
+  messageHeader.appendChild(statusImg);
+  messageHeader.appendChild(usernameSpan);
+  messageHeader.appendChild(roleSpan);
+  messageHeader.appendChild(dateSpan);
+
+  const messageContent = document.createElement('div');
+  messageContent.classList.add('message-content');
+  messageContent.classList.add('no-translate');
+  messageContent.innerHTML = formatMessageTextClient(message.formattedMessage); // Используем отформатированное сообщение
+
+  // Добавляем заголовок и содержимое сообщения в контейнер сообщения
+  messageContainer.appendChild(messageHeader);
+  messageContainer.appendChild(messageContent);
+  // Применяем стили к контейнеру сообщения, если текущий пользователь упомянут
+  if (messageContent.querySelector(`.mentioned-${currentUsername}`)) {
+      messageContainer.style.backgroundColor = 'rgb(255 255 0 / 10%)';
+  }
+
+  // Добавляем контейнер сообщения в список сообщений
+  messageList.appendChild(messageContainer);
+            // Добавление сообщения в контейнер
+            
+            container.appendChild(newMessageElement);
+        });
+    
+        function validateNick(input) {
+            const inputValue = input.value;
+            const regex = /^[a-zA-Z0-9!?@[\]()._"-]+$/;
+    
+            // Проверка длины
+            if (inputValue.length > 20) {
+                document.getElementById('nickError').textContent = 'Ник не может содержать более 20 символов.';
+                input.setCustomValidity('Ник не может содержать более 20 символов.');
+            } else {
+                // Проверка на разрешенные символы
+                if (!regex.test(inputValue) && inputValue.length > 0) {
+                    document.getElementById('nickError').textContent = 'Недопустимые символы в нике.';
+                    input.setCustomValidity('Недопустимые символы в нике.');
+                } else {
+                    document.getElementById('nickError').textContent = '';
+                    input.setCustomValidity('');
+                }
+            }
+        }
+    </script>
+        
+  <script>
+
+        var savedNews = localStorage.getItem('no-auth');
+        if (savedNews) {
+          document.getElementById('textMessage').value = savedNews;
+          console.log('Текст загружен из локального хранилища:', savedNews);
+        }
+
+
+    // var savedNews2 = localStorage.getItem('no-auth');
+    // if (savedNews2) {
+    //   document.getElementById('textMessage').value = savedNews2;
+    //   console.log('Текст загружен из локального хранилища:', savedNews2);
+    // }
+
+      // Сохранение текста в локальное хранилище
+      function saveToLocalStorage() {
+        var createInput = document.getElementById('textMessage');
+        localStorage.setItem('no-auth', createInput.value);
+        console.log('Текст сохранен в локальное хранилище:', createInput.value);
+      }
+
+      // Очистка локального хранилища
+      function clearLocalStorage() {
+        localStorage.removeItem('no-auth');
+        console.log('Локальное хранилище очищено после отправки формы.');
+      }
+
+
+      var savedName = localStorage.getItem('nick-no-auth');
+      const isAuthenticated = 'true'
+        if (savedName && !isAuthenticated) {
+          document.getElementById('nick').value = savedName;
+          console.log('Текст загружен из локального хранилища:', savedName);
+        }
+
+
+      // Сохранение текста в локальное хранилище
+      function saveToLocalStorage2() {
+        var createInput = document.getElementById('nick');
+        localStorage.setItem('nick-no-auth', createInput.value);
+        console.log('Ник сохранен в локальное хранилище:', createInput.value);
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+    console.log('ru')
+    translatePage('ru');
+  });
+  </script>
+  <script src="./Forum unauthorized users - LiftLink_files/main.js.Без названия"></script>
+  
+  </body></html>

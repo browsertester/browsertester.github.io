@@ -1,0 +1,4212 @@
+
+          
+
+          
+    function toggleSettings() {
+        var popup = document.getElementById("settings-popup");
+        if (popup.style.display === "none") {
+            popup.style.display = "block";
+        } else {
+            popup.style.display = "none";
+        }
+    }
+    
+    function toggleBurgerAccount() {
+        var popup = document.getElementById("burger-account");
+        if (popup.style.display === "none") {
+            popup.style.display = "block";
+        } else {
+            popup.style.display = "none";
+        }
+    }
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then((registration) => {
+            console.log('Service Worker зарегистрирован с областью:', registration.scope);
+          })
+          .catch((error) => {
+            console.log('Ошибка регистрации Service Worker:', error);
+          });
+      }
+      
+      
+      window.addEventListener('appinstalled', (evt) => {
+        console.log('LiftLink был установлен.', evt);
+      });
+      
+      fetch('/manifest.json')
+        .then(response => {
+          if (response.ok) {
+            console.log('Манифест успешно загружен.');
+            return response.json();
+          } else {
+            throw new Error('Ошибка загрузки манифеста.');
+          }
+        })
+        .then(manifest => {
+          console.log('Содержимое манифеста:', manifest);
+        })
+        .catch(error => {
+          console.error('Ошибка загрузки манифеста:', error);
+        });
+      
+      let deferredPrompt;
+      const installButton = document.getElementById('install-button');
+      
+      window.addEventListener('beforeinstallprompt', (e) => {
+        console.log('beforeinstallprompt event fired');
+        e.preventDefault();
+        deferredPrompt = e;
+        installButton.style.display = 'block';
+      
+        installButton.addEventListener('click', () => {
+          installButton.style.display = 'none';
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('Пользователь выбрал установить приложение');
+            } else {
+              console.log('Пользователь отклонил установку приложения');
+            }
+            deferredPrompt = null;
+          });
+        });
+      });
+      
+      
+    
+    document.addEventListener('contextmenu', function(event) {
+        // Получаем выделенный текст
+        const selection = window.getSelection().toString();
+
+        // Проверяем, щелкнули ли на ссылке
+        const isLink = event.target.tagName.toLowerCase() === 'a';
+
+        // Проверяем, щелкнули ли на кнопке, поле ввода или текстовом поле
+        const isFormElement = ['button', 'input', 'textarea', 'a'].includes(event.target.tagName.toLowerCase());
+
+        // Проверяем, является ли элемент редактируемым
+        const isContentEditable = event.target.isContentEditable;
+
+        // Если есть выделенный текст, кликнули на ссылке, кнопке, элементе формы или редактируемом элементе, не прерываем событие
+        if (selection.length > 0 || isLink || isFormElement || isContentEditable) {
+            return;
+        }
+
+        // Отменяем стандартное контекстное меню для пустых областей
+        event.preventDefault();
+
+        // Выводим сообщение в консоль
+        console.log('Правый клик по пустой области');
+    });
+
+    function showLinkMenu(x, y, tabId, tabLink) {
+        // Создаем элемент контекстного меню
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'context-menu';
+      
+        // Добавляем опции контекстного меню
+        // Например:
+        const option1 = document.createElement('div');
+        option1.textContent = 'ㅤㅤПерейти по ссылке';
+        option1.setAttribute('data-link', `${tabLink}`);
+        option1.classList.add('link-option');
+      
+        option1.addEventListener('click', function() {
+          const link = this.getAttribute('data-link'); // Получаем URL из атрибута data-link
+          window.location.href = link; // Перенаправляем на полученный URL
+        });
+        contextMenu.appendChild(option1);
+
+        
+        const option2 = document.createElement('div');
+        option2.textContent = 'ㅤㅤСкопировать ссылку';
+        option2.classList.add('link-option');
+      
+        option2.addEventListener('click', function() {
+            const link = window.location.origin + tabLink; // Получаем полную ссылку
+            const tempInput = document.createElement('input'); // Создаем временный input элемент
+            document.body.appendChild(tempInput); // Добавляем временный input на страницу
+            tempInput.value = link; // Устанавливаем значение для временного input
+            tempInput.select(); // Выделяем текст внутри input
+            document.execCommand('copy'); // Копируем текст в буфер обмена
+            document.body.removeChild(tempInput); // Удаляем временный input из DOM
+            alert('Ссылка скопирована в буфер обмена'); // Опционально: выводим сообщение о успешном копировании
+        });
+        contextMenu.appendChild(option2);
+      
+        contextMenu.style.top = y + 'px';
+        contextMenu.style.left = x + 'px';
+      
+        // Добавляем контекстное меню на страницу
+        document.body.appendChild(contextMenu);
+      
+        // Обработчик для скрытия контекстного меню при щелчке вне него
+        document.addEventListener('click', function hideContextMenu() {
+          document.removeEventListener('click', hideContextMenu); // Удаляем обработчик после использования
+          contextMenu.remove(); // Удаляем контекстное меню со страницы
+        });
+      
+        function hideContextMenu(event) {
+          if (!contextMenu.contains(event.target)) {
+              contextMenu.remove(); // Удаляем контекстное меню со страницы
+          }
+        }
+      
+        // Добавляем обработчик для всех остальных действий в документе (кроме клика, контекстного меню, прокрутки и изменения размера окна)
+        document.addEventListener('mousedown', hideContextMenu);
+        document.addEventListener('mouseup', hideContextMenu);
+        document.addEventListener('mousemove', hideContextMenu);
+      }
+
+      function submit(action) {
+        var form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', action);
+        document.body.appendChild(form);
+        form.submit();
+      }
+
+    document.querySelectorAll('.nav-menu').forEach(link => {
+      console.log('Assigning context menu event to:', link);
+      link.addEventListener('contextmenu', function(event) {
+        event.preventDefault(); // Предотвращаем стандартное контекстное меню браузера
+        // Получаем id таба
+        tabId = this.getAttribute('data-tab-link');
+        tabLink = this.getAttribute('href');
+    
+        console.log('Context menu event triggered', tabId, tabLink);
+        // Показываем контекстное меню
+        showLinkMenu(event.clientX, event.clientY, tabId, tabLink);
+      });
+    });
+
+    
+    
+    // ЕСЛИ ЧТО, ВОССТАНОВИТЬ
+    //   const favouriteBtn = document.getElementById("favourite-btn")
+    // const favouriteMenus = document.querySelectorAll(".favourite-menu");
+    // const inputInter = document.getElementById('input')
+    // const svgFavourite = document.getElementById("svg-favourite")
+    
+    // svgFavourite.addEventListener('click', function() {
+    //   favouriteBtn.style.display = "flex"
+    //   favouriteMenus.forEach(menu => {
+    //   menu.style.display = "flex";
+    // });
+    // })
+    
+    function redirect(page) {
+        const link = window.location.origin + page;
+        window.location.href = link;
+      }
+
+      function copyLink(link) {
+        // Копируем ссылку в буфер обмена
+        navigator.clipboard.writeText(link).then(() => {
+          // Выводим сообщение об успешном копировании
+          alert('Ссылка скопирована!');
+        }).catch(err => {
+          console.error('Ошибка при копировании ссылки:', err);
+        });
+      }
+
+      function copyReferalLink(link) {
+        // Копируем ссылку в буфер обмена
+        navigator.clipboard.writeText(link).then(() => {
+          // Выводим сообщение об успешном копировании
+          alert('Ваша реферальная ссылка была скопирована!');
+        }).catch(err => {
+          console.error('Ошибка при копировании ссылки:', err);
+        });
+      }
+      
+    
+
+      const usernameUsername = currentUsername; // Замените на реальное имя пользователя
+      const inactiveTimeLimit = 60 * 60 * 1000; // 30 минут в миллисекундах
+    
+      function updateLastUpdate() {
+        const currentTime = Date.now();
+        localStorage.setItem('lastActivityTime', currentTime);
+        
+        // Отправка запроса на сервер для обновления lastUpdate
+        fetch('/updateLastUpdate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username: usernameUsername })
+        }).then(response => {
+          if (!response.ok) {
+            console.error('Failed to update lastUpdate on server');
+          }
+        }).catch(error => {
+          console.error('Failed to update lastUpdate:', error);
+        });
+      }
+    
+      function checkInactivity() {
+        const lastActivityTime = localStorage.getItem('lastActivityTime');
+        const currentTime = Date.now();
+    
+        if (lastActivityTime && (currentTime - lastActivityTime) > inactiveTimeLimit) {
+          window.location.href = '/timenow';
+        } else {
+          setTimeout(checkInactivity, 10000); // Проверяем каждые 1 секунду
+        }
+      }
+    
+      function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+      }
+    
+      const debouncedUpdateLastUpdate = debounce(updateLastUpdate, 5000); // Дебаунсинг с задержкой в 5 секунд
+
+    
+      function resetTimer() {
+        debouncedUpdateLastUpdate();
+      }
+    
+      document.addEventListener('mousemove', resetTimer);
+      document.addEventListener('keypress', resetTimer);
+      document.addEventListener('click', resetTimer);
+      document.addEventListener('scroll', resetTimer);
+    
+      // Инициализируем проверку при загрузке страницы
+      updateLastUpdate();
+      checkInactivity();
+
+
+          const searchInput = document.getElementById('search-users');
+          const userList = document.getElementById('searched-users');
+          const users = document.querySelectorAll('.list > li');
+      
+          searchInput.addEventListener('input', function() {
+              const searchTerm = this.value.trim().toLowerCase();
+              const minCharsToShow = 2;
+      
+              if (searchTerm.length < minCharsToShow) {
+                  // Удаляем лишних пользователей из DOM
+                  for (let i = 30; i < users.length; i++) {
+                      userList.removeChild(users[i]);
+                  }
+              } else {
+                  // Показываем всех пользователей, если необходимо
+                  // Проверка на добавление новых пользователей не требуется, так как они не были загружены в DOM
+              }
+          });
+
+
+          function translatePage(language) {
+            const translationDict = {
+                "Привилегия Middle": {
+                    "en": "Middle Privilege",
+                    "es": "Privilegio Middle"
+                },
+                'Недостаточно оценок для формирования рейтинга': {
+                    'en': 'There are not enough ratings to form a rating',
+                    'es': 'No hay suficientes calificaciones para formar una calificación'
+                },
+                'Дать свою оценку пользователю': {
+                    'en': 'Give your assessment to the user',
+                    'es': 'Dar su evaluación al usuario'
+                },
+                "Цель игры - упорядочить плитки по порядку от 1 до": {
+                    "en": "The goal of the game is to arrange the tiles in order from 1 to",
+                    "es": "El objetivo del juego es ordenar las fichas en orden del 1 al"
+                },
+                "находите одинаковые картинки среди набора закрытых карточек": {
+                    "en": "find matching pictures among a set of face-down cards",
+                    "es": "encuentra las imágenes iguales entre un conjunto de cartas boca abajo"
+                },
+                "Постройте маяк, разместив блоки друг на друга в правильном порядке": {
+                    "en": "Build a lighthouse by stacking blocks in the correct order",
+                    "es": "Construye un faro apilando bloques en el orden correcto"
+                },
+                'Если вопрос не был решен до конца, вы можете его переоткрыть': {
+                    'en': 'If the issue has not been fully resolved, you can reopen it',
+                    'es': 'Si la pregunta no se ha resuelto hasta el final, puede volver a abrirla'
+                },
+                'Цель игры — найти все пары одинаковых карт, запоминая их расположение на игровом поле': {
+                    'en': 'The goal of the game is to find all pairs of matching cards by remembering their positions on the game board',
+                    'es': 'El objetivo del juego es encontrar todos los pares de cartas iguales recordando su posición en el tablero de juego'
+                  },
+                'Запретить публикацию постов на моей странице': {
+                    'en': 'Prohibit posting on my page',
+                    'es': 'Prohibir publicaciones en mi página'
+                },
+                'Перепрыгивайте пропасти перед вами': {
+                    'en': 'Jump over the gaps in front of you',
+                    'es': 'Salta sobre las brechas frente a ti'
+                  },
+                  'зажатием пробела или кнопки мыши': {
+                    'en': 'by pressing the space bar or mouse button',
+                    'es': 'presionando la barra espaciadora o el botón del ratón'
+                  },
+                "Самая классическая браузерная игра": {
+                    "en": "The most classic browser game",
+                    "es": "El juego de navegador más clásico"
+                  },
+                  "Игра оканчивается, когда змейка врезается в саму себя": {
+                    "en": "The game ends when the snake crashes into itself",
+                    "es": "El juego termina cuando la serpiente choca consigo misma"
+                  },
+                "Получите доступ к новым функциям и эксклюзивными возможностями, которые улучшат ваш опыт взаимодействия с нашей платформой!": {
+                    "en": "Gain access to new features and exclusive opportunities that will enhance your experience with our platform!",
+                    "es": "Obtenga acceso a nuevas funciones y oportunidades exclusivas que mejorarán su experiencia con nuestra plataforma."
+                },
+                "Переместите каждый шарик в центр или соединяйте их друг с другом, образуя единое": {
+                    "en": "Move each ball to the center or connect them together to form a single unit",
+                    "es": "Mueva cada bola al centro o conéctelas entre sí para formar una unidad"
+                },
+                "Найдите правильный маршрут, передвигая персонажа по клеткам": {
+                    "en": "Find the correct route by moving the character across the cells",
+                    "es": "Encuentra la ruta correcta moviendo el personaje por las celdas"
+                },
+                "Вы прокомментировали слишком много постов за короткий промежуток времени": {
+                    "en": "You have commented on too many posts in a short period of time",
+                    "es": "Has Comentado demasiadas publicaciones en un corto período de tiempo"
+                },
+                'Посмотреть все штрафы': {
+                    'en': 'View all fines',
+                    'es': 'Ver todas las multas'
+                  },
+                "Описание": {
+                    "en": "Description",
+                    "es": "Descripción"
+                },
+                'Аккаунт верифицирован': {
+                    'en': 'Account verified',
+                    'es': 'Cuenta verificada'
+                  },
+                "Лимит ежедневных подарков": {
+                    "en": "Daily gift limit",
+                    "es": "Límite diario de regalos"
+                },
+                "Возможность ставить анимированные аватарки в свой профиль": {
+                    "en": "Ability to set animated avatars in your profile",
+                    "es": "Posibilidad de poner avatares animados en tu perfil"
+                },
+                "Количество добавляемых пользователей на закрытие форумы": {
+                    "en": "Number of users added to private forums",
+                    "es": "Número de usuarios añadidos a foros privados"
+                },
+                "Удалять чужие сообщения на форумах при наличии прав владельца/хелпера": {
+                    "en": "Delete other users' posts in forums if you have owner/helper rights",
+                    "es": "Eliminar mensajes de otros usuarios en foros si tienes derechos de propietario/ayudante"
+                },
+                "Расширено количество допустимых символов в публикациях/комментариях в 1.5 раза": {
+                    "en": "Expanded allowed characters in posts/comments by 1.5 times",
+                    "es": "Aumentado el número de caracteres permitidos en publicaciones/comentarios en 1.5 veces"
+                },
+                "Лимит на публикацию событий": {
+                    "en": "Event publication limit",
+                    "es": "Límite de publicación de eventos"
+                },
+                "Пожалуйста, подождите немного перед созданием сдедующего сюжета": {
+                    "en": "Please wait a bit before creating the next story",
+                    "es": "Por favor, espere un poco antes de crear la siguiente trama"
+                },
+                'Выбранный часовой пояс': {
+                    'en': 'Selected time zone',
+                    'es': 'Zona horaria seleccionada'
+                },
+                'Дата и время': {
+                    'en': 'Date and time',
+                    'es': 'Fecha y hora'
+                },
+                'Очистить уведомления': {
+                    'en': 'Clear notifications',
+                    'es': 'Limpiar notificaciones'
+                },
+                'Очистка часа': {
+                    'en': 'Hour cleanup',
+                    'es': 'Limpieza de hora'
+                },
+                'Удалить все сообщения': {
+                    'en': 'Delete all messages',
+                    'es': 'Eliminar todos los mensajes'
+                },
+                "Возможность писать большим шрифтом на форумах": {
+                    "en": "Ability to write in large font on forums",
+                    "es": "Posibilidad de escribir con fuente grande en foros"
+                },
+                "Доступна панель": {
+                    "en": "Panel",
+                    "es": "Panel"
+                },
+                "У вас уже есть это": {
+                    "en": "You already have this",
+                    "es": "Ya tienes esto"
+                },
+                "Недостаточно средств": {
+                    "en": "Insufficient funds",
+                    "es": "Fondos insuficientes"
+                },
+                "Привилегия Senior": {
+                    "en": "Senior Privilege",
+                    "es": "Privilegio Senior"
+                },
+                "Наслаждайтесь максимальным удобством и преимуществами, которые помогут вам полностью раскрыть потенциал нашей платформы!": {
+                    "en": "Enjoy maximum convenience and benefits that will help you fully unlock the potential of our platform!",
+                    "es": "Disfruta de la máxima comodidad y beneficios que te ayudarán a desbloquear todo el potencial de nuestra plataforma."
+                },
+                "Нарушителю теперь можно выписать штраф или забанить": {
+                    "en": "Offenders can now be fined or banned",
+                    "es": "Ahora se puede multar o banear a los infractores"
+                },
+                "Разрешены публикации постов на чужих страницах": {
+                    "en": "Allowed to post on others' pages",
+                    "es": "Permitido publicar en las páginas de otros"
+                },
+                "Можно скрыть свой статус в сети": {
+                    "en": "Can hide your online status",
+                    "es": "Puedes ocultar tu estado en línea"
+                },
+                "Расширено количество допустимых символов в публикациях/комментариях в 2 раза": {
+                    "en": "Expanded allowed characters in posts/comments by 2 times",
+                    "es": "Aumentado el número de caracteres permitidos en publicaciones/comentarios en 2 veces"
+                },
+                "Все возможности Middle!": {
+                    "en": "All Middle features!",
+                    "es": "¡Todas las características de Middle!"
+                },
+                "Колесо фортуны": {
+                    "en": "Wheel of Fortune",
+                    "es": "Rueda de la Fortuna"
+                },
+                "Попробуйте свои силы в призовой рулетке и получите шанс на неожиданные выигрыши. Не упустите возможность стать обладателем ценных призов и дополнительных привилегий!": {
+                    "en": "Try your luck in the prize roulette and get a chance for unexpected winnings. Don't miss the opportunity to win valuable prizes and additional privileges!",
+                    "es": "Prueba tu suerte en la ruleta de premios y obtén la oportunidad de ganar premios inesperados. ¡No pierdas la oportunidad de ganar premios valiosos y privilegios adicionales!"
+                },
+                "Разбан аккаунта": {
+                    "en": "Account Unban",
+                    "es": "Desbanear cuenta"
+                },
+                "Получите второй шанс и вернитесь к общению с друзьями без ограничений": {
+                    "en": "Get a second chance and return to interacting with friends without restrictions",
+                    "es": "Obtén una segunda oportunidad y vuelve a interactuar con amigos sin restricciones"
+                },
+                "Разблокировка аккаунта предоставляет возможность вновь пользоваться всеми функциями и сервисами нашей платформы": {
+                    "en": "Unblocking your account provides the opportunity to use all features and services of our platform again",
+                    "es": "Desbloquear tu cuenta te brinda la oportunidad de usar todas las funciones y servicios de nuestra plataforma nuevamente"
+                },
+                "Услуга не актуальна": {
+                    "en": "Service is not relevant",
+                    "es": "El servicio no es relevante"
+                },
+                'Вам выдали временную блокировку чата на этом форуме пользователем': {
+                    'en': 'You have been temporarily blocked from chat on this forum by a user',
+                    'es': 'Ha sido bloqueado temporalmente del chat en este foro por un usuario'
+                },
+                'и не можете отправлять сообщения': {
+                    'en': 'and cannot send messages',
+                    'es': 'y no puede enviar mensajes'
+                },
+                'Ваш мут истекает': {
+                    'en': 'Your mute expires',
+                    'es': 'Su silencio expira'
+                },
+                'Разрешить запросы в друзья': {
+                    'en': 'Allow friend requests',
+                    'es': 'Permitir solicitudes de amistad'
+                },
+                'Запретить запросы в друзья': {
+                    'en': 'Prohibit friend requests',
+                    'es': 'Prohibir solicitudes de amistad'
+                },
+                'Как подать жалобу на пользователя или публикации с нарушениями?': {
+                    'en': 'How to report a user or posts with violations?',
+                    'es': '¿Cómo denunciar a un usuario o publicaciones con violaciones?'
+                },
+                'Для этого нужно обратиться в': {
+                    'en': 'For this, you need to contact',
+                    'es': 'Para esto, debes contactar'
+                },
+                'с отсылкой на публикацию/форум/профиль с нарушениями': {
+                    'en': 'with a reference to the post/forum/profile with violations',
+                    'es': 'con una referencia a la publicación/foro/perfil con violaciones'
+                },
+                'приветствуются фото- и видео- доказательства': {
+                    'en': 'photo and video evidence is welcome',
+                    'es': 'se agradecen las pruebas fotográficas y de video'
+                },
+                'Вашу жалобу обязательство рассмотрят наши модераторы и примут соответствующий вердикт': {
+                    'en': 'Our moderators will review your complaint and make an appropriate verdict',
+                    'es': 'Nuestros moderadores revisarán tu queja y tomarán un veredicto adecuado'
+                },
+                'У меня возникла проблема и мне необходима помощь или меня заинтересовал вопрос, куда обратиться?': {
+                    'en': 'I have a problem and need help or I am interested in a question, where to go?',
+                    'es': 'Tengo un problema y necesito ayuda o estoy interesado en una pregunta, ¿a dónde ir?'
+                },
+                'Опять же таки, в': {
+                    'en': 'Again, in',
+                    'es': 'De nuevo, en'
+                },
+                'Наши модераторы очень отзывчивые и в обязательном порядке вам предоставят поддержку': {
+                    'en': 'Our moderators are very responsive and will definitely provide you with support',
+                    'es': 'Nuestros moderadores son muy receptivos y te proporcionarán apoyo sin falta'
+                },
+                'Я нашел ошибку/баг на вашей платформе или я хочу предложить идеи по улучшению проекта, что делать?': {
+                    'en': 'I found a bug on your platform or I want to suggest ideas for project improvement, what to do?',
+                    'es': 'Encontré un error en tu plataforma o quiero sugerir ideas para mejorar el proyecto, ¿qué hacer?'
+                },
+                'При нахождении ошибок на нашей платформе, обязательно пишите в': {
+                    'en': 'When finding errors on our platform, be sure to write to',
+                    'es': 'Al encontrar errores en nuestra plataforma, asegúrate de escribir a'
+                },
+                'постарайтесь объяснить более подробно об нашей проблеме. За такое сотрудничество вы можете получить хорошую награду!': {
+                    'en': 'try to explain our problem in more detail. For such cooperation, you can receive a good reward!',
+                    'es': 'intenta explicar nuestro problema con más detalle. ¡Por tal cooperación, puedes recibir una buena recompensa!'
+                },
+                'Что касаемо идей по улучшению проекта, то вы можете создать обычную форумную публикацию на': {
+                    'en': 'As for ideas for improving the project, you can create a regular forum post on',
+                    'es': 'En cuanto a ideas para mejorar el proyecto, puedes crear una publicación regular en'
+                },
+                'и порассуждать об этой идее с другими пользователями, наша администрация на такую активность обязательно обратит внимание и, возможно, даже реализует ее': {
+                    'en': 'and discuss this idea with other users, our administration will definitely pay attention to such activity and may even implement it',
+                    'es': 'y discutir esta idea con otros usuarios, nuestra administración definitivamente prestará atención a dicha actividad e incluso puede implementarla'
+                },
+                'Меня наказали ни за что, куда обращаться?': {
+                    'en': 'I was punished for nothing, where to go?',
+                    'es': 'Me castigaron por nada, ¿a dónde ir?'
+                },
+                'Если считаете': {
+                    'en': 'If you believe',
+                    'es': 'Si crees'
+                },
+                'Ваш пароль на аккаунте был успешно изменен': {
+                    'en': 'Your account password has been successfully changed',
+                    'es': 'Su contraseña de cuenta ha sido cambiada con éxito'
+                },
+                'что над вашим аккаунтом произвели неправомерное действие': {
+                    'en': 'that an unlawful action has been taken against your account',
+                    'es': 'que se ha tomado una acción ilegal contra tu cuenta'
+                },
+                'например, заблокировали его': {
+                    'en': 'for example, it was blocked',
+                    'es': 'por ejemplo, fue bloqueada'
+                },
+                'Такие темы мы всегда рассматриваем и стараемся объяснять все аспекты возникших ситуаций, поднимая доказательства из нашего архива. Вердикт можно конечно же оспорить, к примеру, пользователь с донатом Senior забанил вас потому что ему захотелось, то он получит суровое наказание вплоть до чистки аккаунта и черного списка проекта. Мы обязательно вам поможем': {
+                    'en': 'We always consider such topics and try to explain all aspects of the situations that have arisen, raising evidence from our archive. The verdict can of course be challenged, for example, if a Senior donor user banned you because he wanted to, he will receive severe punishment up to account cleaning and blacklisting the project. We will definitely help you',
+                    'es': 'Siempre consideramos tales temas e intentamos explicar todos los aspectos de las situaciones surgidas, levantando evidencia de nuestro archivo. El veredicto, por supuesto, puede ser impugnado, por ejemplo, si un usuario donante Senior te prohibió porque quiso, recibirá un castigo severo hasta la limpieza de la cuenta y la inclusión en la lista negra del proyecto. Definitivamente te ayudaremos'
+                },
+              'пользователя может быть присвоен на основе различных факторов, включая количество выполненных задач, частота нарушений правил, активности, обратная связь от других пользователей и другие критерии. поставить свою оценку пользователю можно': {
+                'en': 'a user may be assigned based on various factors, including the number of completed tasks, frequency of rule violations, activity, feedback from other users, and other criteria. You can rate the user',
+                'es': 'un usuario puede ser asignado en función de varios factores, incluido el número de tareas completadas, la frecuencia de violaciones de las reglas, la actividad, los comentarios de otros usuarios y otros criterios. Puede calificar al usuario aquí.'
+            },
+            'вы не можете оценивать самого себя': {
+                'en': 'You cannot rate yourself',
+                'es': 'No puedes calificarte a ti mismo'
+            },
+            'дать свою оценку': {
+                'en': 'Give your rating',
+                'es': 'Dar tu calificación'
+            },
+            'отрицательные': {
+                'en': 'Negative',
+                'es': 'Negativas'
+            },
+            'положительные': {
+                'en': 'Positive',
+                'es': 'Positivas'
+            },
+            'уменьшить': {
+                'en': 'Decrease',
+                'es': 'Disminuir'
+            },
+            'ваша оценка': {
+                'en': 'Your rating',
+                'es': 'Tu calificación'
+            },
+            'положительная': {
+                'en': 'Positive',
+                'es': 'Positiva'
+            },
+            'отрицательная': {
+                'en': 'Negative',
+                'es': 'Negativa'
+            },
+            'Включить уведомления об упоминаниях': {
+                'en': 'Enable mention notifications',
+                'es': 'Activar notificaciones de menciones'
+            },
+            'Заглушить уведомления об упоминаниях': {
+                'en': 'Mute mention notifications',
+                'es': 'Silenciar notificaciones de menciones'
+            },
+            'Включить уведомления о звонках': {
+                'en': 'Enable call notifications',
+                'es': 'Activar notificaciones de llamadas'
+            },
+            'Заглушить уведомления о звонках': {
+                'en': 'Mute call notifications',
+                'es': 'Silenciar notificaciones de llamadas'
+            },
+            'Включить уведомления о новостях и событиях': {
+                'en': 'Enable news and event notifications',
+                'es': 'Activar notificaciones de noticias y eventos'
+            },
+            'Заглушить уведомления о новостях и событиях': {
+                'en': 'Mute news and event notifications',
+                'es': 'Silenciar notificaciones de noticias y eventos'
+            },
+            'Системные уведомления не отключаются!': {
+                'en': 'System notifications cannot be disabled!',
+                'es': '¡Las notificaciones del sistema no se pueden desactivar!'
+            },
+            'Показать все уведомления': {
+                'en': 'Show all notifications',
+                'es': 'Mostrar todas las notificaciones'
+              },
+              'несколько секунд назад': {
+                'en': 'A few seconds ago',
+                'es': 'hace unos segundos'
+              },
+              'января': {
+                'en': 'january',
+                'es': 'enero'
+            },
+            'февраля': {
+                'en': 'february',
+                'es': 'febrero'
+            },
+            'марта': {
+                'en': 'march',
+                'es': 'marzo'
+            },
+            'апреля': {
+                'en': 'april',
+                'es': 'abril'
+            },
+            'мая': {
+                'en': 'may',
+                'es': 'mayo'
+            },
+            'июня': {
+                'en': 'june',
+                'es': 'junio'
+            },
+            'июля': {
+                'en': 'july',
+                'es': 'julio'
+            },
+            'августа': {
+                'en': 'august',
+                'es': 'agosto'
+            },
+            'сентября': {
+                'en': 'september',
+                'es': 'septiembre'
+            },
+            'октября': {
+                'en': 'october',
+                'es': 'octubre'
+            },
+            'ноября': {
+                'en': 'november',
+                'es': 'noviembre'
+            },
+            'декабря': {
+                'en': 'december',
+                'es': 'diciembre'
+            },
+            'Богачи по': {
+                'en': 'Rich by',
+                'es': 'Ricos por'
+            },
+            "Пригласи друзей": {
+                "en": "Invite friends",
+                "es": "Invita a tus amigos"
+            },
+            "Цель: получить число": {
+                "en": "The goal: to get the number",
+                "es": "El objetivo: conseguir el número"
+              },
+            'Ломайте блоки в воздухе, проводя курсором мыши по объектам и удерживая нажатие': {
+                'en': 'Break blocks in the air by moving the mouse cursor over the objects and holding the click',
+                'es': 'Rompe bloques en el aire moviendo el cursor del ratón sobre los objetos y manteniendo pulsado'
+              },
+              'Ломайте блоки в воздухе, проводя пальцем по экрану по объектам': {
+                'en': 'Break blocks in the air by moving your finger across the screen over the objects',
+                'es': 'Rompe bloques en el aire moviendo el dedo por la pantalla sobre los objetos'
+              },
+              'Игра, в которой вы должны обращать внимание на цвет мяча, так как цвет мяча меняется после каждого прыжка': {
+                'en': 'A game where you need to pay attention to the color of the ball, as the color changes after each jump',
+                'es': 'Un juego donde debes prestar atención al color de la pelota, ya que el color cambia después de cada salto'
+              },
+              'В этой игре вам нужно запомнить и повторить комбинацию цветов, отображаемую на палитре.': {
+                'en': 'In this game, you need to memorize and repeat the color combination displayed on the palette.',
+                'es': 'En este juego, necesitas memorizar y repetir la combinación de colores mostrada en la paleta.'
+              },
+              'С каждый ходом количество цветов увеличивается': {
+                'en': 'The number of colors increases with each move',
+                'es': 'La cantidad de colores aumenta con cada movimiento'
+              },
+              'Цель игры: не дать башне упасть, извлекая из неё по одному кирпичику и помещая его наверх всей конструкции': {
+                'en': 'The goal of the game: prevent the tower from falling by removing one brick at a time and placing it on top of the structure',
+                'es': 'El objetivo del juego: evita que la torre caiga quitando un ladrillo a la vez y colocándolo en la parte superior de la estructura'
+              },
+              'Уворачивайтесь от летящих на вас космических объектов, перемещая курсор мыши в безопасное положение': {
+                'en': 'Dodge incoming space objects by moving the mouse cursor to a safe position',
+                'es': 'Esquiva objetos espaciales entrantes moviendo el cursor del ratón a una posición segura'
+              },
+              'Убегайте от злого волка, собирайте морковку для усилений и избегайте лежащих ежиков перед вами': {
+                'en': 'Run away from the angry wolf, collect carrots for power-ups, and avoid hedgehogs in front of you',
+                'es': 'Huye del lobo enfadado, recoge zanahorias para mejoras y evita los erizos frente a ti'
+              },
+              'Дойдите до финиша, используя клавиши со стрелками влево, вправо и вверх для перемещения': {
+                'en': 'Reach the finish line using the left, right, and up arrow keys to move',
+                'es': 'Llega a la meta usando las teclas de flecha izquierda, derecha y arriba para moverte'
+              },
+              'Не допустите столкновение с другими автомобилями, катаясь по кругу': {
+                'en': 'Avoid collisions with other cars by driving in circles',
+                'es': 'Evita colisiones con otros coches conduciendo en círculos'
+              },
+              'Переместите каждый шарик в центр или соединяйте их друг с другом, образуя единое': {
+                'en': 'Move each ball to the center or combine them together to form one',
+                'es': 'Mueve cada bola al centro o combínalas para formar una sola'
+              },
+              'Выбирается случайное слово из пяти букв, которое игроки должны угадать за шесть попыток.': {
+                'en': 'A random five-letter word is chosen that players must guess in six attempts.',
+                'es': 'Se elige una palabra aleatoria de cinco letras que los jugadores deben adivinar en seis intentos.'
+              },
+              'Зеленый цвет - буква слова на месте, желтый - буква стоит не на своем месте': {
+                'en': 'Green means the letter is in the right place, yellow means the letter is in the wrong place',
+                'es': 'El verde significa que la letra está en el lugar correcto, el amarillo significa que la letra está en el lugar incorrecto'
+              },
+              'зажатием пальцем по экрану': {
+                'en': 'by pressing your finger on the screen',
+                'es': 'presionando tu dedo en la pantalla'
+              },
+              'Чем больше прыжков вы сделали, тем больше результат': {
+                'en': 'The more jumps you make, the higher the score',
+                'es': 'Cuantos más saltos hagas, mayor será la puntuación'
+              },
+              'Цель игры - расположить раньше противника подряд по горизонтали, вертикали или диагонали четыре фишки своего цвета': {
+                'en': 'The goal of the game is to line up four chips of your color horizontally, vertically, or diagonally before your opponent',
+                'es': 'El objetivo del juego es alinear cuatro fichas de tu color horizontalmente, verticalmente o en diagonal antes que tu oponente'
+              },
+              'Постройте правильный маршрут для поезда, замещая каждый блок направления рельс другим блоком': {
+                'en': 'Build the correct route for the train by replacing each rail direction block with another block',
+                'es': 'Construye la ruta correcta para el tren reemplazando cada bloque de dirección del riel con otro bloque'
+              },
+              'Защищайтесь от падающих на вас объектов уворачиваясь и отстреливаясь от них': {
+                'en': 'Defend against falling objects by dodging and shooting at them',
+                'es': 'Defiéndete de los objetos que caen esquivándolos y disparándoles'
+              },
+              'Игрок управляет пиксельной свечей и должен дойти как можно дальше, избегая встречи с машинами': {
+                'en': 'The player controls a pixel candle and must go as far as possible while avoiding cars',
+                'es': 'El jugador controla una vela de píxeles y debe llegar lo más lejos posible mientras evita los coches'
+              },
+              "Ловите как можно больше кроликов": {
+                "en": "Catch as many rabbits as possible",
+                "es": "Atrapa tantos conejos como puedas"
+              },
+              'Игра на память': {
+                'en': 'A memory game',
+                'es': 'Juego de memoria'
+              },
+              'В этой игре вам нужно упорядочить костяшки по возрастанию номеров, перемещая их внутри коробки, желательно сделав как можно меньше перемещений': {
+                'en': 'In this game, you need to arrange the knuckles in ascending order by moving them inside the box, preferably making as few movements as possible',
+                'es': 'En este juego tienes que organizar los nudillos en orden ascendente de los números, moviéndolos dentro de la Caja, preferiblemente haciendo el menor movimiento posible'
+              },
+              "Четыре в ряд": {
+                "en": "Four in a row",
+                "es": "Cuatro en una fila"
+              },
+              "Пятнашки": {
+                "en": "15puzzle",
+                "es": "15puzzle"
+              },
+              "которые периодически появляются на короткое время": {
+                "en": "which periodically appear for a short time",
+                "es": "que aparecen periódicamente por un corto tiempo"
+              },
+              "Игра на реакцию": {
+                "en": "Reaction game",
+                "es": "Juego de reacción"
+              },
+              "Не допустите приближение к вам злых пауков": {
+                "en": "Don't let the evil spiders get close to you",
+                "es": "No dejes que las arañas malvadas se acerquen a ti"
+              },
+              "защищаясь от них": {
+                "en": "defend yourself from them",
+                "es": "defiéndete de ellas"
+              },
+              "Игра на бдительность и смекалку": {
+                "en": "A game of vigilance and ingenuity",
+                "es": "Un juego de vigilancia e ingenio"
+              },
+              "найдите три шара": {
+                "en": "find three balls",
+                "es": "encuentra tres bolas"
+              },
+              "которые могут соответствовать описанию игры": {
+                "en": "that may match the game description",
+                "es": "que pueden coincidir con la descripción del juego"
+              },
+              "Косынка": {
+                "en": "Solitaire",
+                "es": "Solitario"
+              },
+              "Классическая карточная игра": {
+                "en": "Classic card game",
+                "es": "Juego de cartas clásico"
+              },
+              "Смысл игры заключается в том, что нужно собрать 4 масти: от туза до короля": {
+                "en": "The goal of the game is to collect 4 suits: from ace to king",
+                "es": "El objetivo del juego es recoger 4 palos: del as al rey"
+              },
+              "Генерируется рандомный лабиринт": {
+                "en": "A random labyrinth is generated",
+                "es": "Se genera un laberinto aleatorio"
+              },
+              "в котором ваш шарик весело скатывается": {
+                "en": "in which your ball rolls merrily",
+                "es": "en el que tu bola rueda alegremente"
+              },
+              "попадая в специальные лунки": {
+                "en": "falling into special holes",
+                "es": "cayendo en agujeros especiales"
+              },
+              "но вам нужно суметь дойти до конечной точки": {
+                "en": "but you need to reach the end point",
+                "es": "pero necesitas llegar al punto final"
+              },
+              "Перемещайте курсор мыши по появляющимся блокам": {
+                "en": "Move the mouse cursor over the appearing blocks",
+                "es": "Mueve el cursor del ratón sobre los bloques que aparecen"
+              },
+              "и не выходите за их пределы": {
+                "en": "and don't go beyond them",
+                "es": "y no salgas de ellos"
+              },
+              "Главное - не торопиться": {
+                "en": "The main thing is not to rush",
+                "es": "Lo principal es no apresurarse"
+              },
+              "Найдите ближайшую сгенерированную желтую точку": {
+                "en": "Find the nearest generated yellow dot",
+                "es": "Encuentra el punto amarillo generado más cercano"
+              },
+              "Игра на развитие глазомера": {
+                "en": "A game to develop your eye",
+                "es": "Un juego para desarrollar tu ojo"
+              },
+              "Самая классическая браузерная игра": {
+                "en": "The most classic browser game",
+                "es": "El juego de navegador más clásico"
+              },
+              "Цель игры — преодолеть как можно большее расстояние": {
+                "en": "The goal of the game is to cover as much distance as possible",
+                "es": "El objetivo del juego es cubrir la mayor distancia posible"
+              },
+              "прыгая через препятствия": {
+                "en": "by jumping over obstacles",
+                "es": "saltando obstáculos"
+              },
+              "такие как кактусы и птеродактили": {
+                "en": "such as cacti and pterodactyls",
+                "es": "como cactus y pterodáctilos"
+              },
+              "Змейка": {
+                "en": "Snake",
+                "es": "Serpiente"
+              },
+              "Цель игры — накормить змейку": {
+                "en": "The goal of the game is to feed the snake",
+                "es": "El objetivo del juego es alimentar a la serpiente"
+              },
+              "сделав её как можно длиннее": {
+                "en": "making it as long as possible",
+                "es": "haciéndola lo más larga posible"
+              },
+              "Оплата прошла": {
+                "en": "Payment completed",
+                "es": "Pago completado"
+            },
+            "Поздравляем": {
+                "en": "Congratulations",
+                "es": "Felicidades"
+            },
+            "Спасибо за покупку": {
+                "en": "Thank you for your purchase",
+                "es": "Gracias por su compra"
+            },
+            "Чек платежа": {
+                "en": "Payment receipt",
+                "es": "Recibo de pago"
+            },
+            "Тип доната": {
+                "en": "Donation type",
+                "es": "Tipo de donación"
+            },
+            "Игрок управляет машиной и должен избегать столкновений с другими машинами": {
+                "en": "The player controls a car and must avoid collisions with other cars",
+                "es": "El jugador controla un coche y debe evitar colisiones con otros coches"
+            },
+            "Убегайте от препятствий, преодолевая их через прыжок": {
+                "en": "Escape obstacles by jumping over them",
+                "es": "Evita los obstáculos saltando sobre ellos"
+            },
+            "Классическая игра змейка": {
+                "en": "Classic snake game",
+                "es": "Juego clásico de la serpiente"
+            },
+            "Цель игры - собрать максимальное количество точек и не столкнуться с собственным телом": {
+                "en": "The goal is to collect as many points as possible and not collide with your own body",
+                "es": "El objetivo es recoger la mayor cantidad de puntos posible y no chocar con tu propio cuerpo"
+            },
+            "Простая аркада с препятствиями и бонусами": {
+                "en": "Simple arcade game with obstacles and bonuses",
+                "es": "Juego de arcade simple con obstáculos y bonificaciones"
+            },
+            "Классическая игра в Тетрис": {
+                "en": "Classic Tetris game",
+                "es": "Juego clásico de Tetris"
+            },
+            "Ставьте блоки так, чтобы образовывались сплошные линии": {
+                "en": "Place blocks to form complete lines",
+                "es": "Coloca los bloques para formar líneas completas"
+            },
+            "Цель игры - открыть все клетки поля, не наткнувшись на мины": {
+                "en": "The goal of the game is to uncover all the cells on the field without hitting any mines",
+                "es": "El objetivo del juego es descubrir todas las celdas del campo sin tropezar con minas"
+            },
+            "Классическая карточная игра на 21 очко": {
+                "en": "Classic card game of 21 points",
+                "es": "Juego de cartas clásico de 21 puntos"
+            },
+            "Игрокам раздаются карты, и они должны собрать комбинацию ближе к 21 очку, чем у дилера": {
+                "en": "Players are dealt cards and must get a combination closer to 21 points than the dealer",
+                "es": "A los jugadores se les reparten cartas y deben obtener una combinación más cercana a 21 puntos que el crupier"
+            },
+            "Занять больше территории на игровом поле, чем противник": {
+                "en": "Claim more territory on the game board than the opponent",
+                "es": "Reclama más territorio en el tablero de juego que el oponente"
+            },
+            "Собирайте числа одинаковых блоков для увеличения их значения вдвое": {
+                "en": "Combine numbers of identical blocks to double their value",
+                "es": "Combina números de bloques idénticos para duplicar su valor"
+            },
+            "Как добавить сюда свою игру": {
+                "en": "How to add your game here",
+                "es": "Cómo agregar tu juego aquí"
+            },
+            "Старшая администрация обязательно рассмотрит ваше предложение, если ваша игра будет добавлена, то вы получите сладкую награду на нашей платформе": {
+                "en": "Senior administration will definitely consider your proposal, and if your game is added, you will receive a sweet reward on our platform",
+                "es": "La administración superior considerará su propuesta, y si se agrega su juego, recibirá una dulce recompensa en nuestra plataforma"
+            },
+              "Испытайте свои навыки вождения и реакцию": {
+                "en": "Test your driving skills and reaction",
+                "es": "Prueba tus habilidades de conducción y reacción"
+              },
+              "преодолевая различные уровни": {
+                "en": "by overcoming various levels",
+                "es": "superando varios niveles"
+              },
+              "соревнуясь за лучшее время": {
+                "en": "competing for the best time",
+                "es": "compitiendo por el mejor tiempo"
+              },
+
+              "Когда две плитки, содержащие одинаковое число, сталкиваются": {
+                "en": "When two tiles containing the same number collide",
+                "es": "Cuando dos fichas con el mismo número chocan"
+              },
+              "они сливаются, превращаясь в одну плитку": {
+                "en": "they merge into one tile",
+                "es": "se fusionan en una ficha"
+              },
+              "Успеете перебежать дорогу с летящими жучками": {
+                "en": "Can you cross the road with flying bugs",
+                "es": "Puedes cruzar la carretera con insectos voladores"
+              },
+              "После каждого успешно прохождения дороги ваш уровень увеличивается": {
+                "en": "After each successful crossing, your level increases",
+                "es": "Después de cada cruce exitoso, tu nivel aumenta"
+              },
+              "Задача игрока — заполнять полностью ряды": {
+                "en": "The player's task is to completely fill rows",
+                "es": "La tarea del jugador es llenar completamente las filas"
+              },
+              "ускорять их исчезновение": {
+                "en": "to speed up their disappearance",
+                "es": "acelerar su desaparición"
+              },
+              "получать за них очки": {
+                "en": "to get points for them",
+                "es": "obtener puntos por ellos"
+              },
+              "Как только всё игровое поле заполнится рядами с пустотами": {
+                "en": "As soon as the entire playing field is filled with rows with gaps",
+                "es": "Tan pronto como todo el campo de juego se llene de filas con huecos"
+              },
+              "игра закончится": {
+                "en": "the game will end",
+                "es": "el juego terminará"
+              },
+              "Сапер": {
+                "en": "Minesweeper",
+                "es": "Buscaminas"
+              },
+              "Классическая компьютерная игра": {
+                "en": "Classic computer game",
+                "es": "Juego de computadora clásico"
+              },
+              "Цель игры – вскрыть пустые ячейки": {
+                "en": "The goal of the game is to uncover empty cells",
+                "es": "El objetivo del juego es descubrir celdas vacías"
+              },
+              "не вскрыв при этом ни одной, содержащей мину": {
+                "en": "without uncovering any containing a mine",
+                "es": "sin descubrir ninguna que contenga una mina"
+              },
+              "Игра на захват территории": {
+                "en": "A game of territory capture",
+                "es": "Un juego de captura de territorio"
+              },
+              "Камень или прочно связанная группа камней одного цвета захватывается и удаляется с игрового поля": {
+                "en": "A stone or a tightly connected group of stones of one color is captured and removed from the playing field",
+                "es": "Una piedra o un grupo de piedras fuertemente conectadas de un color es capturado y eliminado del campo de juego"
+              },
+              "когда все перекрестки заняты противником": {
+                "en": "when all intersections are occupied by the opponent",
+                "es": "cuando todas las intersecciones están ocupadas por el oponente"
+              },
+              "Цель игры в блэкджек — набрать комбинацию карт": {
+                "en": "The goal of the blackjack game is to get a combination of cards",
+                "es": "El objetivo del juego de blackjack es obtener una combinación de cartas"
+              },
+              "сумма очков которых ближе всего к 21": {
+                "en": "the total points of which are closest to 21",
+                "es": "cuyo total de puntos es más cercano a 21"
+              },
+              "но не превышает это число": {
+                "en": "but does not exceed this number",
+                "es": "pero no excede este número"
+              },
+              "Игроки соревнуются с дилером, а не друг с другом": {
+                "en": "Players compete with the dealer, not with each other",
+                "es": "Los jugadores compiten con el crupier, no entre sí"
+              },
+            "Участники разговора": {
+                "en": "Conversation participants",
+                "es": "Participantes de la conversación"
+            },
+            "Что вы хотите поговорить": {
+                "en": "What do you want to talk about",
+                "es": "De qué quieres hablar"
+            },
+            "Отправить пользователю уведомление о том": {
+                "en": "Send a notification to the user about",
+                "es": "Enviar una notificación al usuario sobre"
+            },
+            "который продлился": {
+                "en": "the duration",
+                "es": "la duración"
+            },
+            "Вы завершили звонок с пользователем": {
+                "en": "You have ended the call with the user",
+                "es": "Has finalizado la llamada con el usuario"
+            },
+            "Вы успешно отправили пользователю уведомление": {
+                "en": "You have successfully sent a notification to the user",
+                "es": "Has enviado con éxito una notificación al usuario"
+            },
+            "Не перебивайте собеседника, иначе вы его не услышите": {
+                "en": "Do not interrupt the interlocutor, otherwise you will not hear them",
+                "es": "No interrumpas al interlocutor, de lo contrario no lo escucharás"
+            },
+            "Вы можете отправлять уведомления не чаще, чем раз в 5 минут": {
+                "en": "You can send notifications no more than once every 5 minutes",
+                "es": "Puedes enviar notificaciones no más de una vez cada 5 minutos"
+            },
+            "Панели поиска": {
+                "en": "Search panels",
+                "es": "Paneles de búsqueda"
+            },
+            "Начать запись": {
+                "en": "Start recording",
+                "es": "Comenzar a grabar"
+            },
+            "Запись идет": {
+                "en": "Recording in progress",
+                "es": "Grabación en curso"
+            },
+            "Найти друга по имени можно в": {
+                "en": "You can find a friend by name in",
+                "es": "Puedes encontrar a un amigo por nombre en"
+            },
+            "Используемый язык": {
+                "en": "Language used",
+                "es": "Idioma utilizado"
+            },
+            "Управление соц.сетью": {
+                "en": "Social network management",
+                "es": "Gestión de redes sociales"
+            },
+            "Перейти на другой аккаунт": {
+                "en": "Switch to another account",
+                "es": "Cambiar a otra cuenta"
+            },
+            "Назначить технические работы": {
+                "en": "Schedule maintenance",
+                "es": "Programar mantenimiento"
+            },
+            "База данных": {
+                "en": "Database",
+                "es": "Base de datos"
+            },
+            "Логи": {
+                "en": "Logs",
+                "es": "Registros"
+            },
+            "Удачный вход": {
+                "en": "Successful login",
+                "es": "Inicio de sesión exitoso"
+            },
+            "Оформление профиля": {
+                "en": "Profile setup",
+                "es": "Configuración del perfil"
+            },
+            "Включение отправки письма на почту при авторизации": {
+                "en": "Enable email notification upon login",
+                "es": "Habilitar notificación por correo electrónico al iniciar sesión"
+            },
+            "Здесь вы можете настроить отправку подтверждающего письма на электронную почту при каждой авторизации в вашем аккаунте": {
+                "en": "Here you can set up sending a confirmation email upon each login to your account",
+                "es": "Aquí puedes configurar el envío de un correo electrónico de confirmación cada vez que inicies sesión en tu cuenta"
+            },
+            "Отключить отправку подтверждающего письма при авторизации": {
+                "en": "Disable email confirmation upon login",
+                "es": "Deshabilitar confirmación por correo electrónico al iniciar sesión"
+            },
+            "После включения этой функции вам будет приходить письмо на почту с уникальной ссылкой, по которой вам необходимо будет перейти, чтобы завершить процесс авторизации": {
+                "en": "After enabling this feature, you will receive an email with a unique link that you need to follow to complete the login process",
+                "es": "Después de habilitar esta función, recibirás un correo electrónico con un enlace único que debes seguir para completar el proceso de inicio de sesión"
+            },
+            "После отключения этой функции вам больше не будет приходить письмо на почту с подтверждением авторизации, доступ к вашему аккаунту можно будет получить лишь введя пароль от него": {
+                "en": "After disabling this feature, you will no longer receive a confirmation email upon login; access to your account will be granted only by entering the password",
+                "es": "Después de deshabilitar esta función, ya no recibirás un correo electrónico de confirmación al iniciar sesión; el acceso a tu cuenta solo se otorgará ingresando la contraseña"
+            },
+            "Это дополнительная мера безопасности, которая позволяет убедиться, что вход в аккаунт происходит именно вами": {
+                "en": "This is an additional security measure to ensure that the account login is performed by you",
+                "es": "Esta es una medida de seguridad adicional para garantizar que el inicio de sesión en la cuenta lo realices tú"
+            },
+            'До начала этого события': {
+                'en': 'Before the start of this event',
+                'es': 'Antes del inicio de este evento'
+            },
+            'еще долго': {
+                'en': 'still long',
+                'es': 'aún mucho tiempo'
+            },
+            'Ожидайте': {
+                'en': 'Expect',
+                'es': 'Espera'
+            },
+            'Событие уже началось': {
+                'en': 'The event has already begun',
+                'es': 'El evento ya ha comenzado'
+            },
+            'Создано новое обращение в тех.поддержку': {
+                'en': 'A new support ticket has been created',
+                'es': 'Se ha creado un nuevo ticket de soporte'
+              },
+            'ждут это событие': {
+                'en': 'waiting for this event',
+                'es': 'esperando este evento'
+            },
+            'я жду!': {
+                'en': 'Wait.',
+                'es': 'Esper.'
+            },
+            'Вы и еще': {
+                'en': 'You and still',
+                'es': 'Tú y aún'
+            },
+            'запросы в друзья': {
+                'en': 'friend requests',
+                'es': 'solicitudes de amistad'
+            },
+            'пост находится в архиве': {
+                'en': 'the post is in the archive',
+                'es': 'la publicación está en el archivo'
+            },
+            
+            'под ником': {
+                'en': 'under the nickname',
+                'es': 'bajo el apodo'
+            },
+            'опубликовал у себя на странице новый': {
+                'en': 'posted a new one on his page',
+                'es': 'publicó uno nuevo en su página'
+            },
+            'начнется через': {
+                'en': 'will start in',
+                'es': 'comenzará en'
+            },
+            
+            'Пожалуйста, используйте это время для размышлений и прочтите еще раз наше': {
+                'en': 'Please use this time for reflection and read our user agreement again',
+                'es': 'Por favor, use este tiempo para reflexionar y vuelva a leer nuestro acuerdo de usuario'
+            },
+            'а также избегайте нарушений правил сообщества в будущем': {
+                'en': 'and also avoid violating community rules in the future.',
+                'es': 'y también evite violar las reglas de la comunidad en el futuro'
+            },
+            'Это временное наказание из-за нарушения правил платформы. Просим вас внимательно ознакомиться с': {
+                'en': 'This is a temporary punishment for violating the platform`s rules. We ask you to carefully read',
+                'es': 'Esta es una sanción temporal por violar las reglas de la plataforma. Le pedimos que lea cuidadosamente'
+            },
+            'И соблюдать их в дальнейшем': {
+                'en': 'And follow them in the future',
+                'es': 'Y seguirlos en el futuro'
+            },
+            'Рейтинг не сформирован': {
+                'en': 'The rating has not been formed',
+                'es': 'Calificación no formada'
+            },
+            'Информация отсутствует': {
+                'en': 'There is no information available',
+                'es': 'No se dispone de información'
+            },
+            'Из-за серьезного нарушения правил, ваш аккаунт был забанен на такой долгий срок': {
+                'en': 'Due to a serious violation of the rules, your account has been banned for such a long period',
+                'es': 'Debido a una violación grave de las reglas, su cuenta ha sido prohibida por un período tan largo'
+            },
+            'К сожалению, из-за многократных или серьезных нарушений, ваш аккаунт был заблокирован навсегда': {
+                'en': 'Unfortunately, due to multiple or serious violations, your account has been permanently blocked',
+                'es': 'Desafortunadamente, debido a múltiples o graves violaciones, su cuenta ha sido bloqueada permanentemente'
+            },
+            'Это возможно окончательное решение, и вы больше не сможете использовать наши услуги': {
+                'en': 'This may be a final decision, and you will no longer be able to use our services',
+                'es': 'Esta puede ser una decisión final y ya no podrá usar nuestros servicios'
+            },
+            'К сожалению, из-за многократных или серьезных нарушений, ваш аккаунт был заблокирован навсегда': {
+                'en': 'Unfortunately, due to multiple or serious violations, your account has been permanently blocked',
+                'es': 'Desafortunadamente, debido a múltiples o graves violaciones, su cuenta ha sido bloqueada permanentemente'
+            },
+            'Это возможно окончательное решение, и вы больше не сможете использовать наши услуги': {
+                'en': 'This may be a final decision, and you will no longer be able to use our services',
+                'es': 'Esta puede ser una decisión final y ya no podrá usar nuestros servicios'
+            },
+            'Пожалуйста, обратите внимание на соблюдение правил в других онлайн-сообществах': {
+                'en': 'Please pay attention to compliance with the rules in other online communities',
+                'es': 'Por favor, preste atención al cumplimiento de las reglas en otras comunidades en línea'
+            },
+            'Ваш аккаунт был заблокирован за нарушения условий его создания': {
+                'en': 'Your account has been blocked for violating the terms of its creation',
+                'es': 'Su cuenta ha sido bloqueada por violar los términos de su creación'
+            },
+            'Это вы можете уточнить в': {
+                'en': 'You can clarify this in',
+                'es': 'Puede aclarar esto en'
+            },
+            'Это решение было принято старшей Администрацией платформы и оно никак не может быть опровергнуто': {
+                'en': 'This decision was made by the senior administration of the platform and it cannot be refuted in any way',
+                'es': 'Esta decisión fue tomada por la administración superior de la plataforma y no puede ser refutada de ninguna manera'
+            },
+            'потому как вы совершили серьезнейшее нарушение, о котором вы, скорей всего, должны знать и понимать': {
+                'en': 'because you committed a very serious violation, which you probably should know and understand',
+                'es': 'porque cometió una violación muy grave, que probablemente debería conocer y entender'
+            },
+            'Вы были забанены на этом форуме пользователем': {
+                'en': 'You have been banned from this forum by a user',
+                'es': 'Usted ha sido Prohibido en este foro por un usuario'
+            },
+            'Вы были забанены на этом форуме за нарушения наших правил': {
+                'en': 'You have been banned from this forum for violating our rules',
+                'es': 'Usted ha sido Prohibido en este foro por violar nuestras reglas'
+            },
+            "не можете отправлять ему сообщения": {
+                "en": "You cannot send him messages",
+                "es": "No puedes enviarle mensajes"
+            },
+            "Выбран часовой пояс": {
+                "en": "Time zone selected",
+                "es": "Zona horaria seleccionada"
+            },
+            "Пользователь уже у вас в друзьях": {
+                "en": "The user is already your friend",
+                "es": "El usuario ya está en tu lista de amigos"
+            },
+            "Пользователь отключил мессенджер": {
+                "en": "The user has disabled the messenger",
+                "es": "El usuario ha desactivado el mensajero"
+            },
+            "Пользователь вас заблокировал": {
+                "en": "The user has blocked you",
+                "es": "El usuario te ha bloqueado"
+            },
+            "Вы заблокировали этого пользователя": {
+                "en": "You have blocked this user",
+                "es": "Has bloqueado a este usuario"
+            },
+            "опубликовал здесь": {
+                "en": "posted here",
+                "es": "publicó aquí"
+            },
+            "Включить мессенджер": {
+                "en": "Enable messenger",
+                "es": "Habilitar mensajero"
+            },
+            "Удалить свою аватарку": {
+                "en": "Delete your avatar",
+                "es": "Eliminar tu avatar"
+            },
+            "Удалить свою шапку профиля": {
+                "en": "Delete your profile header",
+                "es": "Eliminar tu encabezado de perfil"
+            },
+            "Вернуться в чаты": {
+                "en": "Return to chats",
+                "es": "Volver a los chats"
+            },
+            "Пользователь находится в вашем черном списке": {
+                "en": "The user is in your blacklist",
+                "es": "El usuario está en tu lista negra"
+            },
+            "Вы находитесь у этого пользователя в черном списке": {
+                "en": "You are in this user's blacklist",
+                "es": "Estás en la lista negra de este usuario"
+            },
+            "Пользователь запретил публикацию новостей у себя на странице": {
+                "en": "The user has disabled posting on their page",
+                "es": "El usuario ha deshabilitado la publicación en su página"
+            },
+            "Вы опубликовали слишком много постов за последнее время": {
+                "en": "You have posted too many posts recently",
+                "es": "Has publicado demasiados posts recientemente"
+            },
+            "Показать еще": {
+                "en": "Show more",
+                "es": "Mostrar más"
+            },
+            "Пожаловаться на кибератаки аккаунта": {
+                "en": "Report account cyber attacks",
+                "es": "Informar sobre ataques cibernéticos a la cuenta"
+            },
+            "Выбранное или загруженное вами изображение будет использоваться как аватар для вашего аккаунта": {
+                "en": "The selected or uploaded image will be used as your account avatar",
+                "es": "La imagen seleccionada o subida se utilizará como el avatar de tu cuenta"
+            },
+            "Превышен лимит на публикацию событий": {
+                "en": "Event posting limit exceeded",
+                "es": "Límite de publicación de eventos superado"
+            },
+            "Мессенджер отключен": {
+                "en": "Messenger is disabled",
+                "es": "El mensajero está deshabilitado"
+            },
+            "Удалите свои уже завершившиеся события для освобождения места": {
+                "en": "Delete your finished events to free up space",
+                "es": "Elimina tus eventos finalizados para liberar espacio"
+            },
+            "Выберите изображение для аватарки": {
+                "en": "Choose an image for the avatar",
+                "es": "Elige una imagen para el avatar"
+            },
+            "Азартный типаж": {
+                "en": "Gambling type",
+                "es": "Tipo jugador"
+            },
+            "Почистить чат": {
+                "en": "Clean chat",
+                "es": "Limpiar chat"
+            },
+            "Попробуйте позже": {
+                "en": "Try again later",
+                "es": "Inténtalo más tarde"
+            },
+            "Вы владелец этого форума": {
+                "en": "You are the owner of this forum",
+                "es": "Eres el propietario de este foro"
+            },
+            "Вы не можете на форум добавить такого пользователя": {
+                "en": "You cannot add such a user to the forum",
+                "es": "No puedes agregar a ese usuario al foro"
+            },
+            "Очистка чата": {
+                "en": "Chat cleaning",
+                "es": "Limpieza de chat"
+            },
+            "вы находитесь у него в черном списке": {
+                "en": "you are in his blacklist",
+                "es": "estás en su lista negra"
+            },
+            "вы добавили его в черный список": {
+                "en": "you have added him to the blacklist",
+                "es": "lo has agregado a la lista negra"
+            },
+            "Этот форум был заблокирован модератором": {
+                "en": "This forum has been blocked by a moderator",
+                "es": "Este foro ha sido bloqueado por un moderador"
+            },
+            "Этот форум был добавлен в архив и не доступен в общем доступе": {
+                "en": "This forum has been archived and is not publicly accessible",
+                "es": "Este foro ha sido archivado y no es accesible públicamente"
+            },
+            "подождите немного перед созданием следующего форума": {
+                "en": "wait a little before creating the next forum",
+                "es": "espera un poco antes de crear el próximo foro"
+            },
+            "Похоже вы создали слишком много форумов за короткий промежуток времени": {
+                "en": "It seems you have created too many forums in a short period of time",
+                "es": "Parece que has creado demasiados foros en un corto período de tiempo"
+            },
+            "Превышен лимит выдачи наказаний": {
+                "en": "Punishment issuance limit exceeded",
+                "es": "Límite de emisión de sanciones superado"
+            },
+            "Недостаточно NodeGems для проведения операции": {
+                "en": "Not enough NodeGems to complete the operation",
+                "es": "No hay suficientes NodeGems para completar la operación"
+            },
+            "Вы достигли максимально возможного количества добавленных вкладок": {
+                "en": "You have reached the maximum number of added tabs",
+                "es": "Has alcanzado el número máximo de pestañas añadidas"
+            },
+            'Если вы считаете, что вы были заблокированы неверно или ошибочно, то вы можете подать аппеляцию по восстановлению в нашу поддержку': {
+                'en': 'If you believe that you were blocked incorrectly or mistakenly, you can appeal for restoration to our support',
+                'es': 'Si cree que fue bloqueado incorrecta o erróneamente, puede apelar para su restauración a nuestro soporte'
+            },
+            'Аккаунт был заблокирован': {
+                'en': 'The account has been blocked',
+                'es': 'La cuenta ha sido bloqueada'
+            },
+            'Данный аккаунт был забанен за нарушение правил использования нашей социальной сети': {
+                'en': 'This account has been banned for violating the rules of our social network',
+                'es': 'Esta cuenta ha sido prohibida por violar las reglas de nuestra red social'
+            },
+            'Навсегда, без возможности восстановления': {
+                'en': 'Forever, with no possibility of recovery',
+                'es': 'Para siempre, sin posibilidad de recuperación'
+            },
+            'Покупка разбана': {
+                'en': 'Unban purchase',
+                'es': 'Compra de desbaneo'
+            },
+            'Был забанен': {
+                'en': 'Was banned',
+                'es': 'Fue prohibido'
+            },
+            'Кто забанил': {
+                'en': 'Who banned',
+                'es': 'Quién prohibió'
+            },
+            'Время бана': {
+                'en': 'Ban time',
+                'es': 'Hora de prohibición'
+            },
+            'Фатальная угроза безопасности аккаунта': {
+                'en': 'Fatal account security threat',
+                'es': 'Amenaza fatal para la seguridad de la cuenta'
+            },
+            'Было предпринято более сотни попыток авторизации на ваш аккаунт, немедленно смените пароль на более надежный и обратитесь в тех.поддержку': {
+                'en': 'More than a hundred login attempts have been made to your account, immediately change your password to a more secure one and contact technical support',
+                'es': 'Se han realizado más de cien intentos de inicio de sesión en su cuenta, cambie inmediatamente su contraseña por una más segura y contacte con soporte técnico'
+            },
+            'Аккаунт под угрозой': {
+                'en': 'Account at risk',
+                'es': 'Cuenta en peligro'
+            },
+            'Недавно на ваш ник аккаунта было приложено десятки попыток авторизации, если это были не вы - незамедлительно обновите пароль': {
+                'en': 'Dozens of login attempts have recently been made to your account name, if it wasn\'t you - immediately update your password',
+                'es': 'Se han realizado docenas de intentos de inicio de sesión recientemente con su nombre de cuenta, si no fue usted - actualice su contraseña de inmediato'
+            },
+            "Пригласи друга": {
+                "en": "Invite a friend",
+                "es": "¡Invita a un amigo"
+            },
+            "Создайте реферальное приглашение для своего друга": {
+                "en": "Create a referral invitation for your friend",
+                "es": "Crea una invitación de referencia para tu amigo"
+            },
+            "Скопировать ссылку": {
+                "en": "Copy link",
+                "es": "Copiar enlace"
+            },
+            "Командный Спирит": {
+                "en": "Team Spirit",
+                "es": "¡Espíritu de equipo"
+            },
+            "Пригласите на нашу платформу 3 пользователей": {
+                "en": "Invite 3 users to our platform",
+                "es": "Invita a 3 usuarios a nuestra plataforma"
+            },
+            "Соц.сеть для всех": {
+                "en": "Social Network for Everyone",
+                "es": "¡Red social para todos"
+            },
+            "Пригласите на нашу платформу 10 пользователей и получите хорошую награду": {
+                "en": "Invite 10 users to our platform and get a great reward",
+                "es": "¡Invita a 10 usuarios a nuestra plataforma y obtén una gran recompensa"
+            },
+            "Гонка за временем": {
+                "en": "Race Against Time",
+                "es": "Carrera contra el tiempo"
+            },
+            "Выполните 5 временных заданий, которые появляются каждый день": {
+                "en": "Complete 5 time-limited tasks that appear every day",
+                "es": "Completa 5 tareas limitadas por tiempo que aparecen cada día"
+            },
+            "Временной Воин": {
+                "en": "Time Warrior",
+                "es": "Guerrero del tiempo"
+            },
+            "Выполните 20 временных заданий": {
+                "en": "Complete 20 time-limited tasks",
+                "es": "Completa 20 tareas limitadas por tiempo"
+            },
+            "Безупречные Пути": {
+                "en": "Perfect Paths",
+                "es": "¡Caminos perfectos"
+            },
+            "Постройте маршрут для поезда до конечной точки на стандартной сложности в игре": {
+                "en": "Build a route for the train to the final point at standard difficulty in the game",
+                "es": "Construye una ruta para el tren hasta el punto final en dificultad estándar en el juego"
+            },
+            "Башня до Небес": {
+                "en": "Tower to the Heavens",
+                "es": "Torre hasta el cielo"
+            },
+            "Постройте башню высотой 20 блоков, не уронив ни одного блока в игре": {
+                "en": "Build a tower 20 blocks high without dropping a single block in the game",
+                "es": "Construye una torre de 20 bloques de altura sin dejar caer un solo bloque en el juego"
+            },
+            "Круговое Испытание": {
+                "en": "Circular Challenge",
+                "es": "Desafío circular"
+            },
+            "Пройдите 15 кругов, не столкнувшись ни с одним автомобилем в игре": {
+                "en": "Complete 15 laps without hitting any cars in the game",
+                "es": "Completa 15 vueltas sin chocar con ningún coche en el juego"
+            },
+            "Блокобой": {
+                "en": "Blockbuster",
+                "es": "Rompebloques"
+            },
+            "Наберите 300 очков в игре": {
+                "en": "Score 300 points in the game",
+                "es": "Anota 300 puntos en el juego"
+            },
+            "Мастер Прыжков": {
+                "en": "Jump Master",
+                "es": "Maestro del salto"
+            },
+            "Сделайте 30 прыжков, не упав в пропасть, в игре": {
+                "en": "Make 30 jumps without falling into the abyss in the game",
+                "es": "Haz 30 saltos sin caer en el abismo en el juego"
+            },
+            "Охотник на Кроликов": {
+                "en": "Rabbit Hunter",
+                "es": "Cazador de conejos"
+            },
+            "Поймайте 20 кроликов за 1 раунд в игре": {
+                "en": "Catch 20 rabbits in one round in the game",
+                "es": "Atrapa 20 conejos en una ronda en el juego"
+            },
+            "Мастер Путей": {
+                "en": "Path Master",
+                "es": "Maestro del camino"
+            },
+            "Соедините правильный маршрут 20 раз в игре": {
+                "en": "Connect the correct route 20 times in the game",
+                "es": "Conecta la ruta correcta 20 veces en el juego"
+            },
+            "Линия за Линией": {
+                "en": "Line by Line",
+                "es": "Línea por línea"
+            },
+            "Соберите 10 сплошных линий в игре": {
+                "en": "Collect 10 solid lines in the game",
+                "es": "Recoge 10 líneas continuas en el juego"
+            },
+            'Деактивировать аккаунт': {
+                'en': 'Deactivate account',
+                'es': 'Desactivar cuenta'
+            },
+            'Выйти из аккаунта': {
+                'en': 'Log out',
+                'es': 'Cerrar sesión'
+            },
+            'Управление аккаунтом': {
+                'en': 'Account management',
+                'es': 'Gestión de la cuenta'
+            },
+            'Верификация аккаунта': {
+                'en': 'Account verification',
+                'es': 'Verificación de cuenta'
+            },
+            'Дополнительные настройки': {
+                'en': 'Additional settings',
+                'es': 'Configuraciones adicionales'
+            },
+            
+            'Разрешить пользователям звонить мне': {
+                'en': 'Allow users to call me',
+                'es': 'Permitir a los usuarios llamarme'
+            },
+            'Разрешить показывать меня в панели для поиска пользователей': {
+                'en': 'Allow showing me in the user search panel',
+                'es': 'Permitir mostrarme en el panel de búsqueda de usuarios'
+            },
+            'Скрыть меня в панели для поиска пользователей': {
+                'en': 'Hide me in the user search panel',
+                'es': 'Ocultarme en el panel de búsqueda de usuarios'
+            },
+            'Запретить пользователям звонить мне': {
+                'en': 'Prohibit users from calling me',
+                'es': 'Prohibir a los usuarios llamarme'
+            },
+            'Бесплатный сыр не только в мышеловке!': {
+                'en': 'Get 5 free gifts by visiting our platform every day!',
+                'es': '¡Obtén 5 regalos gratis visitando nuestra plataforma todos los días!'
+            },
+            'Раскрой свою личность': {
+                'en': 'Complete your profile with interesting information about yourself',
+                'es': 'Completa tu perfil con información interesante sobre ti mismo'
+            },
+            'Первый контакт': {
+                'en': 'Add your first friend',
+                'es': 'Agrega tu primer amigo'
+            },
+            'Дружба на все времена': {
+                'en': 'Find 5 friends',
+                'es': 'Encuentra 5 amigos'
+            },
+            'Дружба без границ': {
+                'en': 'Find 15 friends',
+                'es': 'Encuentra 15 amigos'
+            },
+            'Охота за контактами': {
+                'en': 'Find 50 friends',
+                'es': 'Encuentra 50 amigos'
+            },
+            'Камень в Озере': {
+                'en': 'Publish your first',
+                'es': 'Publica tu primer'
+            },
+            'Первый Пост, Первая Волна!': {
+                'en': 'post',
+                'es': 'post'
+            },
+            'Соцмагистраль': {
+                'en': 'Publish 10',
+                'es': 'Publica 10'
+            },
+            'Запрещены сцены чрезмерного насилия, жестокости и иных действий, способных шокировать или оскорбить других пользователей': {
+                'en': 'Scenes of excessive violence, cruelty, and other actions that may shock or offend other users are prohibited',
+                'es': 'Se prohíben escenas de violencia excesiva, crueldad y otras acciones que puedan impactar u ofender a otros usuarios'
+              },
+              'Сюжеты не должны содержать ненавистнические высказывания, оскорбления, темы сексуального характера и ненормативную лексику': {
+                'en': 'Stories must not contain hate speech, insults, sexual content, or profanity',
+                'es': 'Las historias no deben contener discursos de odio, insultos, temas sexuales o lenguaje inapropiado'
+              },
+              'Стремитесь к созданию качественного контента': {
+                'en': 'Strive to create high-quality content',
+                'es': 'Esfuércese por crear contenido de alta calidad'
+              },
+              'Запрещено плагиаторство': {
+                'en': 'Plagiarism is prohibited',
+                'es': 'El plagio está prohibido'
+              },
+              'За действительно качественные сюжеты вы можете получить награду': {
+                'en': 'You can receive a reward for truly high-quality stories',
+                'es': 'Puede recibir una recompensa por historias de alta calidad'
+              },
+              'Попробуйте написать что-то новое или доработайте этот и опубликуйте его снова': {
+                'en': 'Try writing something new or refine this one and publish it again',
+                'es': 'Intente escribir algo nuevo o refine este y publíquelo nuevamente'
+              },
+              'Избегайте публикации коротких, неразработанных или неинтересных сюжетов, которые могут не вызвать интереса у читателей': {
+                'en': 'Avoid publishing short, underdeveloped, or uninteresting stories that may not engage readers',
+                'es': 'Evite publicar historias cortas, poco desarrolladas o poco interesantes que puedan no atraer a los lectores'
+              },
+              'Доступ только по ссылке': {
+                'en': 'Access by link only',
+                'es': 'Acceso solo por enlace'
+              },
+              'Сначала популярные': {
+                'en': 'Popular first',
+                'es': 'Primero populares'
+              },
+              'Сначала новые': {
+                'en': 'New first',
+                'es': 'Primero nuevos'
+              },
+              'Непросмотренные': {
+                'en': 'Unviewed',
+                'es': 'No vistos'
+              },
+              'Мы очень ценим ваше старание и креативность, но в данный момент мы решили, что сюжет требует некоторых улучшений, чтобы стать более привлекательным для нашей аудитории и по-этому ограничили к нему доступ для других пользователей': {
+                'en': 'We greatly appreciate your effort and creativity, but at the moment we have decided that the story needs some improvements to become more appealing to our audience, and therefore we have restricted access to it for other users',
+                'es': 'Valoramos mucho su esfuerzo y creatividad, pero en este momento hemos decidido que la historia necesita algunas mejoras para ser más atractiva para nuestra audiencia, y por eso hemos restringido el acceso a ella para otros usuarios'
+              },
+              'Создать сюжет': {
+                'en': 'Create story',
+                'es': 'Crear historia'
+              },
+              'Данный сюжет видите только вы': {
+                'en': 'Only you can see this story',
+                'es': 'Solo usted puede ver esta historia'
+              },
+              'просмотров': {
+                'en': 'views',
+                'es': 'vistas'
+              },
+              'просмотра': {
+                'en': 'view',
+                'es': 'vista'
+              },
+              'просмотр': {
+                'en': 'view',
+                'es': 'vista'
+              },
+              'секунда': {
+                'en': 'second',
+                'es': 'segundo'
+              },
+              'секунды': {
+                'en': 'seconds',
+                'es': 'segundos'
+              },
+              'секунду': {
+                'en': 'second',
+                'es': 'segundo'
+              },
+              'секунд': {
+                'en': 'seconds',
+                'es': 'segundos'
+              },
+              'минута': {
+                'en': 'minute',
+                'es': 'minuto'
+              },
+              'Новый сюжет': {
+                'en': 'New story',
+                'es': 'Nueva historia'
+              },
+              'Прикрепленная картинка': {
+                'en': 'Attached image',
+                'es': 'Imagen adjunta'
+              },
+              'Стили оформления текста': {
+                'en': 'Text formatting styles',
+                'es': 'Estilos de formato de texto'
+              },
+              'жирный': {
+                'en': 'bold',
+                'es': 'negrita'
+              },
+              'курсивный': {
+                'en': 'italic',
+                'es': 'cursiva'
+              },
+              'в стиле кода': {
+                'en': 'code style',
+                'es': 'estilo de código'
+              },
+              'подчеркнутый': {
+                'en': 'underlined',
+                'es': 'subrayado'
+              },
+              'перечеркнутый': {
+                'en': 'strikethrough',
+                'es': 'tachado'
+              },
+              'цветной': {
+                'en': 'colored',
+                'es': 'colorido'
+              },
+              'На заголовок стили не применяются': {
+                'en': 'Styles do not apply to the title',
+                'es': 'Los estilos no se aplican al título'
+              },
+              'Ограничения на ввод текста': {
+                'en': 'Text input limitations',
+                'es': 'Limitaciones de entrada de texto'
+              },
+              'Правила создания сюжетов': {
+                'en': 'Story creation rules',
+                'es': 'Reglas para la creación de historias'
+              },
+              'Опубликовать': {
+                'en': 'Publish',
+                'es': 'Publicar'
+              },
+            'Шевели Пальцами!': {
+                'en': 'posts on the platform',
+                'es': 'posts en la plataforma'
+            },
+            'Новая метка!': {
+                'en': 'Make 50 posts on the platform',
+                'es': 'Realiza 50 publicaciones en la plataforma'
+            },
+            'Ну вот вы и попались! Хэ-хэ': {
+                'en': 'Well, here you are! Hehe',
+                'es': '¡Ahí lo tienes! Hae-Hae'
+            },
+            "Цветовой Гуру": {
+                "en": "Color Guru",
+                "es": "Gurú del Color"
+            },
+            "Наберите 20 очков, не допуская ошибок в цветах мяча при каждом прыжке в игре": {
+                "en": "Score 20 points without making mistakes in the ball colors at each jump in the game",
+                "es": "Anota 20 puntos sin cometer errores en los colores de la pelota en cada salto en el juego"
+            },
+            "Цветовая Память": {
+                "en": "Color Memory",
+                "es": "Memoria de Color"
+            },
+            
+            "Запомните и воспроизведите комбинацию из 10 цветов в игре": {
+                "en": "Remember and reproduce the combination of 10 colors in the game",
+                "es": "Recuerda y reproduce la combinación de 10 colores en el juego"
+            },
+            "Мастер Пересечений": {
+                "en": "Crossing Master",
+                "es": "Maestro del Cruce"
+            },
+            "Пройдите 50 дорог, не столкнувшись с машинами в игре": {
+                "en": "Cross 50 roads without hitting cars in the game",
+                "es": "Cruza 50 caminos sin chocar con coches en el juego"
+            },
+            "Кроличья Удача": {
+                "en": "Rabbit Luck",
+                "es": "Suerte de Conejo"
+            },
+            "Наберите 500 очков, убегая от волка, в игре": {
+                "en": "Score 500 points while running away from the wolf in the game",
+                "es": "Anota 500 puntos mientras huyes del lobo en el juego"
+            },
+            "Галактический Защитник": {
+                "en": "Galactic Defender",
+                "es": "Defensor Galáctico"
+            },
+            "Наберите 1000 очков в игре": {
+                "en": "Score 1000 points in the game",
+                "es": "Anota 1000 puntos en el juego"
+            },
+            "Шаровая Миссия": {
+                "en": "Bauble Mission",
+                "es": "Misión de Bolas"
+            },
+            "Найдите 3 правильных шара за 30 секунд в игре": {
+                "en": "Find 3 correct baubles in 30 seconds in the game",
+                "es": "Encuentra 3 bolas correctas en 30 segundos en el juego"
+            },
+            "Аркадный Мастер": {
+                "en": "Arcade Master",
+                "es": "Maestro de Arcade"
+            },
+            "Достигните 15 уровня, не столкнувшись с препятствиями, в игре": {
+                "en": "Reach level 15 without hitting obstacles in the game",
+                "es": "Alcanza el nivel 15 sin chocar con obstáculos en el juego"
+            },
+            "Счастливое": {
+                "en": "Lucky",
+                "es": "Suerte"
+            },
+            "Выиграйте партию, набрав ровно 21 очко в игре": {
+                "en": "Win a round by scoring exactly 21 points in the game",
+                "es": "Gana una partida anotando exactamente 21 puntos en el juego"
+            },
+            'получить награду': {
+                'en': 'Get a reward',
+                'es': 'Obtener una recompensa'
+            },
+            'убрать выполнение': {
+                'en': 'Remove completion',
+                'es': 'Eliminar finalización'
+            },
+            'опубликуйте свой первый пост': {
+                'en': 'Publish your first post',
+                'es': 'Publica tu primer post'
+            },
+            'добавить своего первого друга': {
+                'en': 'Add your first friend',
+                'es': 'Agrega tu primer amigo'
+            },
+            'дополни свой': {
+                'en': 'Complete your',
+                'es': 'Completa tu'
+            },
+            'интересной информацией о себе': {
+                'en': 'profile with interesting information about yourself',
+                'es': 'perfil con información interesante sobre ti mismo'
+            },
+            'найдите 5 друзей': {
+                'en': 'Find 5 friends',
+                'es': 'Encuentra 5 amigos'
+            },
+            'найдите 15 друзей': {
+                'en': 'Find 15 friends',
+                'es': 'Encuentra 15 amigos'
+            },
+            'найдите 50 друзей': {
+                'en': 'Find 50 friends',
+                'es': 'Encuentra 50 amigos'
+            },
+            'опубликуйте на платформе 10 постов': {
+                'en': 'Publish 10 posts on the platform',
+                'es': 'Publica 10 posts en la plataforma'
+            },
+            'сделайте публикации 50 постов': {
+                'en': 'Make 50 posts on the platform',
+                'es': 'Realiza 50 publicaciones en la plataforma'
+            },
+         'В поисках сердечек': {
+                'en': 'In Search of Hearts',
+                'es': 'En busca de corazones'
+            },
+            'Лайк-Магнат': {
+                'en': 'Like Magnate',
+                'es': 'Magnate del Me gusta'
+            },
+            'Лайкозавр': {
+                'en': 'Likezilla',
+                'es': 'Likezilla'
+            },
+            'Стать легендой': {
+                'en': 'Become a Legend',
+                'es': 'Conviértete en leyenda'
+            },
+            'Виртуальные Улыбки': {
+                'en': 'Virtual Smiles',
+                'es': 'Sonrisas Virtuales'
+            },
+            'Делитесь своим мнением!': {
+                'en': 'Share Your Opinion!',
+                'es': '¡Comparte tu opinión!'
+            },
+            'Получите 5 лайков к вашим постам': {
+                'en': 'Get 5 likes on your posts',
+                'es': 'Obtén 5 Me gusta en tus publicaciones'
+            },
+            'Получите 30 лайков к вашим постам': {
+                'en': 'Get 30 likes on your posts',
+                'es': 'Obtén 30 Me gusta en tus publicaciones'
+            },
+            'Получите 100 лайков к вашим постам': {
+                'en': 'Get 100 likes on your posts',
+                'es': 'Obtén 100 Me gusta en tus publicaciones'
+            },
+            'Получите 1000 лайков к вашим постам': {
+                'en': 'Get 1000 likes on your posts',
+                'es': 'Obtén 1000 Me gusta en tus publicaciones'
+            },
+            'Отправьте другим пользователям 10 лайков к их постам': {
+                'en': 'Send 10 likes to other users posts',
+                'es': 'Envía 10 Me gusta a las publicaciones de otros usuarios'
+            },
+            'Отправьте другим пользователям 10 комментариев к их постам': {
+                'en': 'Send 10 comments to other users posts',
+                'es': 'Envía 10 comentarios a las publicaciones de otros usuarios'
+            },
+        'Открытие календаря': {
+                'en': 'Calendar Opening ',
+                'es': 'Apertura del calendario - Publicaciones'
+            },
+            'Рейтинговый жюри': {
+                'en': 'Rating Jury ',
+                'es': 'Jurado de calificación - Perfil'
+            },
+            'Путь к популярности': {
+                'en': 'Path to Popularity ',
+                'es': 'Camino hacia la popularidad - Perfil'
+            },
+            'Рост аудитории': {
+                'en': 'Audience Growth ',
+                'es': 'Crecimiento de la audiencia - Perfil'
+            },
+            'Вихрь Фолловинга': {
+                'en': 'Following Whirlwind ',
+                'es': 'Torbellino de seguidores - Perfil'
+            },
+            'Стартовый Сигнал': {
+                'en': 'Starting Signal',
+                'es': 'Señal de inicio - Mensajes'
+            },
+            'Коммуникационный Милестоун': {
+                'en': 'Communication Milestone ',
+                'es': 'Hitos de comunicación - Mensajes'
+            },
+            'Диалоговый ветеран': {
+                'en': 'Dialogue Veteran ',
+                'es': 'Veterano del diálogo - Mensajes'
+            },
+            // Добавленные переводы
+            'Назначьте свое первое событие в вашем ': {
+                'en': 'Set your first event in your ',
+                'es': 'Establezca su primer evento en su '
+            },
+            'Оцените 3 пользователей, дав': {
+                'en': 'Rate 3 users, giving them',
+                'es': 'Califica a 3 usuarios, dándoles'
+            },
+            'положительную или отрицательную': {
+                'en': 'a positive or negative',
+                'es': 'una calificación positiva o negativa'
+            },
+            
+            'обращайтесь в': {
+                'en': 'contact',
+                'es': 'contacta'
+            },
+            'в их ': {
+                'en': 'rating on their',
+                'es': 'en su'
+            },
+            'Наберите 3 подписчиков': {
+                'en': 'Get 3 subscribers',
+                'es': 'Obtén 3 suscriptores'
+            },
+            'Наберите 10 подписчиков': {
+                'en': 'Get 10 subscribers',
+                'es': 'Obtén 10 suscriptores'
+            },
+            'Наберите 50 подписчиков': {
+                'en': 'Get 50 subscribers',
+                'es': 'Obtén 50 suscriptores'
+            },
+            'отправьте свое первое сообщение в нашем': {
+                'en': 'Send your first message in our!',
+                'es': 'Envía tu primer mensaje en nuestro'
+            },
+            'Сотня Разговоров: Превзойдите 100 сообщений в': {
+                'en': 'Hundred Conversations: Exceed 100 messages in the',
+                'es': 'Cien conversaciones: supere los 100 mensajes en el'
+            },
+            'Отправил более 1000 сообщений за месяц в ': {
+                'en': 'Sent over 1000 messages per month in the ',
+                'es': 'Envió más de 1000 mensajes por mes en el '
+            },
+        'Поддержание отношений ': {
+                'en': 'Maintaining Relationships',
+                'es': 'Mantener relaciones - Mensajes'
+            },
+            'изображение к новости': {
+                'en': 'image for the news',
+                'es': 'imagen para la noticia'
+              },
+              'изображение к посту': {
+                'en': 'image for the news',
+                'es': 'imagen para la noticia'
+              },
+              'изображение к событию': {
+                'en': 'image for the event',
+                'es': 'imagen para el evento'
+              },
+            'Звонок другу! - Calls': {
+                'en': 'Call a Friend! - Calls',
+                'es': '¡Llama a un amigo! - Llamadas'
+            },
+            'Часовая Симфония - Calls': {
+                'en': 'Hourly Symphony - Calls',
+                'es': 'Sinfonía Horaria - Llamadas'
+            },
+            'Звонок в Будущее - Calls': {
+                'en': 'Call to the Future - Calls',
+                'es': 'Llamada al Futuro - Llamadas'
+            },
+            'Форумный фронтир ': {
+                'en': 'Forum Frontier ',
+                'es': 'Frontera del Foro - Foro'
+            },
+            'Форумная бездна: погружение в мир бесконечных форумных дебатов ': {
+                'en': 'Forum Abyss: Immersion into the World of Endless Forum Debates ',
+                'es': 'Abismo del Foro: Inmersión en el Mundo de los Debates de Foro Infinito - Foro'
+            },
+            'Путешествие по безумным форумным темам и идеям ': {
+                'en': 'Journey through Insane Forum Topics and Ideas ',
+                'es': 'Viaje a Través de Temas e Ideas de Foro Locos - Foro'
+            },
+            'Добро пожаловать в сообщество': {
+                'en': 'Welcome to the Community',
+                'es': '¡Bienvenido a la Comunidad'
+            },
+            'Отправьте 5 сообщений благодарности вашему другу или знакомому, используя слова': {
+                'en': 'Send 5 messages of gratitude to your friend or acquaintance using the words',
+                'es': 'Envía 5 mensajes de gratitud a tu amigo o conocido usando las palabras'
+            },
+            '«Спасибо», «Пожалуйста» или «Благодарю» в ': {
+                'en': '"Thank you", "Please" or "Thanks" in the',
+                'es': '"Gracias", "Por favor" o "Gracias" en el'
+            },
+            'Позвоните своему знакомому, кликнув на специальный значок в его профиле или мессенджере': {
+                'en': 'Call your friend by clicking on the special icon in their profile or messenger',
+                'es': 'Llama a tu amigo haciendo clic en el icono especial en su perfil o mensajero'
+            },
+            'Проведите в звонке с другом 1 час': {
+                'en': 'Spend 1 hour on the call with your friend',
+                'es': 'Pasa 1 hora en la llamada con tu amigo'
+            },
+            'Натрындите более 1000 минут с любыми пользователями': {
+                'en': 'Chat for more than 1000 minutes with any users',
+                'es': 'Chatea durante más de 1000 minutos con cualquier usuario'
+            },
+            'создайте свой первый': {
+                'en': 'Create your first',
+                'es': 'Crea tu primer'
+            },
+            'создайте 5 форумов': {
+                'en': 'Create 5 forums',
+                'es': 'Crea 5 foros'
+            },
+            'создайте 20 форумов': {
+                'en': 'Create 20 forums',
+                'es': 'Crea 20 foros'
+            },
+            'создайте 50 форумов': {
+                'en': 'Create 50 forums',
+                'es': 'Crea 50 foros'
+            },
+            'Выполнение наших увлекательных': {
+                'en': 'Completing our exciting',
+                'es': 'Completar nuestras emocionantes'
+              },
+              'поможет вам быстрее освоиться и раскрыть свой потенциал': {
+                'en': 'will help you settle in faster and unlock your potential',
+                'es': 'te ayudará a adaptarte más rápido y a desbloquear tu potencial'
+              },
+              'Пусть ваши дни будут наполнены вдохновением и радостью': {
+                'en': 'May your days be filled with inspiration and joy',
+                'es': 'Que tus días estén llenos de inspiración y alegría'
+              },
+              'Новая заявка на верификацию аккаунта': {
+                'en': 'New account verification request',
+                'es': 'Nueva solicitud de verificación de cuenta'
+              },
+            'отправьте свое первое сообщение на нашем': {
+                'en': 'Send your first message on our',
+                'es': 'Envía tu primer mensaje en nuestro'
+            },
+        'отправьте 100 сообщений на нашем': {
+                'en': 'Send 100 messages on our',
+                'es': 'Envía 100 mensajes en nuestro'
+            },
+            'отправьте 1000 сообщений на нашем': {
+                'en': 'Send 1000 messages on our',
+                'es': 'Envía 1000 mensajes en nuestro'
+            },
+            'иметь': {
+                'en': 'Have',
+                'es': 'Tener'
+            },
+            'рейтинг выше': {
+                'en': 'a rating above',
+                'es': 'una calificación superior al'
+            },
+            'Быть зарегистрированным на платформе больше 1 месяца': {
+                'en': 'Be registered on the platform for more than 1 month',
+                'es': 'Estar registrado en la plataforma durante más de 1 mes'
+            },
+            'Быть зарегистрированным на платформе 1 год': {
+                'en': 'Be registered on the platform for 1 year',
+                'es': 'Estar registrado en la plataforma durante 1 año'
+            },
+            'Выполните 25 постоянных заданий из выше представленных': {
+                'en': 'Complete 25 tasks from the above list',
+                'es': 'Completa 25 tareas de la lista anterior'
+            },
+            'Выполните 46 постоянных заданий из выше представленных': {
+                'en': 'Complete 46 tasks from the above list',
+                'es': 'Completa 46 tareas de la lista anterior'
+            },
+        'Пишите с удовольствием и страстью! ': {
+                'en': 'Write with pleasure and passion! ',
+                'es': '¡Escribe con placer y pasión! - Foro'
+            },
+            'Форумный Фонтан: Сплошной поток идей и мыслей! ': {
+                'en': 'Forum Fountain: A continuous flow of ideas and thoughts! ',
+                'es': 'Fuente del foro: ¡Un flujo continuo de ideas y pensamientos! - Foro'
+            },
+            'Приветствуем вас!': {
+                'en': 'Welcome!',
+                'es': '¡Bienvenido!'
+            },
+            'Добро пожаловать в LiftLink!': {
+                'en': 'Welcome to LiftLink!',
+                'es': '¡Bienvenido a LiftLink!'
+            },
+            'Создание аккаунта': {
+                'en': 'Create an account',
+                'es': 'Crear una cuenta'
+            },
+            'Перейдите на': {
+                'en': 'Go to',
+                'es': 'Vaya a'
+            },
+            'Укажите данные': {
+                'en': 'Enter your details',
+                'es': 'Ingrese sus datos'
+            },
+            'страницу регистрации': {
+                'en': 'registration page',
+                'es': 'página de registro'
+            },
+            'Введите желаемый никнейм, пароль и почту': {
+                'en': 'Enter your desired nickname, password, and email',
+                'es': 'Ingrese su apodo deseado, contraseña y correo electrónico'
+            },
+            'Подтвердите почту': {
+                'en': 'Confirm your email',
+                'es': 'Confirme su correo electrónico'
+            },
+            'Перейдите по ссылке из письма': {
+                'en': 'Follow the link from the email',
+                'es': 'Siga el enlace del correo electrónico'
+            },
+            'О нас': {
+                'en': 'About us',
+                'es': 'Sobre nosotros'
+            },
+            'это инновационная социальная сеть, которая предлагает уникальные возможности для общения, обмена идеями и совместного творчества': {
+                'en': 'is an innovative social network that offers unique opportunities for communication, idea sharing, and collaboration',
+                'es': 'es una red social innovadora que ofrece oportunidades únicas para la comunicación, el intercambio de ideas y la colaboración'
+            },
+            'Мы стремимся создать безопасное и вдохновляющее пространство, где каждый пользователь может найти поддержку, вдохновение и новые возможности для роста и развития': {
+                'en': 'We strive to create a safe and inspiring space where every user can find support, inspiration, and new opportunities for growth and development',
+                'es': 'Nos esforzamos por crear un espacio seguro e inspirador donde cada usuario pueda encontrar apoyo, inspiración y nuevas oportunidades para el crecimiento y desarrollo'
+            },
+            'Зарегистрируйтесь, создав учетную запись с помощью почты': {
+                'en': 'Register by creating an account with your email',
+                'es': 'Regístrese creando una cuenta con su correo electrónico'
+            },
+            'Заполните профиль, добавив информацию о себе': {
+                'en': 'Complete your profile by adding information about yourself',
+                'es': 'Complete su perfil agregando información sobre usted'
+            },
+            'Изучите основные функции и настройки, чтобы настроить ваш опыт': {
+                'en': 'Explore the main features and settings to customize your experience',
+                'es': 'Explore las funciones y configuraciones principales para personalizar su experiencia'
+            },
+            'Начните общаться с другими пользователями, делиться постами и комментировать': {
+                'en': 'Start interacting with other users, sharing posts, and commenting',
+                'es': 'Comience a interactuar con otros usuarios, compartiendo publicaciones y comentando'
+            },
+            'Выполняйте задания и участвуйте в активностях, чтобы лучше понять наши возможности!': {
+                'en': 'Complete tasks and participate in activities to better understand our capabilities!',
+                'es': '¡Complete tareas y participe en actividades para comprender mejor nuestras capacidades!'
+            },
+            'Присоединяйтесь к LiftLink и откройте для себя мир безграничных возможностей!': {
+                'en': 'Join LiftLink and discover a world of endless possibilities!',
+                'es': '¡Únase a LiftLink y descubra un mundo de posibilidades infinitas!'
+            },
+            'Установить приложение': {
+                'en': 'Install the app',
+                'es': 'Instalar la aplicación'
+            },
+            'Грядущие обновления': {
+                'en': 'Upcoming updates',
+                'es': 'Actualizaciones próximas'
+            },
+            'Безопасность и конфиденциальность': {
+                'en': 'Security and privacy',
+                'es': 'Seguridad y privacidad'
+            },
+            'Улучшенные механизмы защиты аккаунтов, включая авторизацию по коду из приложения': {
+                'en': 'Enhanced account protection mechanisms, including app-based code authorization',
+                'es': 'Mecanismos mejorados de protección de cuentas, incluida la autorización por código de la aplicación'
+            },
+            'Быстро и легко': {
+                'en': 'Fast and easy',
+                'es': 'Rápido y fácil'
+            },
+            'Планируется интеграция с платежными сервисами для покупки': {
+                'en': 'Integration with payment services for purchases is planned',
+                'es': 'Se planea la integración con servicios de pago para compras'
+            },
+            'Настройки форумов': {
+                'en': 'Forum settings',
+                'es': 'Configuración de foros'
+            },
+            'Планируется внедрить API для добавления своих ботов на форумы': {
+                'en': 'API implementation for adding your bots to forums is planned',
+                'es': 'Se planea la implementación de API para agregar sus bots a los foros'
+            },
+            'Свои группы': {
+                'en': 'Your groups',
+                'es': 'Tus grupos'
+            },
+            'В будущем планируется создание сообществ по интересам': {
+                'en': 'Creating interest-based communities is planned for the future',
+                'es': 'Se planea la creación de comunidades basadas en intereses en el futuro'
+            }, 
+            'Взлет к вершинам ': {
+                'en': 'Soaring to the heights ',
+                'es': 'Elevándose a las alturas - Perfil'
+            },
+            'Пройденный путь': {
+                'en': 'The journey traveled',
+                'es': 'El camino recorrido - Registro'
+            },
+            'Время укрепляет': {
+                'en': 'Time strengthens',
+                'es': 'El tiempo fortalece'
+            },
+            'долгая дорога': {
+                'en': 'the long road',
+                'es': 'el largo camino'
+            },
+            'Путь к мастерству ': {
+                'en': 'Path to Mastery ',
+                'es': 'Camino hacia la maestría - Perfil'
+            },
+            'Миссия выполнима! ': {
+                'en': 'Mission Possible! ',
+                'es': '¡Misión posible! - Perfil'
+            },
+            'укажите информацию о себе': {
+                'en': 'Provide information about yourself',
+                'es': 'Proporcione información sobre usted mismo'
+            },
+            'получите 5 бесплатных подарков, заходя на нашу платформу каждый день!': {
+                'en': 'Get 5 free gifts by visiting our platform every day!',
+                'es': '¡Obtenga 5 regalos gratis visitando nuestra plataforma todos los días!'
+            },
+            'дополни свой профиль интересной информацией о себе': {
+                'en': 'Complete your profile with interesting information about yourself',
+                'es': 'Completa tu perfil con información interesante sobre ti mismo'
+            },
+            'добавьте своего первого друга': {
+                'en': 'Add your first friend',
+                'es': 'Agrega tu primer amigo'
+            },
+            'опубликуйте свой первый пост': {
+                'en': 'Publish your first post',
+              'es': 'Publica tu primer post'
+            },
+            'В поисках сердец': {
+                'en': 'In Search of Hearts',
+                'es': 'En busca de corazones'
+            },
+            'Виртуальные улыбки': {
+                'en': 'Virtual Smiles',
+                'es': 'Sonrisas virtuales'
+            },
+            'Авторизация': {
+                'en': 'Login',
+                'es': 'Iniciar sesión'
+            },
+            'Страницы аутентификации': {
+                'en': 'Authentication Pages',
+                'es': 'Páginas de autenticación'
+            },
+            'Уже в скором времени у страниц авторизации и регистрации будет изменен дизайн на более красивый': {
+                'en': 'In the near future, the design of the authorization and registration pages will be changed to a more beautiful one',
+                'es': 'En un futuro próximo, las páginas de autorización y registro cambiarán el diseño a uno más hermoso'
+            },
+            'Откройте календарь': {
+                'en': 'Open the calendar',
+                'es': 'Abre el calendario'
+            },
+            'Рейтинговое жюри': {
+                'en': 'Rating Jury',
+                'es': 'Jurado de clasificación'
+            },
+            'Путь к популярности': {
+                'en': 'Path to Popularity',
+                'es': 'Camino hacia la popularidad'
+            },
+            'Стартовый сигнал': {
+                'en': 'Starting Signal',
+                'es': 'Señal de inicio'
+            },
+            'Поддержание отношений': {
+                'en': 'Maintaining Relationships',
+                'es': 'Mantener relaciones'
+            },
+            'Звонок другу!': {
+                'en': 'Call a friend!',
+                'es': '¡Llama a un amigo!'
+            },
+            'Добро пожаловать!': {
+                'en': 'Welcome to the community!',
+                'es': '¡Bienvenido a la comunidad!'
+            },
+            'Взлет к вершинам': {
+                'en': 'Soaring to the heights',
+                'es': 'Elevándose a las alturas'
+            },
+            'Пройденный путь': {
+                'en': 'The journey traveled',
+                'es': 'El camino recorrido'
+            },
+            'Путь к мастерству': {
+                'en': 'Path to Mastery',
+                'es': 'Camino hacia la maestría'
+            },
+              'участник': {
+                'en': 'Participant',
+                'es': 'Participante'
+            },
+            'Вы зарегистрировались на нашей платформе!': {
+                'en': 'You have registered on our platform!',
+                'es': '¡Te has registrado en nuestra plataforma!'
+            },
+            "Упоминания на форумах": {
+                "en": "Forum Mentions",
+                "es": "Menciones en el foro"
+            },
+            "Уведомления включены": {
+                "en": "Notifications Enabled",
+                "es": "Notificaciones activadas"
+            },
+            "Включить уведомления": {
+                "en": "Enable Notifications",
+                "es": "Activar notificaciones"
+            },
+            "Очистить все уведомления": {
+                "en": "Clear All Notifications",
+                "es": "Borrar todas las notificaciones"
+            },
+            "Все уведомления": {
+                "en": "All Notifications",
+                "es": "Todas las notificaciones"
+            },
+            "У вас есть": {
+                "en": "You have",
+                "es": "Usted tiene"
+            },
+            "вращений колеса": {
+                "en": "wheel rotations",
+                "es": "rotación de la rueda"
+            },
+            "опубликовал на вашей странице новый": {
+                "en": "posted a new one on your page",
+                "es": "publicó uno nuevo en tu página"
+            },
+            "Это прочитано": {
+                "en": "This is read",
+                "es": "Esto está leído"
+            },
+            "упоминул": {
+                "en": "mentioned",
+                "es": "mencionó"
+            },
+            "Наши контакты": {
+                "en": "Our Contacts",
+                "es": "Nuestros contactos"
+            },
+            "Ваш кошелек": {
+                "en": "Your Wallet",
+                "es": "Tu billetera"
+            },
+            "Колесо Фортуны": {
+                "en": "Wheel of Fortune",
+                "es": "Rueda de la fortuna"
+            },
+            "Колесо фортуны": {
+                "en": "Wheel of Fortune",
+                "es": "Rueda de la fortuna"
+            },
+            "Разбан аккаунта": {
+                "en": "Account Unban",
+                "es": "Desbanear cuenta"
+            },
+            "Доступно прокруток": {
+                "en": "Available Spins",
+                "es": "Giros disponibles"
+            },
+            "Купить": {
+                "en": "Buy",
+                "es": "Comprar"
+            },
+            'Для неавторизованных пользователей': {
+                'en': 'For unauthorized users',
+                'es': 'Para usuarios no autorizados'
+            },
+            "Для неавторизованных": {
+                "en": "For Unauthorized",
+                "es": "Para no autorizados"
+            },
+            "У вас уже есть это": {
+                "en": "You already have this",
+                "es": "Ya tienes esto"
+            },
+            "Спасибо за активность": {
+                "en": "Thank you for your activity",
+                "es": "Gracias por tu actividad"
+            },
+            
+            "Вы получили ежедневный подарок за вход": {
+                "en": "You received a daily login gift",
+                "es": "Recibiste un regalo diario por iniciar sesión"
+            },
+            "Цель игры": {
+                "en": "Goal of the game",
+                "es": "Objetivo del juego"
+            },
+            "Классическая игра": {
+                "en": "Classic game",
+                "es": "Juego clásico"
+            },
+            "Моя страница": {
+                "en": "My page",
+                "es": "Mi página"
+            },
+            "Хочешь бонус": {
+                "en": "Want a bonus",
+                "es": "¿Quieres un bono?"
+            },
+            "Принять": {
+                "en": "Accept",
+                "es": "Aceptar"
+            },
+            "Отказать": {
+                "en": "Refuse",
+                "es": "Rechazar"
+            },
+            "Отклонить": {
+                "en": "Decline",
+                "es": "Rechazar"
+            },
+            "Системные": {
+                "en": "System",
+                "es": "Sistemático"
+            },
+            "Посты": {
+                "en": "Posts",
+                "es": "Publicaciones"
+            },
+            "запрос": {
+                "en": "request",
+                "es": "solicitud"
+            },
+            "пост": {
+                "en": "post",
+                "es": "publicación"
+            },
+            "Цена": {
+                "en": "Price",
+                "es": "Precio"
+            },
+            "Описание": {
+                "en": "Description",
+                "es": "Descripción"
+            },
+            'Ваша роль': {
+                'en': 'Your role',
+                'es': 'Su rol'
+            },
+            'Дата создания': {
+                'en': 'Creation date',
+                'es': 'Fecha de creación'
+            },
+            'Статус форума': {
+                'en': 'Forum status',
+                'es': 'Estado del foro'
+            },
+            'Этот форум закрыт': {
+                'en': 'This forum is closed',
+                'es': 'Este foro está cerrado'
+            },
+            'Скопировать ссылку': {
+                'en': 'Copy link',
+                'es': 'Copiar enlace'
+            },
+            'Сделать общедоступным': {
+                'en': 'Make public',
+                'es': 'Hacer público'
+            },
+            'Форум не в архиве': {
+                'en': 'Forum not archived',
+                'es': 'Foro no archivado'
+            },
+            'Архивировать форум': {
+                'en': 'Archive forum',
+                'es': 'Archivar foro'
+            },
+            'Форум не забанен': {
+                'en': 'Forum not banned',
+                'es': 'Foro no prohibido'
+            },
+            'Забанить форум': {
+                'en': 'Ban forum',
+                'es': 'Prohibir foro'
+            },
+            'Безвозмездная деактивация форума': {
+                'en': 'Gratis deactivation of forum',
+                'es': 'Desactivación gratuita del foro'
+            },
+            'Подтвердите удаление': {
+                'en': 'Confirm deletion',
+                'es': 'Confirmar eliminación'
+            },
+            'Сделать приватным': {
+                'en': 'Make private',
+                'es': 'Hacer privado'
+            },
+            'Разархивировать форум': {
+                'en': 'Unarchive forum',
+                'es': 'Desarchivar foro'
+            },
+            'Форум открыт': {
+                'en': 'Forum open',
+                'es': 'Foro abierto'
+            },
+            'Форум находится в архиве': {
+                'en': 'Forum is archived',
+                'es': 'El foro está archivado'
+            },
+            'Разбанить форум': {
+                'en': 'Unban forum',
+                'es': 'Desbanear foro'
+            },
+            'Форум был заблокирован модератором': {
+                'en': 'Forum was blocked by moderator',
+                'es': 'El foro fue bloqueado por el moderador'
+            },
+            'По вопросам обращаться в тех.поддержку': {
+                'en': 'For questions, contact support',
+                'es': 'Para preguntas, contacte al soporte'
+            },
+            'Управление пользователями': {
+                'en': 'User management',
+                'es': 'Gestión de usuarios'
+            },
+            'Ник пользователя': {
+                'en': 'Username',
+                'es': 'Nombre de usuario'
+            },
+            'Сделать доверенным лицом форума': {
+                'en': 'Make forum trusted user',
+                'es': 'Hacer usuario de confianza del foro'
+            },
+            'Вы можете добавить одного доверенного пользователя этого форума': {
+                'en': 'You can add one trusted user of this forum',
+                'es': 'Puede agregar un usuario de confianza de este foro'
+            },
+            'Введя его никнейм': {
+                'en': 'by entering their username',
+                'es': 'ingresando su nombre de usuario'
+            },
+            'Забанить': {
+                'en': 'Ban',
+                'es': 'Prohibir'
+            },
+            'Нет забаненных пользователей': {
+                'en': 'No banned users',
+                'es': 'No hay usuarios prohibidos'
+            },
+            'Выдать мут пользователю': {
+                'en': 'Mute user',
+                'es': 'Silenciar usuario'
+            },
+            'Выдать мут': {
+                'en': 'Issue mute',
+                'es': 'Emitir silencio'
+            },
+            'Хелпера': {
+                'en': 'Helper',
+                'es': 'Helper'
+            },
+            'Список заткнутых пользователей отсутствует': {
+                'en': 'No muted users list',
+                'es': 'No hay lista de usuarios silenciados'
+            },
+            'Ваш доверенный пользователь': {
+                'en': 'Your trusted user',
+                'es': 'Su usuario de confianza'
+            },
+            'Список забаненных пользователей': {
+                'en': 'List of banned users',
+                'es': 'Lista de usuarios prohibidos'
+            },
+            'Мут пройдет': {
+                'en': 'Mute will expire',
+                'es': 'El silencio expirará'
+            },
+            'Список заткнутых пользователей': {
+                'en': 'Muted users list',
+                'es': 'Lista de usuarios silenciados'
+            },
+            'Размутить': {
+                'en': 'Unmute',
+                'es': 'Quitar silencio'
+            },
+            'Прикрепленные медиа': {
+                'en': 'Attached media',
+                'es': 'Medios adjuntos'
+            },
+            'Вы достигли лимита загрузки изображений (максимум 4)': {
+                'en': 'You have reached the image upload limit (maximum 4)',
+                'es': 'Ha alcanzado el límite de carga de imágenes (máximo 4)'
+            },
+            'Размер видеофайла не должен превышать': {
+                'en': 'Video file size must not exceed',
+                'es': 'El tamaño del archivo de video no debe exceder'
+            },
+            '4 МБ': {
+                'en': '4 MB',
+                'es': '4 MB'
+            },
+            '8 МБ': {
+                'en': '8 MB',
+                'es': '8 MB'
+            },
+            
+            'Форум был заблокирован модератором': {
+                'en': 'Forum was blocked by moderator',
+                'es': 'El foro fue bloqueado por el moderador'
+            },
+            'Заблокировано': {
+                'en': 'Blocked',
+                'es': 'Bloqueado'
+            },
+            'Начать переписку с': {
+                'en': 'Start a conversation with',
+                'es': 'Iniciar correspondencia con'
+            },
+            'По вопросам обращаться в тех.поддержку': {
+                'en': 'For questions, contact support',
+                'es': 'Para preguntas, contacte al soporte'
+            },
+            'за нарушение правил сообщества': {
+                'en': 'for violating community rules',
+                'es': 'por violar las reglas de la comunidad'
+            },
+            'Внимание': {
+                'en': 'Attention',
+                'es': 'Atención'
+            },
+            'Подписчики': {
+                'en': 'Subscribers',
+                'es': 'Suscriptores'
+            },
+            'Неизвестно': {
+                'en': 'Unknown',
+                'es': 'Desconocido'
+            },
+            'Привилегия': {
+                'en': 'Privilege',
+                'es': 'Privilegio'
+            },
+            'Аккаунт': {
+                'en': 'Account',
+                'es': 'Cuenta'
+            },
+            'Язык': {
+                'en': 'Language',
+                'es': 'Idioma'
+            },
+            'Русский': {
+                'en': 'Russian',
+                'es': 'Ruso'
+            },
+            'Английский': {
+                'en': 'English',
+                'es': 'Inglés'
+            },
+            'Испанский': {
+                'en': 'Spanish',
+                'es': 'Español'
+            },
+            'Мужской': {
+                'en': 'Male',
+                'es': 'Masculino'
+            },
+            'Женский': {
+                'en': 'Female',
+                'es': 'Femenino'
+            },
+            'Средний': {
+                'en': 'Neuter',
+                'es': 'Neutro'
+            },
+            'Не указан': {
+                'en': 'Not specified',
+                'es': 'No especificado'
+            },
+            'Активность': {
+                'en': 'Activity',
+                'es': 'Actividad'
+            },
+            'Указать информацию о себе': {
+                'en': 'Provide information about yourself',
+                'es': 'Proporcione información sobre usted'
+            },
+            'Статистика и достижения': {
+                'en': 'Statistics and achievements',
+                'es': 'Estadísticas y logros'
+            },
+            'Уведомления': {
+                'en': 'Notifications',
+                'es': 'Notificaciones'
+            },
+            'Штрафы': {
+                'en': 'Penalties',
+                'es': 'Penalizaciones'
+            },
+            'Приватность': {
+                'en': 'Privacy',
+                'es': 'Privacidad'
+            },
+            'Основные настройки': {
+                'en': 'Main settings',
+                'es': 'Configuraciones principales'
+            },
+            'Отключить мессенджер': {
+                'en': 'Disable messenger',
+                'es': 'Desactivar mensajero'
+            },
+            
+            'Показывать друзей': {
+                'en': 'Show friends',
+                'es': 'Mostrar amigos'
+            },
+            'Скрыть друзей': {
+                'en': 'Hide friends',
+                'es': 'Ocultar amigos'
+            },
+            
+            'Показывать подписки на форумы': {
+                'en': 'Show forum subscriptions',
+                'es': 'Mostrar suscripciones a foros'
+            },
+            'Скрыть подписки на форумы': {
+                'en': 'Hide forum subscriptions',
+                'es': 'Ocultar suscripciones a foros'
+            },
+            'Отображать свой статус в сети': {
+                'en': 'Show online status',
+                'es': 'Mostrar estado en línea'
+            },
+            'Скрыть свой статус в сети': {
+                'en': 'Hide online status',
+                'es': 'Ocultar estado en línea'
+            },
+            
+            
+            'Автоподписка': {
+                'en': 'Auto-subscription',
+                'es': 'Auto-suscripción'
+            },
+            'Запретить автоподписку на форумные публикации': {
+                'en': 'Prohibit auto-subscription to forum posts',
+                'es': 'Prohibir auto-suscripción a publicaciones en foros'
+            },
+            'Разрешить автоподписку на форумные публикации': {
+                'en': 'Allow auto-subscription to forum posts',
+                'es': 'Permitir auto-suscripción a publicaciones en foros'
+            },
+            'Публикация новостей': {
+                'en': 'News publication',
+                'es': 'Publicación de noticias'
+            },
+            'Разрешить публикацию постов на моей странице': {
+                'en': 'Allow posting on my page',
+                'es': 'Permitir publicaciones en mi página'
+            },
+
+            'Звонки': {
+                'en': 'Calls',
+                'es': 'Llamadas'
+            },
+            
+            'Безопасность': {
+                'en': 'Security',
+                'es': 'Seguridad'
+            },
+            'Управление аккаунтом': {
+                'en': 'Account management',
+                'es': 'Gestión de la cuenta'
+            },
+            'Изменить пароль': {
+                'en': 'Change password',
+                'es': 'Cambiar contraseña'
+            },
+            'Включить 2fa по коду из приложения': {
+                'en': 'Enable 2FA via app code',
+                'es': 'Habilitar 2FA a través del código de la aplicación'
+            },
+            'Включить 2fa по отправке письма с подтверждением входа': {
+                'en': 'Enable 2FA via confirmation email',
+                'es': 'Habilitar 2FA a través del correo de confirmación'
+            },
+            'Изменить адрес почты': {
+                'en': 'Change email address',
+                'es': 'Cambiar dirección de correo electrónico'
+            },
+            "тех.поддержку": {
+                "en": "technical support",
+                "es": "soporte técnico"
+            },
+            
+            'профиле': {
+                'en': 'profile',
+                'es': 'perfil'
+            },
+            'профиль': {
+                'en': 'profile',
+                'es': 'perfil'
+            },
+            'оценку': {
+                'en': 'rating',
+                'es': 'calificación'
+            },
+            'мессенджере': {
+                'en': 'messenger',
+                'es': 'mensajero'
+            },
+            'выше': {
+                'en': 'above',
+                'es': 'superior'
+            },
+            'Вы выполнили это задание! Награда': {
+                'en': 'You completed this task! Reward',
+                'es': '¡Completaste esta tarea! Recompensa'
+            },
+            'поиск': {
+                'en': 'search',
+                'es': 'búsqueda'
+            },
+            'выполнено заданий': {
+                'en': 'tasks completed',
+                'es': 'tareas completadas'
+            },
+            'сортировка': {
+                'en': 'sorting',
+                'es': 'clasificación'
+            },
+            'по названию': {
+                'en': 'by name',
+                'es': 'por nombre'
+            },
+            'по категории': {
+                'en': 'by category',
+                'es': 'por categoría'
+            },
+            'скрыть': {
+                'en': 'hide',
+                'es': 'ocultar'
+            },
+            'Наложить штраф на пользователя': {
+                'en': 'Impose a fine on the user',
+                'es': 'Imponer una multa al usuario'
+            },
+            'Сумма штрафа': {
+                'en': 'Fine amount',
+                'es': 'Cantidad de la multa'
+            },
+            'Причина штрафа': {
+                'en': 'Reason for the fine',
+                'es': 'Motivo de la multa'
+            },
+            'Выписать штраф': {
+                'en': 'Issue a fine',
+                'es': 'Imponer una multa'
+            },
+            'Забанить пользователя': {
+                'en': 'Ban the user',
+                'es': 'Prohibir al usuario'
+            },
+            'Мелкие нарушения правил': {
+                'en': 'Minor rule violations',
+                'es': 'Violaciones menores de las reglas'
+            },
+            'Штрафный час': {
+                'en': 'Fine hour',
+                'es': 'Hora de la multa'
+            },
+            'Караул': {
+                'en': 'Patrol',
+                'es': 'Patrulla'
+            },
+              'Покупки': {
+                'en': 'Purchases',
+                'es': 'Compras'
+              },
+              'Владелец форума изменил настройки доступности чата на этом форуме для определенного круга лиц': {
+                'en': 'The forum owner changed chat accessibility settings on this forum for a specific group of people',
+                'es': 'El propietario del foro cambió la configuración de accesibilidad del chat en este foro para un grupo específico de personas'
+              },
+              'Документация': {
+                'en': 'Documentation',
+                'es': 'Documentación'
+              },
+              'Пользовательское Соглашение': {
+                'en': 'User Agreement',
+                'es': 'Acuerdo de Usuario'
+              },
+              'Пользовательским Соглашением': {
+                'en': 'User Agreement',
+                'es': 'Acuerdo de Usuario'
+              },
+              'Хотите разместить рекламу': {
+                'en': 'Do you want to advertise',
+                'es': '¿Quieres hacer publicidad'
+              },
+              'По коммерческим вопросам': {
+                'en': 'For commercial matters',
+                'es': 'Asuntos comerciales'
+              },
+              'Условия использования': {
+                'en': 'Terms of Use',
+                'es': 'Términos de Uso'
+              },
+              'Политика Конфиденциальности': {
+                'en': 'Privacy Policy',
+                'es': 'Política de Privacidad'
+              },
+              'Настройка': {
+                'en': 'Settings',
+                'es': 'Configuración'
+              },
+              'файлов': {
+                'en': 'files',
+                'es': 'archivos'
+              },
+              'История входа и подозрительных действий': {
+                'en': 'Login and suspicious activity history',
+                'es': 'Historial de inicio de sesión y actividad sospechosa'
+              },
+
+              'зайти в звонок': {
+                'en': 'join the call',
+                'es': 'unirse a la llamada'
+              },
+              'Приветствуем вас': {
+                'en': 'Welcome',
+                'es': 'Te damos la bienvenida'
+              },
+              'Рады видеть вас здесь на нашей': {
+                'en': 'Glad to see you here on our',
+                'es': 'Nos alegra verte aquí en nuestro'
+              },
+              'Добро пожаловать в мир новых возможностей и интересных знакомств': {
+                'en': 'Welcome to a world of new opportunities and interesting acquaintances',
+                'es': 'Bienvenido a un mundo de nuevas oportunidades y conocidos interesantes'
+              },
+              'которые имеют привилегию': {
+                'en': 'who have the privilege',
+                'es': 'que tienen el privilegio'
+              },
+              'которые могут отправлять сообщения': {
+                'en': 'who can send messages',
+                'es': 'que pueden enviar mensajes'
+              },
+              'Вам был выписан штраф': {
+                'en': 'You have been fined',
+                'es': 'Has sido multado'
+              },
+              'только по ссылке к нему можно получить доступ': {
+                'en': 'can only be accessed via the link',
+                'es': 'solo se puede acceder a través del enlace'
+              },
+              'роль обновляется после отправки любого сообщения в чат': {
+                'en': 'the role is updated after sending any message in the chat',
+                'es': 'el rol se actualiza después de enviar cualquier mensaje en el chat'
+              },
+              'доступ к форуму ограничен': {
+                'en': 'access to the forum is restricted',
+                'es': 'el acceso al foro está restringido'
+              },
+              'Разрешать доступ только по ссылке': {
+                'en': 'Allow access by link only',
+                'es': 'Permitir acceso solo por enlace'
+              },
+              'Сделать общедоступным': {
+                'en': 'Make public',
+                'es': 'Hacer público'
+              },
+              'Ваш форум общедоступен и виден всем на странице форумов': {
+                'en': 'Your forum is public and visible to everyone on the forums page',
+                'es': 'Tu foro es público y visible para todos en la página de foros'
+              },
+              'Только я и хелперы': {
+                'en': 'Only me and helpers',
+                'es': 'Solo yo y los ayudantes'
+              },
+              'Только мои друзья': {
+                'en': 'Only my friends',
+                'es': 'Solo mis amigos'
+              },
+              'минуты': {
+                'en': 'minutes',
+                'es': 'minutos'
+              },
+              'минуту': {
+                'en': 'minute',
+                'es': 'minuto'
+              },
+            'минут': {
+                'en': 'minutes',
+                'es': 'minutos'
+            },
+            'Правила': {
+                'en': 'Rules',
+                'es': 'Reglas'
+            },
+            'это серьезно': {
+                'en': 'this is serious',
+                'es': 'esto es serio'
+            },
+            'Подумайте о своих действиях': {
+                'en': 'Think about your actions',
+                'es': 'Piensa en tus acciones'
+            },
+            'Ночь на раздумья': {
+                'en': 'Night for reflection',
+                'es': 'Noche para reflexionar'
+            },
+            'отдохни': {
+                'en': 'rest',
+                'es': 'descansar'
+            },
+            'друг': {
+                'en': 'friend',
+                'es': 'amigo'
+            },
+            'часов': {
+                'en': 'hours',
+                'es': 'horas'
+            },
+            
+            'Верифицировать аккаунт': {
+                   'en': 'Verify account',
+                   'es': 'Verificar cuenta'
+               },
+               'Добавить аккаунту статус подтвержденного': {
+                   'en': 'Add verified status to account',
+                   'es': 'Agregar estado verificado a la cuenta'
+               },
+               'Убрать верификацию': {
+                   'en': 'Remove verification',
+                   'es': 'Eliminar verificación'
+               },
+               'Убрать статус подтвержденного аккаунта': {
+                   'en': 'Remove verified account status',
+                   'es': 'Eliminar estado de cuenta verificada'
+               },
+               'Разбанить аккаунт': {
+                   'en': 'Unban account',
+                   'es': 'Desbanear cuenta'
+               },
+               'Был забанен': {
+                   'en': 'Was banned',
+                   'es': 'Fue baneado'
+               },
+               'Добавить в ЧС проекта': {
+                   'en': 'Add to project blacklist',
+                   'es': 'Agregar a la lista negra del proyecto'
+               },
+               'Добавить в список черных пользователей соц.сети': {
+                   'en': 'Add to social network black users list',
+                   'es': 'Agregar a la lista de usuarios negros de la red social'
+               },
+               'Убрать из ЧС проекта': {
+                   'en': 'Remove from project blacklist',
+                   'es': 'Eliminar de la lista negra del proyecto'
+               },
+               'Вычеркнуть пользователя из черного списка соц.сети': {
+                   'en': 'Remove user from social network black list',
+                   'es': 'Eliminar usuario de la lista negra de la red social'
+               },
+               'Очистить информацию': {
+                   'en': 'Clear information',
+                   'es': 'Limpiar información del'
+               },
+               'Информация содержит 18+, оскорбления, угрозы и т.д.': {
+                   'en': 'Information contains 18+, insults, threats, etc.',
+                   'es': 'La información contiene 18+, insultos, amenazas, etc.'
+               },
+               'Удалить аватар профиля': {
+                   'en': 'Delete profile avatar',
+                   'es': 'Eliminar avatar del perfil'
+               },
+               'Шокирующий контент, сексуальные действия, пропаганда ненавести': {
+                   'en': 'Shocking content, sexual acts, hate propaganda, etc.',
+                   'es': 'Contenido impactante, actos sexuales, propaganda de odio, etc.'
+               },
+               'Удалить обложку профиля': {
+                   'en': 'Delete profile cover',
+                   'es': 'Eliminar portada del perfil'
+               },
+               'Отправлены в изгнание на 3 дня': {
+                   'en': 'Banished for 3 days',
+                   'es': 'Desterrado por 3 días'
+               },
+               'Поступайте взвешенно, 30 дней': {
+                   'en': 'Act wisely, 30 days',
+                   'es': 'Actuar sabiamente, 30 días'
+               },
+               'Навсегда в бане. Никогда больше': {
+                   'en': 'Permanently banned. Never again',
+                   'es': 'Baneado permanentemente. Nunca más'
+               },
+               'Нарушение условий использования': {
+                   'en': 'Terms of use violation',
+                   'es': 'Violación de los términos de uso'
+               },
+               'Пермаментный бан': {
+                   'en': 'Permanent ban',
+                   'es': 'Baneo permanente'
+               },
+               'Подтвердить': {
+            'en': 'Confirm',
+            'es': 'Confirmar'
+        },
+        'выдача': {
+            'en': 'Issuance',
+            'es': 'Emisión'
+        },
+        'количество': {
+            'en': 'Amount',
+            'es': 'Cantidad'
+        },
+        'не указан': {
+            'en': 'Not specified',
+            'es': 'No especificado'
+        },'Выберите теги, которые хотите прикрепить': {
+            'en': 'Select the tags you want to attach',
+            'es': 'Seleccione las etiquetas que desea adjuntar'
+        },
+        'Дополнительные настройки': {
+            'en': 'Additional settings',
+            'es': 'Configuraciones adicionales'
+        },
+        'Оффтоп': {
+            'en': 'Off-topic',
+            'es': 'Fuera de tema'
+        },
+        'Вопросы': {
+            'en': 'Questions',
+            'es': 'Preguntas'
+        },
+        'Новости и события': {
+            'en': 'News and events',
+            'es': 'Noticias y eventos'
+        },
+        'Идеи': {
+            'en': 'Ideas',
+            'es': 'Ideas'
+        },
+        'Общение': {
+            'en': 'Communication',
+            'es': 'Comunicación'
+        },
+        'Пост находится в архиве': {
+            'en': 'The post is archived',
+            'es': 'La publicación está archivada'
+        },
+        'Комментарии отключены': {
+            'en': 'Comments are disabled',
+            'es': 'Los comentarios están deshabilitados'
+        },
+        'Это чат для гостей нашей соц.сети, давайте общаться': {
+            'en': 'This is a chat for guests of our social network, let\'s chat',
+            'es': 'Este es un chat para invitados de nuestra red social, hablemos'
+        },
+        'Создать опрос': {
+            'en': 'Create Poll',
+            'es': 'Crear Encuesta'
+        },
+        'Название вкладки': {
+            'en': 'Tab Title',
+            'es': 'Título de la Pestaña'
+        },
+        'Ссылка': {
+            'en': 'Link',
+            'es': 'Enlace'
+        },
+        'Ваше обращение архивировано': {
+            'en': 'Your request has been archived',
+            'es': 'Su solicitud ha sido archivada'
+        },
+        'Его можете видеть только вы и старшие администраторы': {
+            'en': 'Only you and senior administrators can see it',
+            'es': 'Solo usted y los administradores principales pueden verlo'
+        },
+        'Жалоба': {
+            'en': 'Complaint',
+            'es': 'Queja'
+        },
+        'Помощь': {
+            'en': 'Help',
+            'es': 'Ayuda'
+        },
+        'Вопрос': {
+            'en': 'Question',
+            'es': 'Pregunta'
+        },
+        'Найдена ошибка': {
+            'en': 'Error found',
+            'es': 'Error encontrado'
+        },
+        'Другое': {
+            'en': 'Other',
+            'es': 'Otro'
+        },
+        'Создать обращение': {
+            'en': 'Create a request',
+            'es': 'Crear una solicitud'
+        },
+        'Напишите название вашего форума': {
+            'en': 'Write the name of your forum',
+            'es': 'Escriba el nombre de su foro'
+        },
+        'тип форума': {
+            'en': 'forum type',
+            'es': 'tipo de foro'
+        },
+        'открытый': {
+            'en': 'open',
+            'es': 'abierto'
+        },
+        'закрытый': {
+            'en': 'closed',
+            'es': 'cerrado'
+        },
+        'Вы закрыли это обращение': {
+            'en': 'You have closed this appeal',
+            'es': 'Has cerrado este recurso'
+        },
+        'Обращение было закрыто модератором': {
+            'en': 'The appeal was closed by the moderator',
+            'es': 'La apelación fue cerrada por el moderador'
+        },
+        'Закрыть обращение': {
+            'en': 'Close the request',
+            'es': 'Cerrar caso'
+        },
+        'Переоткрыть обращение': {
+            'en': 'Reopen the appeal',
+            'es': 'Volver a abrir la apelación'
+        },
+        'Введите ники пользователей, которым хотите разрешить доступ к этому форуму': {
+            'en': 'Enter the usernames of the users you want to grant access to this forum',
+            'es': 'Ingrese los nombres de usuario de los usuarios a los que desea otorgar acceso a este foro'
+        },
+        'Разрешить доступ только по ссылке': {
+            'en': 'Allow access only to the parcel',
+            'es': 'Permitir el acceso solo por enlace'
+        },
+        'Изъять привилегию': {
+            'en': 'To withdraw a privilege',
+            'es': 'Retirar el privilegio'
+        },
+        'Покинуть форум': {
+            'en': 'Leave the forum',
+            'es': 'Abandonar el foro'
+        },
+        'Создать свой опрос': {
+            'en': 'Create your poll',
+            'es': 'Crea tu encuesta'
+        },
+        'Опрос от': {
+            'en': 'Poll by',
+            'es': 'Encuesta por'
+        },
+        'Проголосовать': {
+            'en': 'Vote',
+            'es': 'Votar'
+        },
+        'Вы еще не проголосовали': {
+            'en': 'You have not voted yet',
+            'es': 'Aún no ha votado'
+        },
+        'не проголосовано': {
+            'en': 'not voted',
+            'es': 'no votado'
+        },
+        'Ваш голос учтен': {
+            'en': 'Your vote is counted',
+            'es': 'Su voto está contado'
+        },
+        'Не проголосовано': {
+            'en': 'Not voted',
+            'es': 'No votado'
+        },
+        'заполните следующие поля': {
+            'en': 'fill in the following fields',
+            'es': 'complete los siguientes campos'
+        },
+        'суть голосования': {
+            'en': 'essence of the vote',
+            'es': 'esencia de la votación'
+        },
+        'вариант ответа': {
+            'en': 'answer option',
+            'es': 'opción de respuesta'
+        },
+        'введите': {
+            'en': 'enter',
+            'es': 'ingresar'
+        },
+        'часа': {
+            'en': 'hours',
+            'es': 'horas'
+        },
+        'часов': {
+            'en': 'hours',
+            'es': 'horas'
+        },
+        'час': {
+            'en': 'hour',
+            'es': 'hora'
+        },
+        'только что': {
+            'en': 'just now',
+            'es': 'justo ahora'
+        },
+        'день': {
+            'en': 'day',
+            'es': 'día'
+        },
+        'дней': {
+            'en': 'days',
+            'es': 'días'
+        },
+        
+        'месяц': {
+            'en': 'month',
+            'es': 'mes'
+        },
+        'месяцев': {
+            'en': 'months',
+            'es': 'meses'
+        },
+        'очень давно': {
+            'en': 'a long time ago',
+            'es': 'hace mucho tiempo'
+        },
+        'назад': {
+            'en': 'ago',
+            'es': 'hace'
+        },
+        'голосов': {
+            'en': 'votes',
+            'es': 'votos'
+        },
+        'голос': {
+            'en': 'vote',
+            'es': 'voto'
+        },
+        'последние': {
+            'en': 'latest',
+            'es': 'últimos'
+        },
+        'страница': {
+            'en': 'page',
+            'es': 'página'
+        },
+            'Пользователь': {
+                'en': 'User',
+                'es': 'Usuario'
+            },
+            'Гость': {
+                'en': 'Guest',
+                'es': 'Huésped'
+            },
+            'прокомментировал ваш': {
+                'en': 'commented on your',
+                'es': 'comentó en tu'
+            },
+            'хотел с вами поговорить': {
+                'en': 'wanted to talk to you',
+                'es': 'quería hablar contigo'
+            },
+            'Магазин': {
+                'en': 'Store',
+                'es': 'Tienda'
+            },
+            'тех.поддержка': {
+                'en': 'technical support',
+                'es': 'soporte técnico'
+            },
+            'форума': {
+                'en': 'forum',
+                'es': 'foro'
+            },
+            'владелец': {
+                'en': 'Owner',
+                'es': 'Propietario'
+            },
+            'хелпер': {
+                'en': 'Helper',
+                'es': 'Ayudante'
+            },
+            'показать все': {
+                'en': 'show all',
+                'es': 'mostrar todo'
+            },
+              'все новости': {
+                    'en': 'All news',
+                    'es': 'Todas las noticias'
+                },
+              'новости': {
+                'en': 'News',
+                'es': 'Noticias'
+              },
+              'моя страница': {
+                'en': 'My profile',
+                'es': 'Mi perfil'
+              },
+              'мой профиль': {
+                'en': 'My profile',
+                'es': 'Mi perfil'
+              },
+              'сообщения': {
+                'en': 'Messages',
+                'es': 'Mensajes'
+              },
+              'форумы': {
+                'en': 'Forums',
+                'es': 'Foros'
+              },
+              'форум': {
+                'en': 'Forum',
+                'es': 'Foro'
+              },
+              'игры': {
+                'en': 'Games',
+                'es': 'Juegos'
+              },
+              
+              'информация': {
+                'en': 'Information',
+                'es': 'Información'
+              },
+              'достижения': {
+                'en': 'Achievements',
+                'es': 'Logros'
+              },
+              'языки': {
+                'en': 'Language',
+                'es': 'Idioma'
+              },
+              'подписчиков': {
+                'en': 'subscribers',
+                'es': 'suscriptores'
+              },
+              'подписчика': {
+                'en': 'subscriber',
+                'es': 'suscriptor'
+              },
+              'подписчик': {
+                'en': 'subscriber',
+                'es': 'suscriptor'
+              },
+              'выйти': {
+                'en': 'Log out',
+                'es': 'Salir'
+              },
+              'получить подарок': {
+                'en': 'get a gift',
+                'es': 'recibir un regalo'
+              },
+              'настройки': {
+                'en': 'Settings',
+                'es': 'Ajustes'
+              },
+              'выбрать фото': {
+                'en': 'choose a photo',
+                'es': 'elegir una foto'
+              },
+              'вернуться': {
+                'en': 'return',
+                'es': 'volver'
+              },
+              'добавить в друзья': {
+                'en': 'Add to friends',
+                'es': 'Agregar a amigos'
+            },
+              'добавить': {
+                'en': 'Add',
+                'es': 'Añadir'
+              },
+              'фото не выбрано': {
+                'en': 'photo not selected',
+                'es': 'foto no seleccionada'
+              },
+              'добавить в друзья': {
+                'en': 'Add to friends',
+                'es': 'Agregar a amigos'
+              },
+              'подписаться': {
+                'en': 'Subscribe',
+                'es': 'Suscribirse'
+              },
+              'отписаться': {
+                'en': 'Unsubscribe',
+                'es': 'Cancelar suscripción'
+              },
+              'перейти по ссылке': {
+                    'en': 'Go to link',
+                    'es': 'Ir al enlace'
+                },
+                'переименовать': {
+                    'en': 'Rename',
+                    'es': 'Renombrar'
+                },
+                
+              'перейти': {
+                'en': 'go to',
+                'es': 'ir a'
+              },
+              'был в сети': {
+            'en': 'Was online',
+            'es': 'Estuvo en línea'
+        },
+        "новых": {
+            "en": "new",
+            "es": "nuevos"
+        },
+        "Цель игры": {
+            "en": "The goal of the game",
+            "es": "El objetivo del juego"
+        },
+        'Общие': {
+            'en': 'General',
+            'es': 'General'
+        },
+        'Пользователи': {
+            'en': 'Users',
+            'es': 'Usuarios'
+        },
+        'в сети': {
+            'en': 'Online',
+            'es': 'En línea'
+        },
+        'узнать больше': {
+            'en': 'Learn more',
+            'es': 'Saber más'
+        },
+        'имя': {
+            'en': 'Name',
+            'es': 'Nombre'
+        },
+        'город': {
+            'en': 'City',
+            'es': 'Ciudad'
+        },
+        'дата рождения': {
+            'en': 'Date of birth',
+            'es': 'Fecha de nacimiento'
+        },
+        'Заголовок': {
+            'en': 'Title',
+            'es': 'Título'
+          },
+          'Тезис': {
+            'en': 'Thesis',
+            'es': 'Tesis'
+          },
+          'Сюжеты': {
+            'en': 'Stories',
+            'es': 'Historias'
+          },
+          'Сюжет': {
+            'en': 'Story',
+            'es': 'Historia'
+          },
+          'Эпилог': {
+            'en': 'Epilogue',
+            'es': 'Epílogo'
+          },
+          'Фото': {
+            'en': 'Photo',
+            'es': 'Foto'
+          },
+          'Отмена': {
+            'en': 'Cancel',
+            'es': 'Cancelar'
+          },
+          'Автор': {
+            'en': 'Author',
+            'es': 'Autor'
+          },
+          'Опубликовано': {
+            'en': 'Published',
+            'es': 'Publicado'
+          },
+          'символов': {
+            'en': 'characters',
+            'es': 'caracteres'
+          },
+          'цвет': {
+            'en': 'color',
+            'es': 'color'
+          },
+          'текст': {
+            'en': 'text',
+            'es': 'texto'
+          },
+        'языки': {
+            'en': 'Languages',
+            'es': 'Idiomas'
+        },
+        'работа': {
+            'en': 'Work',
+            'es': 'Trabajo'
+        },
+        'учеба': {
+            'en': 'Education',
+            'es': 'Educación'
+        },
+        'сайт': {
+            'en': 'Website',
+            'es': 'Sitio web'
+        },
+        'номер телефона': {
+            'en': 'Phone number',
+            'es': 'Número de teléfono'
+        },
+        'соц.сети': {
+            'en': 'Social networks',
+            'es': 'Redes sociales'
+        },
+        'игры': {
+            'en': 'Games',
+            'es': 'Juegos'
+        },
+        'книги': {
+            'en': 'Books',
+            'es': 'Libros'
+        },
+        'фильмы': {
+            'en': 'Movies',
+            'es': 'Películas'
+        },
+        'друзья': {
+                'en': 'Friends',
+                'es': 'Amigos'
+              },
+        
+                'дополнительная информация': {
+                    'en': 'additional information',
+                    'es': 'información adicional'
+                },
+                'дата регистрации': {
+                    'en': 'registration date',
+                    'es': 'fecha de registro'
+                },
+                'штрафных баллов': {
+                    'en': 'penalty points',
+                    'es': 'puntos de penalización'
+                },
+                'рейтинг': {
+                    'en': 'rating',
+                    'es': 'clasificación'
+                },
+                'удалить из друзей': {
+                    'en': 'remove from friends',
+                    'es': 'eliminar de amigos'
+                },
+                'только': {
+                    'en': 'Only',
+                    'es': 'Solo'
+                },
+                'архив': {
+                    'en': 'Archive',
+                    'es': 'Archivo'
+                },
+                'прокомментируйте этот пост..': {
+                    'en': 'Comment on this post..',
+                    'es': 'Comentar esta publicación..'
+                },
+                'пост находится в архиве': {
+                    'en': 'post is archived',
+                    'es': 'la publicación está archivada'
+                },
+                'комментарии отключены': {
+                    'en': 'comments are disabled',
+                    'es': 'los comentarios están desactivados'
+                },
+                'сегодня в': {
+                    'en': 'today at',
+                    'es': 'hoy a las'
+                },
+                'вчера в': {
+                    'en': 'yesterday at',
+                    'es': 'ayer a las'
+                },
+                'был в сети недавно': {
+                'en': 'was online recently',
+                'es': 'estuvo en línea recientemente'
+            },
+            "Отправить": {
+                "en": "Send",
+                "es": "Enviar"
+            },
+            'все уведомления': {
+                'en': 'All notifications',
+                'es': 'Todas las notificaciones'
+            },
+            'пометить прочитанными': {
+                'en': 'Mark as read',
+                'es': 'Marcar como leído'
+            },
+            'Пометить прочитанным': {
+                'en': 'Mark as read',
+                'es': 'Marcar como leído'
+              },
+            'нет новых уведомлений': {
+                'en': 'No new notifications',
+                'es': 'No hay nuevas notificaciones'
+            },
+            'заданий': {
+                'en': 'tasks',
+                'es': 'tareas'
+              },
+            'текст события': {
+                'en': 'Event text',
+                'es': 'Texto del evento'
+            },
+            'добавить этому пользователю привилегию': {
+                'en': 'Grant this user privilege',
+                'es': 'Otorgar privilegio a este usuario'
+            }
+            ,
+            'удалить': {
+                    'en': 'Delete',
+                    'es': 'Eliminar'
+                },
+                'события': {
+                'en': 'Events',
+                'es': 'Eventos'
+              },
+        
+            'еще': {
+                'en': 'more',
+                'es': 'más'
+            },
+            'упомянул': {
+                'en': 'mentioned',
+                'es': 'mencionado'
+            },
+            'вас': {
+                'en': 'you',
+                'es': 'usted'
+            },
+            'в чате': {
+                'en': 'in the chat',
+                'es': 'en el chat'
+            },
+            'напишите что-нибудь': {
+                'en': 'Write something',
+                'es': 'Escribe algo'
+            },
+            'подарок получен!': {
+                'en': 'Gift received!',
+                'es': '¡Regalo recibido!'
+            },
+            'осталось подарков': {
+                'en': 'Gifts left',
+                'es': 'Regalos restantes'
+            },
+            'вы получили ежедневный подарок за вход! спасибо за активность!': {
+                'en': 'You received a daily login gift! Thank you for your activity!',
+                'es': '¡Recibiste un regalo diario por iniciar sesión! ¡Gracias por tu actividad!'
+            },
+            'изменить': {
+                'en': 'Change',
+                'es': 'Cambiar'
+            },
+            'отменить запрос': {
+                'en': 'Cancel request',
+                'es': 'Cancelar solicitud'
+            },
+            'пользователя': {
+              'en': 'user',
+              'es': 'usuario'
+            },
+            'Сохранить': {
+            'en': 'Save',
+            'es': 'Guardar'
+        },
+        'Дополнительная': {
+            'en': 'Additional',
+            'es': 'Adicional'
+        },
+        'пароль': {
+            'en': 'Password',
+            'es': 'Contraseña'
+        },
+        'Начать': {
+            'en': 'Start',
+            'es': 'Comenzar'
+        },
+        'Объявления': {
+            'en': 'Announcements',
+            'es': 'Anuncios'
+        },
+        'важных': {
+            'en': 'important',
+            'es': 'importantes'
+        },
+        'Главная': {
+            'en': 'Home',
+            'es': 'Inicio'
+        },
+        'Регистрация': {
+            'en': 'Registration',
+            'es': 'Registro'
+        },
+        'Для неавторизованных': {
+            'en': 'For unauthorized users',
+            'es': 'Para usuarios no autoriz.'
+        },
+        'Администрация': {
+            'en': 'Administration',
+            'es': 'Administración'
+        },
+        'Изменить статус': {
+            'en': 'Change status',
+            'es': 'Cambiar estado'
+        },
+        'Написать объявление': {
+            'en': 'Write an announcement',
+            'es': 'Escribir un anuncio'
+        },
+        'Отправитель': {
+            'en': 'Sender',
+            'es': 'Remitente'
+        },
+        'Текст на русском': {
+            'en': 'Text in Russian',
+            'es': 'Texto en ruso'
+        },
+        'Текст на английском': {
+            'en': 'Text in English',
+            'es': 'Texto en inglés'
+        },
+        'Текст на испанском': {
+            'en': 'Text in Spanish',
+            'es': 'Texto en español'
+        },
+        'Удалить объявление': {
+            'en': 'Delete announcement',
+            'es': 'Eliminar anuncio'
+        },
+        'ID объявления': {
+            'en': 'Announcement ID',
+            'es': 'ID del anuncio'
+        },
+        'Привет': {
+            'en': 'Hello',
+            'es': 'Hola'
+        },           
+        'мой': {
+            'en': 'My',
+            'es': 'Mi'
+        },
+        'Мужской пол': {
+                'en': 'Male gender',
+                'es': 'Género masculino'
+            },
+            'Женский пол': {
+                'en': 'Female gender',
+                'es': 'Género femenino'
+            },
+            'Средний пол': {
+                'en': 'Neutral gender',
+                'es': 'Género neutral'
+            },
+            'Пол не указан': {
+                'en': 'Gender not specified',
+                'es': 'Género no especificado'
+            },
+            "Забанен с": {
+                "en": "Banned since",
+                "es": "Prohibido desde"
+            },
+            "несколько раз": {
+                "en": "several times",
+                "es": "varias veces"
+            },
+            "свой пост": {
+                "en": "your post",
+                "es": "tu publicación"
+            },
+            "Разбанить": {
+                "en": "Unban",
+                "es": "Desbloquear"
+            },
+            "Прокрутите": {
+                "en": "Scroll",
+                "es": "Desplazar"
+            },
+            'дня': {
+                'en': 'days',
+                'es': 'días'
+            },
+            "Включить": {
+                "en": "Enable",
+                "es": "Habilitar"
+            },
+            "Отключить": {
+                "en": "Disable",
+                "es": "Deshabilitar"
+            },
+            "Спасибо": {
+                "en": "Thank you",
+                "es": "Gracias"
+            },
+            "Пожалуйста": {
+                "en": "Please",
+                "es": "Por favor"
+            },
+            "Благодарю": {
+                "en": "Thanks",
+                "es": "Agradezco"
+            },
+            "по скольку": {
+                "en": "since",
+                "es": "ya que"
+            },
+            'модератор': {
+                'en': 'moderator',
+                'es': 'moderador'
+              },
+              'лет': {
+                'en': 'years',
+                'es': 'años'
+              },
+              'открытый': {
+                'en': 'open',
+                'es': 'abierto'
+              },
+              'закрытый': {
+                'en': 'closed',
+                'es': 'cerrado'
+              },
+              "Событие": {
+                "en": "Event",
+                "es": "Evento"
+            },
+            "верифицирован": {
+                "en": "verified",
+                "es": "verificado"
+            },
+            "очко": {
+                "en": "point",
+                "es": "punto"
+            },
+            "до": {
+                "en": "up to",
+                "es": "hasta"
+            },
+            "на": {
+                "en": "on",
+                "es": "en"
+            },
+              'Все': {
+                'en': 'All',
+                'es': 'Todo'
+              },
+              'через': {
+                'en': 'in',
+                'es': 'en'
+              },
+            "или": {
+                "en": "or",
+                "es": "o"
+            },
+            
+            'пол': {
+                'en': 'Gender',
+                'es': 'Género'
+            },
+            'Ваш': {
+                'en': 'Your',
+                'es': 'Su'
+            },
+            'вы': {
+                'en': 'you',
+                'es': 'vosotros'
+            },
+            "в": {
+                "en": "in",
+                "es": "en"
+            },
+            "и": {
+                "en": "and",
+                "es": "e"
+            }     
+        };
+        
+            
+            function translateText(node) {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    let text = node.nodeValue.trim().toLowerCase();
+                    let lastChar = text.charAt(text.length - 1);
+                    if (lastChar === '.' || lastChar === ':' || !isNaN(lastChar) || lastChar === '(' || lastChar === ')') {
+                        text = text.slice(0, -1);
+                    }
+                    for (let key in translationDict) {
+                        if (text.includes(key.toLowerCase())) {
+                            let translatedText = translationDict[key] && translationDict[key][language];
+                            if (translatedText) {
+                                node.nodeValue = node.nodeValue.replace(new RegExp(key, 'gi'), translatedText);
+                            }
+                        }
+                    }
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    if (!node.classList.contains('scrapbook-content') && !node.classList.contains('scrapbook-detail') && !node.classList.contains('eventing-title') && !node.classList.contains('no-translate')) {
+                        node.childNodes.forEach(translateText);
+                        if (node.attributes) {
+                            Array.from(node.attributes).forEach(attr => {
+                                let attrValue = node.getAttribute(attr.name);
+                                if (attrValue) {
+                                    let translatedAttrValue = translationDict[attrValue.toLowerCase()] ? translationDict[attrValue.toLowerCase()][language] : null;
+                                    if (translatedAttrValue) {
+                                        node.setAttribute(attr.name, translatedAttrValue);
+                                    }
+                                }
+                            });
+                        }
+                        // Перевод placeholder для input
+                        if (node.nodeName.toLowerCase() === 'input' && node.getAttribute('placeholder')) {
+                            let placeholderText = node.getAttribute('placeholder').trim().toLowerCase();
+                            for (let key in translationDict) {
+                                if (placeholderText.includes(key.toLowerCase())) {
+                                    let translatedPlaceholderText = translationDict[key] && translationDict[key][language];
+                                    if (translatedPlaceholderText) {
+                                        node.setAttribute('placeholder', translatedPlaceholderText);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        // Перевод placeholder для textarea
+                        if (node.nodeName.toLowerCase() === 'textarea' && node.getAttribute('placeholder')) {
+                            let placeholderText = node.getAttribute('placeholder').trim().toLowerCase();
+                            for (let key in translationDict) {
+                                if (placeholderText.includes(key.toLowerCase())) {
+                                    let translatedPlaceholderText = translationDict[key] && translationDict[key][language];
+                                    if (translatedPlaceholderText) {
+                                        node.setAttribute('placeholder', translatedPlaceholderText);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+        
+        // Начинаем переводить текст с корневого элемента body
+        translateText(document.body);
+          }
+        
+        // Вызов функции перевода после полной загрузки DOM
+        
+            
+
+        
+          

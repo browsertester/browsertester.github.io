@@ -1,0 +1,84 @@
+
+  const ratingIcon = document.getElementById('ratingIcon');
+                    const ratingPopup = document.getElementById('ratingPopup');
+                    
+                    ratingIcon.addEventListener('click', (event) => {
+                      // Показать всплывающее окно и расположить его рядом с иконкой
+                      ratingPopup.style.display = 'block';
+                      ratingPopup.style.top = ratingIcon.offsetTop + ratingIcon.offsetHeight + 'px';
+                      ratingPopup.style.left = ratingIcon.offsetLeft + 'px';
+                      // Остановить всплытие события клика до документа
+                      event.stopPropagation();
+                    });
+                    
+                    // Скрыть всплывающее окно при клике за его пределами
+                    document.addEventListener('click', () => {
+                      ratingPopup.style.display = 'none';
+                    });
+
+                              document.addEventListener('DOMContentLoaded', function() {
+            var rewardElements = document.querySelectorAll('#rewardText');
+            rewardElements.forEach(function(rewardElement) {
+              var rewardText = rewardElement.textContent;
+              if (rewardText.includes('NodeGems')) {
+                // Создаем регулярное выражение для замены слова 'NodeGems'
+                var regex = /NodeGems/g;
+                // Заменяем слово на изображение
+                rewardElement.innerHTML = rewardText.replace(regex, '<img src="/svg/NodeGems.svg" width="20px" height="20px">');
+              }
+            });
+          });
+
+
+        // var rating = document.getElementById("rating").innerHTML
+
+        // console.log(rating)
+
+        // var frameCount = 1;
+        // var frameInterval = 0.3;
+        // var digitValueMax = 100;
+        // var statValueMax = 40;
+        // var digitValueMin = 0;
+
+        // if (statValueMax > digitValueMax) {
+        //     statValueMax = 100
+        // }
+
+        // if (statValueMax < digitValueMin) {
+        //     statValueMax = 0
+        // }
+
+        // var statValueCurrent = 0;
+        // var statValueInterval = statValueMax / frameCount;
+
+        // updateDetails();
+
+
+        // function updateDetails() {
+        //     // if (statValueCurrent.toFixed(1) > statValueMax) {
+        //     //     return;
+        //     // }
+        //     setStatValue(statValueCurrent.toFixed(1));
+        //     statValueCurrent += statValueInterval;
+        //     setTimeout(updateDetails, frameInterval);
+        // }
+
+
+        function setStatValue(value) {
+            var angle = -120 + 240 * (value / digitValueMax);
+            progress.css({
+                'transform': `rotate(${angle}deg)`
+            });
+
+            details.find('.speed').text(value);
+        }
+
+
+        function deg2rad(angle) {
+            return angle * (Math.PI / 180);
+        }
+
+
+        function rad2deg(angle) {
+            return angle * (180 / Math.PI);
+        }
