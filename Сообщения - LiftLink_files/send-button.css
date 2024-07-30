@@ -1,0 +1,137 @@
+.send-button {
+    --primary: #7289DA;
+    --primary-dark: #7289DA;
+    --primary-darkest: #7289DA;
+    --text: #FFFFFF;
+    --text-opacity: 1;
+    --success-button: #2B3044;
+    --success-button-scale: .2;
+    --success-button-opacity: 0;
+    --border-radius: 7;
+    --overflow: hidden;
+    --rotate: 0;
+    --plane-x: 0;
+    --plane-y: 0;
+    --plane-opacity: 1;
+    --left-button-wing-background: var(--primary);
+    --left-button-wing-first-x: 0;
+    --left-button-wing-first-y: 0;
+    --left-button-wing-second-x: 50;
+    --left-button-wing-second-y: 0;
+    --left-button-wing-third-x: 0;
+    --left-button-wing-third-y: 100;
+    --left-button-body-background: var(--primary);
+    --left-button-body-first-x: 50;
+    --left-button-body-first-y: 0;
+    --left-button-body-second-x: 50;
+    --left-button-body-second-y: 100;
+    --left-button-body-third-x: 0;
+    --left-button-body-third-y: 100;
+    --right-button-wing-background: var(--primary);
+    --right-button-wing-first-x: 50;
+    --right-button-wing-first-y: 0;
+    --right-button-wing-second-x: 100;
+    --right-button-wing-second-y: 0;
+    --right-button-wing-third-x: 100;
+    --right-button-wing-third-y: 100;
+    --right-button-body-background: var(--primary);
+    --right-button-body-first-x: 50;
+    --right-button-body-first-y: 0;
+    --right-button-body-second-x: 50;
+    --right-button-body-second-y: 100;
+    --right-button-body-third-x: 100;
+    --right-button-body-third-y: 100;
+    display: block;
+    cursor: pointer;
+    position: relative;
+    border: 0;
+    padding: 8px 0;
+    min-width: 50px;
+    text-align: center;
+    margin: 0;
+    line-height: 24px;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 14px;
+    background: none;
+    outline: none;
+    color: var(--text);
+    transform: rotate(calc(var(--rotate) * 1deg)) translateZ(0);
+    font-family: "Inter", Arial;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .send-button .left-button,
+  .send-button .right-button {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: var(--plane-opacity);
+    transform: translate(calc(var(--plane-x) * 1px), calc(var(--plane-y) * 1px)) translateZ(0);
+  }
+  .send-button .left-button:before, .send-button .left-button:after,
+  .send-button .right-button:before,
+  .send-button .right-button:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: calc(var(--border-radius) * 1px);
+    transform: translate(var(--x, 0.4%), var(--y, 0)) translateZ(0);
+    z-index: var(--z-index, 2);
+    background: var(--background, var(--left-button-wing-background));
+    -webkit-clip-path: polygon(calc(var(--first-x, var(--left-button-wing-first-x)) * 1%) calc(var(--first-y, var(--left-button-wing-first-y)) * 1%), calc(var(--second-x, var(--left-button-wing-second-x)) * 1%) calc(var(--second-y, var(--left-button-wing-second-y)) * 1%), calc(var(--third-x, var(--left-button-wing-third-x)) * 1%) calc(var(--third-y, var(--left-button-wing-third-y)) * 1%));
+            clip-path: polygon(calc(var(--first-x, var(--left-button-wing-first-x)) * 1%) calc(var(--first-y, var(--left-button-wing-first-y)) * 1%), calc(var(--second-x, var(--left-button-wing-second-x)) * 1%) calc(var(--second-y, var(--left-button-wing-second-y)) * 1%), calc(var(--third-x, var(--left-button-wing-third-x)) * 1%) calc(var(--third-y, var(--left-button-wing-third-y)) * 1%));
+  }
+  .send-button .left-button:after {
+    --x: 0;
+    --z-index: 1;
+    --background: var(--left-button-body-background);
+    --first-x: var(--left-button-body-first-x);
+    --first-y: var(--left-button-body-first-y);
+    --second-x: var(--left-button-body-second-x);
+    --second-y: var(--left-button-body-second-y);
+    --third-x: var(--left-button-body-third-x);
+    --third-y: var(--left-button-body-third-y);
+  }
+  .send-button .right-button:before {
+    --x: -.4%;
+    --z-index: 2;
+    --background: var(--right-button-wing-background);
+    --first-x: var(--right-button-wing-first-x);
+    --first-y: var(--right-button-wing-first-y);
+    --second-x: var(--right-button-wing-second-x);
+    --second-y: var(--right-button-wing-second-y);
+    --third-x: var(--right-button-wing-third-x);
+    --third-y: var(--right-button-wing-third-y);
+  }
+  .send-button .right-button:after {
+    --x: 0;
+    --z-index: 1;
+    --background: var(--right-button-body-background);
+    --first-x: var(--right-button-body-first-x);
+    --first-y: var(--right-button-body-first-y);
+    --second-x: var(--right-button-body-second-x);
+    --second-y: var(--right-button-body-second-y);
+    --third-x: var(--right-button-body-third-x);
+    --third-y: var(--right-button-body-third-y);
+  }
+  .send-button span {
+    display: block;
+    position: relative;
+    z-index: 4;
+    opacity: var(--text-opacity);
+  }
+  .send-button span.success-button {
+    z-index: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 8px;
+    transform: rotate(calc(var(--rotate) * -1deg)) scale(var(--success-button-scale)) translateZ(0);
+    opacity: var(--success-button-opacity);
+    color: var(--success-button);
+  }

@@ -1,0 +1,2747 @@
+
+<!-- saved from url=(0045)http://localhost:3000/messenger/with/milmak13 -->
+<html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:description" content="Общайтесь с друзьями и близкими через удобный и безопасный мессенджер LiftLink.">
+<meta property="og:image" content="URL_К_ИЗОБРАЖЕНИЮ_МЕССЕНДЖЕРА">
+<meta property="og:url" content="https://liftlink.link/messenger">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Мессенджер - LiftLink">
+<meta name="twitter:description" content="Общайтесь с друзьями и близкими через удобный и безопасный мессенджер LiftLink.">
+<meta name="twitter:image" content="URL_К_ИЗОБРАЖЕНИЮ_МЕССЕНДЖЕРА">
+<meta name="keywords" content="мессенджер, LiftLink, социальная сеть, общение, сообщения, чат">
+<link rel="canonical" href="https://liftlink.link/messenger">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:3000/default-lg/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:3000/default-lg/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:3000/default-lg/icons/favicon-16x16.png">
+<link rel="manifest" href="http://localhost:3000/manifest.json">
+
+  <script src="./Сообщения - LiftLink_files/alpine.js.Без названия"></script>
+  <title>Сообщения - LiftLink</title>
+
+
+<link rel="stylesheet" href="./Сообщения - LiftLink_files/main.css">
+
+  <script>
+  window.console = window.console || function(t) {};
+  
+let typing = false;
+let timeout;
+</script>
+<script src="./Сообщения - LiftLink_files/ratingPanel.js.Без названия"></script>
+<link rel="stylesheet" href="./Сообщения - LiftLink_files/ratingPanel.css">
+<link rel="stylesheet" href="./Сообщения - LiftLink_files/send-button.css">
+
+  
+</head>
+
+<body translate="no" id="body">
+  <section id="section">
+  <div class="container" x-data="{ rightSide: false, leftSide: false }">
+  <div class="left-side" :class="{&#39;active&#39; : leftSide}">
+    
+    <div class="left-side-button" @click="leftSide = !leftSide">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      <svg stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+  <path d="M19 12H5M12 19l-7-7 7-7"></path>
+</svg>
+    </div>
+    <div class="logotype">LIFTLINK</div>
+    <div class="side-wrap">
+      <div class="side-title">MENU</div>
+      <div class="side-menu">
+        <link rel="stylesheet" href="./Сообщения - LiftLink_files/main.css">
+<script>
+  const currentUsername = 'tester2';
+</script>
+
+<script src="./Сообщения - LiftLink_files/WebSocket.js.Без названия"></script>
+
+<a href="http://localhost:3000/profile" class="nav-menu" data-tab-link="profile">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+      <path d="M9 22V12h6v10"></path>
+    </svg>
+    Мой профиль
+  </a>
+<a href="http://localhost:3000/news" class="nav-menu" data-tab-link="news"> 
+    <svg stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+    </svg>
+    Новости
+  </a>
+  <a href="http://localhost:3000/messenger" class="nav-menu" data-tab-link="messenger" id="nav-menu-messenger">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+      <path d="M7.76953 4.58009C8.57706 3.74781 9.54639 3.08958 10.6178 2.64588C11.6892 2.20219 12.84 1.98233 13.9995 2.00001C18.4195 2.00001 21.9995 5.10005 21.9995 8.92005C21.9792 9.98209 21.7021 11.0234 21.1919 11.9551C20.6817 12.8867 19.9535 13.681 19.0696 14.27V16.75"></path>
+      <path d="M16 13.64C16 10.29 12.87 7.58008 9 7.58008C5.13 7.58008 2 10.29 2 13.64C2.01941 14.5684 2.26227 15.4785 2.70789 16.2931C3.1535 17.1077 3.78881 17.803 4.56006 18.3201V20.49C4.55903 20.7858 4.64489 21.0755 4.80701 21.3229C4.96912 21.5703 5.20032 21.7647 5.47192 21.8818C5.74353 21.999 6.04362 22.0338 6.33484 21.9819C6.62606 21.9301 6.89553 21.7938 7.10999 21.5901L9.10999 19.6901C12.94 19.6201 16 16.94 16 13.64Z"></path>
+    </svg>
+    Сообщения
+    <span class="message-badge" id="unread-chats-count" style="display: none;">0</span>
+  </a>
+  
+  <a href="http://localhost:3000/create-forum" class="nav-menu" data-tab-link="forums">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle class="cls-1" cx="14.39" cy="10.52" r="1.43"></circle><path class="cls-2" d="M22.5,10.05v10.5l-2.86-2.87H11.05a3.81,3.81,0,0,1-3.7-2.86,3.77,3.77,0,0,1-.12-1V10.05a3.82,3.82,0,0,1,3.82-3.82h7.63A3.82,3.82,0,0,1,22.5,10.05Z"></path><path class="cls-2" d="M16.77,5.27v1H11.05a3.82,3.82,0,0,0-3.82,3.82v2.86H4.36L1.5,15.77V5.27A3.82,3.82,0,0,1,5.32,1.45H13A3.82,3.82,0,0,1,16.77,5.27Z"></path><path class="cls-1" d="M14.39,12h0a2.39,2.39,0,0,1,2.39,2.39v.48a0,0,0,0,1,0,0H12a0,0,0,0,1,0,0v-.48A2.39,2.39,0,0,1,14.39,12Z"></path></svg>
+    Форум
+  </a>
+  <a href="http://localhost:3000/stories" class="nav-menu" data-tab-link="stories">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+      <path d="M4 19V6.2C4 5.0799 4 4.51984 4.21799 4.09202C4.40973 3.71569 4.71569 3.40973 5.09202 3.21799C5.51984 3 6.0799 3 7.2 3H16.8C17.9201 3 18.4802 3 18.908 3.21799C19.2843 3.40973 19.5903 3.71569 19.782 4.09202C20 4.51984 20 5.0799 20 6.2V17H6C4.89543 17 4 17.8954 4 19ZM4 19C4 20.1046 4.89543 21 6 21H20M9 7H15M9 11H15M19 17V21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+     Сюжеты
+  </a>
+  <a href="http://localhost:3000/games" class="nav-menu" data-tab-link="games">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 44 44"><line class="c" x1="14.25" y1="23.6948" x2="14.25" y2="18.2679"></line><line class="c" x1="11.5366" y1="20.9814" x2="16.9634" y2="20.9814"></line><path class="c" d="m17.1869,13.6919v-1.6128c0-.581-.471-1.052-1.052-1.052h-3.7698c-.581,0-1.052.471-1.052,1.052v1.7708"></path><path class="c" d="m29.0435,27.7355l4.5534,6.83c1.485,2.2276,4.377,3.0323,6.7991,1.8919,2.2669-1.0672,3.5041-3.5476,2.9874-5.9993-.9842-4.6705-1.7692-9.0259-2.5726-11.9826-.8457-3.1124-3.8836-5.2804-7.2842-5.2804-2.0521,0-3.9114.8108-5.2876,2.1236h-8.4779c-1.3763-1.3128-3.2355-2.1236-5.2876-2.1236-3.4006,0-6.4386,2.1681-7.2842,5.2804-.8034,2.9567-1.5884,7.3122-2.5726,11.9826-.5167,2.4517.7205,4.9321,2.9874,5.9993,2.4221,1.1404,5.3141.3357,6.7991-1.8919l4.5534-6.83h10.087Z"></path><path class="c" d="m30.8131,13.6919v-1.6128c0-.581.471-1.052,1.052-1.052h3.7698c.581,0,1.052.471,1.052,1.052v1.7708"></path><circle class="b" cx="31.03" cy="20.9814" r=".75"></circle><circle class="b" cx="36.4634" cy="20.9814" r=".75"></circle><circle class="b" cx="33.75" cy="18.2679" r=".75"></circle><circle class="b" cx="33.75" cy="23.6948" r=".785"></circle></svg>  
+     Игры
+  </a>
+  <a href="http://localhost:3000/" class="nav-menu" data-tab-link="index" id="nav-menu-ad" style="display: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+      <path d="M21.9348 15.6583L18.6383 3.37924C18.2799 2.0442 16.6391 1.55235 15.603 2.46935L13.5253 4.30818C11.2132 6.35446 8.45556 7.83537 5.47068 8.63362C2.97216 9.30181 1.49142 11.8725 2.16089 14.3662C2.83037 16.8599 5.40053 18.3472 7.89906 17.679C10.8839 16.8807 14.014 16.787 17.0415 17.4054L19.762 17.961C21.1187 18.2381 22.2932 16.9933 21.9348 15.6583Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M7.71747 8L11.5 22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    Объявления
+    <span class="message-badge" id="unread-ads-count" style="display: none;">0</span>
+  </a>
+<!-- Add this in your HTML body where you want the install button to appear -->
+<!-- <button id="installButton" style="display: none;">Install LiftLink</button> -->
+
+
+  <!-- <a href="/news" class="nav-menu" data-tab-link="events">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+      <path d="M16 2v4M8 2v4M3 10h18"></path>
+    </svg>
+    События
+  </a> -->
+  <script src="./Сообщения - LiftLink_files/main.js.Без названия"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const unreadChatsCountElement = document.getElementById('unread-chats-count');
+  const unreadAdsCountElement = document.getElementById('unread-ads-count');
+  const currentUsername = 'tester2';
+  const currentUserId = '4';
+
+  function updateUnreadChatsCount() {
+    fetch('/unread-chats-count')
+      .then(response => response.json())
+      .then(data => {
+        unreadChatsCountElement.textContent = data.unreadChatsCount;
+        if (data.unreadChatsCount > 0) {
+          unreadChatsCountElement.style.display = 'block'
+          document.getElementById('nav-menu-messenger').style.marginTop = '-10px'
+          document.getElementById('nav-menu-messenger').style.marginBottom = '10px'
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching unread chats count:', error);
+      });
+  }
+  function updateUnreadAdsCount() {
+    fetch('/unread-ads-count')
+      .then(response => response.json())
+      .then(data => {
+        unreadAdsCountElement.textContent = data.unreadAdsCount;
+        if (data.unreadAdsCount > 0) {
+          unreadAdsCountElement.style.display = 'block'
+          document.getElementById('nav-menu-ad').style.display = 'flex'
+          document.getElementById('nav-menu-ad').style.marginTop = '-10px'
+          document.getElementById('nav-menu-ad').style.marginBottom = '10px'
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching unread chats count:', error);
+      });
+  }
+
+  updateUnreadChatsCount();
+  updateUnreadAdsCount();
+  
+})
+  </script>
+      </div>
+    </div>
+    
+    
+<div class="side-wrap">
+    <div class="side-title">YOUR FAVOURITE <svg xmlns="http://www.w3.org/2000/svg" id="svg-favourite" width="17px" height="17px" viewBox="0 0 24 24" fill="none" style="float: right; cursor: pointer; margin-top: 2px">
+      <path d="M4 12H20M12 4V20" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+  </div>
+
+     
+  <form action="http://localhost:3000/add-tab" method="post">
+    <div class="favourite-menu right-search-favourite" style="display: none;">
+      <input type="text" placeholder="Название вкладки" id="input" style="max-width: 130px;" name="tabName" required="">
+    </div>
+    <div class="favourite-menu right-search-favourite" style="display: none;">
+      <input type="text" placeholder="Ссылка" id="input" style="max-width: 130px;" name="tabLink" required="">
+    </div>
+    <button type="submit" class="status-share-favourite" id="favourite-btn" style="display: none;">Добавить</button>
+  </form>
+  <form id="rename-form" method="post" style="display: none;">
+    <div class="favourite-menu right-search-favourite" id="rename-fav">
+      <input type="text" placeholder="Новое название" id="input" style="max-width: 130px;" name="newName" required="">
+    </div>
+    <button type="submit" class="status-share-favourite" id="rename-fav-btn">Изменить</button>
+  </form>
+
+    <div class="side-menu">
+      
+        <a href="http://localhost:3000/forum-noauth" data-tab-id="10" class="tab-link no-translate" title="ПКМ для действия">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle class="cls-1" cx="14.39" cy="10.52" r="1.43"></circle><path class="cls-2" d="M22.5,10.05v10.5l-2.86-2.87H11.05a3.81,3.81,0,0,1-3.7-2.86,3.77,3.77,0,0,1-.12-1V10.05a3.82,3.82,0,0,1,3.82-3.82h7.63A3.82,3.82,0,0,1,22.5,10.05Z"></path><path class="cls-2" d="M16.77,5.27v1H11.05a3.82,3.82,0,0,0-3.82,3.82v2.86H4.36L1.5,15.77V5.27A3.82,3.82,0,0,1,5.32,1.45H13A3.82,3.82,0,0,1,16.77,5.27Z"></path><path class="cls-1" d="M14.39,12h0a2.39,2.39,0,0,1,2.39,2.39v.48a0,0,0,0,1,0,0H12a0,0,0,0,1,0,0v-.48A2.39,2.39,0,0,1,14.39,12Z"></path></svg>  
+            
+            
+            
+            
+            
+            
+          <span>Для неавторизованных</span>
+
+        </a>
+      
+        <a href="http://localhost:3000/shop" data-tab-id="11" class="tab-link no-translate" title="ПКМ для действия">
+            
+            
+            
+            
+            
+          <svg xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 28 28"><g id="shop-cart"><g><circle cx="9" cy="21" r="2"></circle></g><g><circle cx="19" cy="21" r="2"></circle></g><g><path d="M21,18H7.2l-4-16H0V0h4.8l0.8,3H24l-3.2,11H8.3l0.5,2H21V18z M7.8,12h11.5l2-7H6L7.8,12z"></path></g></g></svg>  
+            
+          <span>Магазин</span>
+
+        </a>
+      
+        <a href="http://localhost:3000/create-report-forum" data-tab-id="12" class="tab-link no-translate" title="ПКМ для действия">
+            
+            
+            
+            
+            
+            
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.197 3.35462C16.8703 1.67483 19.4476 1.53865 20.9536 3.05046C22.4596 4.56228 22.3239 7.14956 20.6506 8.82935L18.2268 11.2626M10.0464 14C8.54044 12.4882 8.67609 9.90087 10.3494 8.22108L12.5 6.06212"></path><path d="M13.9536 10C15.4596 11.5118 15.3239 14.0991 13.6506 15.7789L11.2268 18.2121L8.80299 20.6454C7.12969 22.3252 4.55237 22.4613 3.0464 20.9495C1.54043 19.4377 1.67609 16.8504 3.34939 15.1706L5.77323 12.7373"></path></svg>  
+          <span>Тех.поддержка</span>
+
+        </a>
+      
+    </div>
+  </div>
+  <a href="http://localhost:3000/create-report-forum" class="following-me" target="_blank">
+    <span class="following-text">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="supportIconTitle" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" color="#000000"> <title id="supportIconTitle">Support</title> <path d="M18,9 L16,9 C14.8954305,9 14,9.8954305 14,11 L14,13 C14,14.1045695 14.8954305,15 16,15 L16,15 C17.1045695,15 18,14.1045695 18,13 L18,9 C18,4.02943725 13.9705627,0 9,0 C4.02943725,0 0,4.02943725 0,9 L0,13 C1.3527075e-16,14.1045695 0.8954305,15 2,15 L2,15 C3.1045695,15 4,14.1045695 4,13 L4,11 C4,9.8954305 3.1045695,9 2,9 L0,9" transform="translate(3 3)"></path> <path d="M21,14 L21,18 C21,20 20.3333333,21 19,21 C17.6666667,21 16,21 14,21"></path> </svg>   Тех.поддержка
+   </span>
+    <span class="develop">
+      <svg xmlns="http://www.w3.org/2000/svg" width="400px" height="400px" viewBox="0 0 24 24" role="img" aria-labelledby="supportIconTitle" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" color="#000000"> <title id="supportIconTitle">Support</title> <path d="M18,9 L16,9 C14.8954305,9 14,9.8954305 14,11 L14,13 C14,14.1045695 14.8954305,15 16,15 L16,15 C17.1045695,15 18,14.1045695 18,13 L18,9 C18,4.02943725 13.9705627,0 9,0 C4.02943725,0 0,4.02943725 0,9 L0,13 C1.3527075e-16,14.1045695 0.8954305,15 2,15 L2,15 C3.1045695,15 4,14.1045695 4,13 L4,11 C4,9.8954305 3.1045695,9 2,9 L0,9" transform="translate(3 3)"></path> <path d="M21,14 L21,18 C21,20 20.3333333,21 19,21 C17.6666667,21 16,21 14,21"></path> </svg>
+      Наши контакты — securmailsupp@gmail.com
+    </span>
+  </a>
+
+
+
+  <script>
+      function showContextMenu(x, y, tabId, tabLink) {
+    // Создаем элемент контекстного меню
+    const contextMenu = document.createElement('div');
+    contextMenu.className = 'context-menu';
+  
+    // Добавляем опции контекстного меню
+    // Например:
+    const option1 = document.createElement('div');
+    option1.textContent = 'ㅤㅤПерейти по ссылке';
+    option1.setAttribute('data-link', `${tabLink}`);
+    option1.classList.add('link-option');
+  
+    option1.addEventListener('click', function() {
+      const link = this.getAttribute('data-link'); // Получаем URL из атрибута data-link
+      window.location.href = link; // Перенаправляем на полученный URL
+    });
+    contextMenu.appendChild(option1);
+  
+    const option2 = document.createElement('div');
+    option2.textContent = 'ㅤㅤПереименовать';
+    option2.classList.add('rename-option');
+    option2.addEventListener('click', function() {
+        document.getElementById("rename-form").style.display = "block";
+    });
+    contextMenu.appendChild(option2);
+  
+    const option3 = document.createElement('div');
+    option3.innerText = `ㅤㅤУдалить`;
+  option3.classList.add('delete-option');
+  option3.addEventListener('click', function() {
+    // Создаем форму для отправки запроса на удаление таба
+    const form = document.createElement('form');
+    form.action = `/delete-tab/${tabId}`; // Устанавливаем action формы с учетом идентификатора таба
+    form.method = 'post'; // Устанавливаем метод отправки
+    // Создаем кнопку для отправки формы
+    const button = document.createElement('button');
+    button.type = 'submit'; // Устанавливаем тип кнопки
+    button.textContent = 'Delete Tab'; // Устанавливаем текст на кнопке
+    // Добавляем кнопку в форму
+    form.appendChild(button);
+    // Добавляем форму на страницу
+    document.body.appendChild(form);
+    // Отправляем форму
+    form.submit();
+  });
+  
+    contextMenu.appendChild(option3);
+    // Позиционируем контекстное меню по координатам щелчка мыши
+    contextMenu.style.top = y + 'px';
+    contextMenu.style.left = x + 'px';
+  
+    // Добавляем контекстное меню на страницу
+    document.body.appendChild(contextMenu);
+  
+    // Обработчик для скрытия контекстного меню при щелчке вне него
+    document.addEventListener('click', function hideContextMenu() {
+      document.removeEventListener('click', hideContextMenu); // Удаляем обработчик после использования
+      contextMenu.remove(); // Удаляем контекстное меню со страницы
+    });
+  
+    function hideContextMenu(event) {
+      if (!contextMenu.contains(event.target)) {
+          contextMenu.remove(); // Удаляем контекстное меню со страницы
+      }
+  }
+  
+  // Добавляем обработчик для всех остальных действий в документе (кроме клика, контекстного меню, прокрутки и изменения размера окна)
+  document.addEventListener('mousedown', hideContextMenu);
+  document.addEventListener('mouseup', hideContextMenu);
+  document.addEventListener('mousemove', hideContextMenu);
+  }
+  
+  
+  document.querySelectorAll('.tab-link').forEach(link => {
+    link.addEventListener('contextmenu', function(event) {
+      event.preventDefault(); // Предотвращаем стандартное контекстное меню браузера
+      // Получаем id таба
+      tabId = this.getAttribute('data-tab-id');
+      tabLink = this.getAttribute('href');
+      const form = document.querySelector('#rename-form'); // Получаем форму переименования
+      form.action = `/rename-tab/${tabId}`; // Устанавливаем action формы
+      // Выводим id таба в консоль
+  
+      // Показываем контекстное меню
+      showContextMenu(event.clientX, event.clientY, tabId, tabLink);
+    });
+    
+  });
+
+
+
+  const favouriteBtn = document.getElementById("favourite-btn")
+const favouriteMenus = document.querySelectorAll(".favourite-menu");
+const inputInter = document.getElementById('input')
+const svgFavourite = document.getElementById("svg-favourite")
+
+svgFavourite.addEventListener('click', function() {
+  favouriteBtn.style.display = "flex"
+  favouriteMenus.forEach(menu => {
+  menu.style.display = "flex";
+});
+})
+  </script>
+  </div>
+    
+  <script>
+        const urlParams = new URLSearchParams(window.location.search);
+
+const errorMessage = urlParams.get('error');
+if (errorMessage) {
+  document.getElementById('errorPanel').textContent = errorMessage;
+  document.getElementById('errorPanel').style.backgroundColor = `lightcoral`
+}
+  </script>
+  <div class="main">
+    <span id="errorPanel"></span>
+    
+      <button class="right-side-button" @click="rightSide = !rightSide">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+       </button>
+        
+       <div class="main-container overflow-hidden" id="overflow-hidden">
+        <div class="timescale">
+          <div class="timescale-right" id="timescale">
+        <div style="min-width: 100%; margin-left: -20px; margin-right: 5px;">
+          <div id="lovely-things-list" style="background-color: rgba(255, 255, 255, 0);">
+            <div style="background-color: #171929">
+              <a class="notification-link" id="volver" href="http://localhost:3000/messenger">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#ccc" id="volver-icon" style="padding-right: 5px; vertical-align: middle;" width="25px" height="25px" viewBox="0 0 56 56">
+                    <path d="M 19.2811 49.5156 C 20.5233 49.5156 21.3436 48.6719 21.3436 47.4531 C 21.3436 46.8438 21.1561 46.3984 20.7811 46.0234 L 14.0311 39.4375 L 9.5780 35.6406 L 15.0858 35.8750 L 44.9920 35.8750 C 50.4529 35.8750 52.7267 33.3672 52.7267 28.0703 L 52.7267 14.2188 C 52.7267 8.7578 50.4529 6.4844 44.9920 6.4844 L 31.8671 6.4844 C 30.5780 6.4844 29.7342 7.4219 29.7342 8.5703 C 29.7342 9.7188 30.5780 10.6562 31.8671 10.6562 L 44.9920 10.6562 C 47.4764 10.6562 48.5545 11.7344 48.5545 14.2188 L 48.5545 28.0703 C 48.5545 30.6250 47.4764 31.7031 44.9920 31.7031 L 15.0858 31.7031 L 9.5780 31.9375 L 14.0311 28.1406 L 20.7811 21.5547 C 21.1561 21.1797 21.3436 20.7109 21.3436 20.1016 C 21.3436 18.9062 20.5233 18.0391 19.2811 18.0391 C 18.7655 18.0391 18.1561 18.2969 17.7577 18.6953 L 3.9764 32.2188 C 3.5077 32.6640 3.2733 33.2031 3.2733 33.7891 C 3.2733 34.3516 3.5077 34.9140 3.9764 35.3594 L 17.7577 48.8828 C 18.1561 49.2813 18.7655 49.5156 19.2811 49.5156 Z"></path>
+                </svg>
+                <span style="vertical-align: middle;">Вернуться в чаты</span>
+            </a>
+            </div>
+
+          <ul class="list" id="chatList">
+            
+              
+                <li id="chat-milmak13" data-username="milmak13" style="padding: 0px; border-radius: 0px; background-color: rgba(0, 0, 0, 0.1); border: none; position: relative; margin-left: -40px;">
+                  <div class="status boxing hover-effect">
+                    <form>
+                      <div class="status-main" style="padding: 20px 20px; display: block; cursor: pointer; padding-bottom: 5px;" onclick="redirectToChat(&#39;milmak13&#39;)">
+                        <div style="display: flex; margin-bottom: 10px;">
+                          <div style="position: relative; width: 55px; height: 55px;">
+                            <img src="./Сообщения - LiftLink_files/milmak13.png" class="profile-img" style="margin-right: 0px; width: 50px; height: 50px;">
+                            
+                              <span class="status-indicator offline"></span>
+                            
+                          </div>
+                          <div>
+                            <h3 style="margin: 0px; margin-left: 5px; font-size: 16px;" class="name">milmak13</h3>
+                            <br>
+                            <p style="margin: -5px; margin-left: 5px; margin-top: -12px;">
+                              <!-- <span id="last-sender-milmak13" style="font-weight: 600;">
+                                
+                              </span> -->
+                              
+                                <span id="latest-message-milmak13" class="description truncate-text">qwfqwfqwfw12e12eqdqwdqwdqwfqwцуацуацуацуааццуацуацуаdqwdqwdqdwdqdqwfqwdqwdqwqewfwfwdvsdvqwvevqwevqw</span>
+
+                              
+                            </p>
+                          </div>
+                        </div>
+                        
+                          <p class="blinking-text lowerPanel" id="unread-count-milmak13" style="display: none; align-items: center;">
+                            <img src="./Сообщения - LiftLink_files/messagesForum.svg" alt="muted" style="margin-right: 0px;">
+                            <span style="font-size: 14px; font-weight: 700; vertical-align: text-top; margin-left: 5px;"><span id="unreadCount">0</span> новых</span>
+                            <span style="position: relative; padding-left: 20px; font-size: 14px;">
+                              <span style="position: absolute; left: 8px;">•</span>
+                              <span class="last-message-time" data-time="2024-07-29, 18:55:06.124">1дн</span>
+                            </span>
+                          </p>
+                          
+                        
+                        
+                          
+                            <a class="scrapbook-action settings-link" id="clickMenuInEvent" style="cursor: pointer; position: absolute; bottom: 0px; right: -10px;" data-post-id="milmak13" data-post-sender="tester2" data-post-status-ban="">
+                              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="20px" width="20px" version="1.1" id="_x32_" viewBox="0 0 512 512" xml:space="preserve" fill="#838b9b">
+                                <g>
+                                  <circle class="st0" cx="55.091" cy="256" r="55.091"></circle>
+                                  <circle class="st0" cx="256" cy="256" r="55.091"></circle>
+                                  <circle class="st0" cx="456.909" cy="256" r="55.091"></circle>
+                            </g>
+                          </svg>
+                        </a>
+                      
+                      </div>
+                    </form>
+                  </div>
+                </li>
+              
+            
+            
+            
+            
+            
+            
+            <script src="./Сообщения - LiftLink_files/moment.min.js.Без названия"></script>
+            <script src="./Сообщения - LiftLink_files/moment-timezone-with-data.min.js.Без названия"></script>
+            <script src="./Сообщения - LiftLink_files/ru.min.js.Без названия"></script>
+            <script src="./Сообщения - LiftLink_files/moment-duration-format"></script>
+            
+            <audio id="notification-sound" src="/views/imgf/ding-36029.mp3" volume="0"></audio>
+
+            
+            <script>
+         const ws = new WebSocket(`ws://${window.location.host}/?username=${currentUsername}`);
+
+         if (!("Notification" in window)) {
+console.error("Ваш браузер не поддерживает уведомления!");
+} else {
+Notification.requestPermission().then(function (permission) {
+  if (permission === "granted") {
+    console.log("Уведомления разрешены!");
+  } else if (permission === "denied") {
+    console.warn("Пользователь отклонил запрос на уведомления.");
+  } else {
+    console.warn("Пользователь не принял решение по запросу на уведомления.");
+  }
+
+  // Выводим текущее состояние разрешения на уведомления
+  console.log('Текущее состояние разрешения на уведомления: ' + Notification.permission);
+}).catch(function (error) {
+  console.error("Ошибка при запросе на уведомления:", error);
+});
+}
+
+let notificationTimeout = null;
+const notificationDelay = 30000; // 10 секунд
+
+ws.onmessage = function(event) {
+  const message = JSON.parse(event.data);
+
+  function isTabActive() {
+    return !document.hidden;
+  }
+
+  if (message.type === 'newMessage') {
+    const { sender, receiver, content, timestamp } = message.data;
+    if ((currentUsername === sender || currentUsername === receiver)) {
+      
+      const chatItemReceiver = document.getElementById(`chat-${sender}`);
+      const isMuted = chatItemReceiver.querySelector('.scrapbook-action').dataset.postStatusBan === 'true';
+      const currentPath = window.location.pathname;
+
+      const chatItem = document.getElementById(`chat-${receiver}`);
+      if (chatItem) {
+        chatItem.querySelector('#latest-message-' + receiver).textContent = content;
+        chatItem.querySelector('.last-message-time').textContent = 'Только что';
+        chatItem.querySelector('.status').style.backgroundColor = '#1c1f33';
+        moveChatToTop(chatItem);
+      }
+
+      if (chatItemReceiver) {
+        chatItemReceiver.querySelector('#latest-message-' + sender).textContent = content;
+        const messageTimes = chatItemReceiver.querySelectorAll('.last-message-time');
+        messageTimes.forEach(messageTime => {
+          messageTime.textContent = 'Только что'
+        });
+        const unreadCount = chatItemReceiver.querySelector('#unreadCount');
+        let unreadCountInt = parseInt(unreadCount.textContent, 10);
+        unreadCountInt++;
+        unreadCount.textContent = unreadCountInt;
+        chatItemReceiver.querySelector('.status').style.backgroundColor = '#1c1f33';
+        document.querySelector('.lowerPanel').style.display = 'flex';
+        moveChatToTop(chatItemReceiver);
+        
+        if ((currentUsername !== sender) && !isMuted && (currentPath !== `/messenger/with/${sender}` || !isTabActive())) {
+          if (!notificationTimeout) {
+            showBrowserNotificationMessage(sender, content);
+            const notificationSound = document.getElementById('notification-sound');
+            notificationSound.volume = 0.3;
+            notificationSound.play();
+            notificationTimeout = setTimeout(() => {
+              notificationTimeout = null;
+            }, notificationDelay);
+          }
+        }
+      }
+    }
+  }
+};
+
+            function redirectToChat(username) {
+              window.location.href = `/chat/${username}`;
+            }
+            
+            function moveChatToTop(chatItem) {
+              const chatList = chatItem.parentNode;
+              chatList.insertBefore(chatItem, chatList.firstChild);
+            }
+            
+
+function redirectToChat(username) {
+window.location.href = `/chat/${username}`;
+}
+      </script>
+      <script>
+function createChatElement(chat) {
+  const chatList = document.getElementById('chatList'); // Предположим, что это ваш список чатов
+  if (!chatList) {
+    console.error('Element #chatList not found.');
+    return;
+  }
+
+  const li = document.createElement('li');
+  li.id = `chat-${chat.otherUser}`;
+  li.dataset.username = chat.otherUser;
+  li.style.cssText = 'padding: 0px; border-radius: 0px; background-color: rgba(0, 0, 0, 0.1); border: none; position: relative; margin-left: -40px;';
+
+  const divStatus = document.createElement('div');
+  divStatus.className = 'status boxing hover-effect';
+
+  const form = document.createElement('form');
+
+  const divStatusMain = document.createElement('div');
+  divStatusMain.className = 'status-main';
+  divStatusMain.style.cssText = 'padding: 20px 20px; display: block; cursor: pointer; padding-bottom: 5px;';
+  divStatusMain.onclick = function () { redirectToChat(chat.otherUser); };
+
+  const divFlex = document.createElement('div');
+  divFlex.style.cssText = 'display: flex; margin-bottom: 10px;';
+
+  const divRelative = document.createElement('div');
+  divRelative.style.cssText = 'position: relative; width: 55px; height: 55px;';
+
+  const img = document.createElement('img');
+  img.src = `/avatars/${chat.otherUser}.png`;
+  img.className = 'profile-img';
+  img.style.cssText = 'margin-right: 0px; width: 50px; height: 50px;';
+  
+  const spanStatusIndicator = document.createElement('span');
+  spanStatusIndicator.className = chat.isOnline ? 'status-indicator online' : 'status-indicator offline';
+
+  divRelative.appendChild(img);
+  divRelative.appendChild(spanStatusIndicator);
+
+  const divText = document.createElement('div');
+  
+  const h3 = document.createElement('h3');
+  h3.className = 'name';
+  h3.style.cssText = 'margin: 0px; margin-left: 5px; font-size: 16px;';
+  h3.textContent = chat.otherUser;
+
+  const pDescription = document.createElement('p');
+  pDescription.className = 'description';
+  pDescription.style.cssText = 'margin: 5px 5px;';
+  
+  const spanLatestMessage = document.createElement('span');
+  spanLatestMessage.id = `latest-message-${chat.otherUser}`;
+  spanLatestMessage.className = chat.isBlocked ? '' : 'description truncate-text';
+  spanLatestMessage.textContent = chat.isBlocked ? 'Заблокировано' : chat.latestMessage;
+
+  pDescription.appendChild(spanLatestMessage);
+
+  divText.appendChild(h3);
+  divText.appendChild(pDescription);
+
+  divFlex.appendChild(divRelative);
+  divFlex.appendChild(divText);
+
+  divStatusMain.appendChild(divFlex);
+
+  if (!chat.isBlocked && !chat.isMuted) {
+    const pLowerPanel = document.createElement('p');
+    pLowerPanel.className = 'blinking-text lowerPanel';
+    pLowerPanel.id = `unread-count-${chat.otherUser}`;
+    pLowerPanel.style.cssText = 'display: none; align-items: center;';
+
+    const imgMuted = document.createElement('img');
+    imgMuted.src = '/svg/messagesForum.svg';
+    imgMuted.alt = 'muted';
+    imgMuted.style.cssText = 'margin-right: 0px;';
+
+    const spanUnread = document.createElement('span');
+    spanUnread.style.cssText = 'font-size: 14px; font-weight: 700; vertical-align: text-top; margin-left: 5px;';
+    spanUnread.innerHTML = `<span id="unreadCount">${chat.unreadCount}</span> новых`;
+
+    const spanTime = document.createElement('span');
+    spanTime.style.cssText = 'position: relative; padding-left: 20px; font-size: 14px;';
+    spanTime.innerHTML = '<span style="position: absolute; left: 8px;">&#8226;</span>';
+
+    const spanLastMessageTime = document.createElement('span');
+    spanLastMessageTime.className = 'last-message-time';
+    spanLastMessageTime.dataset.time = chat.timestamp;
+
+    spanTime.appendChild(spanLastMessageTime);
+    pLowerPanel.appendChild(imgMuted);
+    pLowerPanel.appendChild(spanUnread);
+    pLowerPanel.appendChild(spanTime);
+    divStatusMain.appendChild(pLowerPanel);
+
+    if (chat.unreadCount > 0) {
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById(`unread-count-${chat.otherUser}`).style.display = 'flex';
+      });
+    }
+  }
+  if (chat.otherUser !== otherUser) {
+    const divTimeContainer = document.createElement('div');
+    divTimeContainer.className = 'time-container';
+
+    const spanLastMessageTime = document.createElement('span');
+    spanLastMessageTime.className = 'last-message-time';
+    spanLastMessageTime.dataset.time = chat.timestamp;
+
+    divTimeContainer.appendChild(spanLastMessageTime);
+
+    if (chat.isMuted) {
+      const imgMuted = document.createElement('img');
+      imgMuted.src = '/svg/mute-not.svg';
+      imgMuted.alt = 'Muted';
+      imgMuted.style.cssText = 'margin-right: 0px; vertical-align: text-top;';
+      divTimeContainer.appendChild(imgMuted);
+    }
+
+    divStatusMain.appendChild(divTimeContainer);
+  }
+
+  if (!chat.isBlocked) {
+    const aScrapbookAction = document.createElement('a');
+    aScrapbookAction.className = 'scrapbook-action settings-link';
+    aScrapbookAction.id = 'clickMenuInEvent';
+    aScrapbookAction.style.cssText = 'cursor: pointer; position: absolute; bottom: 0px; right: -10px;';
+    aScrapbookAction.dataset.postId = chat.otherUser;
+    aScrapbookAction.dataset.postSender = 'tester2';
+    aScrapbookAction.dataset.postStatusBan = chat.isMuted;
+
+    const svgIcon = document.createElement('svg');
+    svgIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    svgIcon.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+    svgIcon.setAttribute('height', '20px');
+    svgIcon.setAttribute('width', '20px');
+    svgIcon.setAttribute('version', '1.1');
+    svgIcon.setAttribute('viewBox', '0 0 512 512');
+    svgIcon.setAttribute('xml:space', 'preserve');
+    svgIcon.setAttribute('fill', '#838b9b');
+
+    const gElement = document.createElement('g');
+
+    const circle1 = document.createElement('circle');
+    circle1.className = 'st0';
+    circle1.setAttribute('cx', '55.091');
+    circle1.setAttribute('cy', '256');
+    circle1.setAttribute('r', '55.091');
+
+    const circle2 = document.createElement('circle');
+    circle2.className = 'st0';
+    circle2.setAttribute('cx', '256');
+    circle2.setAttribute('cy', '256');
+    circle2.setAttribute('r', '55.091');
+
+    const circle3 = document.createElement('circle');
+    circle3.className = 'st0';
+    circle3.setAttribute('cx', '456.909');
+    circle3.setAttribute('cy', '256');
+    circle3.setAttribute('r', '55.091');
+
+    gElement.appendChild(circle1);
+    gElement.appendChild(circle2);
+    gElement.appendChild(circle3);
+    svgIcon.appendChild(gElement);
+    aScrapbookAction.appendChild(svgIcon);
+
+    divStatusMain.appendChild(aScrapbookAction);
+  }
+
+  form.appendChild(divStatusMain);
+  divStatus.appendChild(form);
+  li.appendChild(divStatus);
+  chatList.appendChild(li);
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+      // Устанавливаем локаль на русский
+      moment.locale('ru');
+
+      var elements = document.querySelectorAll('.last-message-time');
+      elements.forEach(function(element) {
+        var timeString = element.getAttribute('data-time');
+
+        console.log('Time string from data attribute:', timeString); // Отладочное сообщение
+
+        // Преобразуем время из строки в объект moment
+        var cetTime = moment.tz(timeString, 'YYYY-MM-DD HH:mm:ss', 'Europe/Warsaw');
+
+        console.log('CET time:', cetTime.format('YYYY-MM-DD HH:mm:ss')); // Отладочное сообщение
+
+        // Вычисляем разницу относительно текущего времени в варшавском времени
+        var duration = moment.duration(moment().diff(cetTime));
+
+        console.log('Duration:', duration.humanize()); // Отладочное сообщение
+
+        // Форматирование в нужном формате
+        var formattedTime;
+        if (duration.asMonths() >= 1) {
+          formattedTime = Math.floor(duration.asMonths()) + 'мес';
+        } else if (duration.asDays() >= 7) {
+          formattedTime = Math.floor(duration.asWeeks()) + 'нед';
+        } else if (duration.asDays() >= 1) {
+          formattedTime = Math.floor(duration.asDays()) + 'дн';
+        } else if (duration.asHours() >= 1) {
+          formattedTime = Math.floor(duration.asHours()) + 'ч';
+        } else if (duration.asMinutes() >= 1) {
+          formattedTime = Math.floor(duration.asMinutes()) + 'м';
+        } else {
+          formattedTime = 'только что';
+        }
+
+        console.log('Formatted time:', formattedTime); // Отладочное сообщение
+
+        // Обновляем содержимое элемента на странице
+        element.textContent = formattedTime;
+      });
+    });
+
+function redirectToChat(username) {
+        const profileUrl = `/messenger/with/${username}`;
+        window.location.href = profileUrl;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+const unreadBlocks = document.querySelectorAll('.unread-block'); // Предположим, что все блоки с классом "unread-block"
+
+const blinkingTextElements = document.querySelectorAll('.blinking-text');
+
+blinkingTextElements.forEach(element => {
+setInterval(() => {
+  element.classList.toggle('blink');
+}, 2000); // Интервал мигания 1 секунда
+});
+});
+
+</script>
+
+
+
+
+          </ul></div>
+    
+
+        </div>
+      
+
+      <br>
+    
+<style>
+  .truncate-text {
+  display: inline-block;
+  max-width: 200px; /* Максимальная ширина текста */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Добавление многоточия в конце */
+  white-space: nowrap; /* Предотвращение переноса текста на новую строку */
+  vertical-align: bottom;
+}
+
+
+.profile-img {
+display: block;
+border-radius: 50%;
+}
+
+.status-indicator {
+position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.status-indicator.online {
+border: 4px solid #171929;
+background-color: rgb(35, 165, 90);
+}
+
+.status-indicator.offline {
+border: 4px solid #171929;
+background-color: gray;
+}
+
+.status-indicator-other {
+  bottom: 1px;
+  right: 1px;
+  width: 15px;
+  height: 15px;
+}
+
+.status-indicator-other.online {
+border: 3px solid #171929;
+background-color: rgb(35, 165, 90);
+}
+
+.status-indicator-other.offline {
+border: 3px solid #171929;
+background-color: gray;
+}
+
+
+.status-main {
+position: relative;
+}
+
+
+/* Определение анимации мигания с плавным переходом */
+@keyframes smooth-blink {
+0%, 35% {
+  opacity: 1;
+}
+65%, 100% {
+  opacity: 0;
+}
+}
+
+/* Класс для применения анимации */
+.blink {
+animation: smooth-blink 2s infinite;
+}
+
+
+
+  .time-container {
+position: absolute;
+top: 10px; /* Adjust as needed */
+right: 10px; /* Adjust as needed */
+font-size: 14px;
+font-weight: 700;
+}
+
+  body {
+    overflow: hidden;
+  }
+
+  .status-main {
+position: relative; /* Ensure the parent has relative positioning */
+}
+
+.scrapbook-action {
+position: absolute;
+top: 60;
+cursor: pointer;
+display: none !important;
+}
+.status-main:hover .scrapbook-action {
+display: inline-block !important; /* Показываем settings-link при наведении на .status-main */
+}
+
+  .btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-subscribe {
+  background-color: #3498db; /* Основной цвет кнопки "Подписаться" */
+  color: white;
+}
+
+.btn-subscribe:hover {
+  background-color: #2980b9; /* Цвет кнопки при наведении */
+  transform: scale(1.01);
+}
+
+.btn-unsubscribe {
+  
+  background-color: #e74c3c; /* Основной цвет кнопки "Отписаться" */
+  color: white;
+
+}
+
+.btn-unsubscribe:hover {
+  transform: scale(1.03);
+}
+
+
+  span {
+    font-family: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .hover-effect {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.hover-effect:hover {
+  transform: scale(0.995);
+  background-color: #2c3e50; /* Цвет при наведении */
+}
+
+.tag-container {
+          margin: 20px 0;
+      }
+
+      .tag-container input[type="checkbox"] {
+          display: none;
+      }
+
+      .tag-container label {
+          background-color: #333;
+          border: 1px solid #555;
+          border-radius: 20px;
+          color: #ccc;
+          padding: 4px 8px;
+          margin-right: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+          display: inline-block;
+      }
+
+      .tag-container input[type="checkbox"]:checked + label {
+          background-color: #3a4b5b;
+          border-color: #5a6b7b;
+          color: #fff;
+      }
+
+      .tag-container label:hover {
+          background-color: #4a5a6b;
+          border-color: #6a7b8b;
+      }
+
+
+   .input-username {
+          background-color: #252532;
+          border: 1px solid #555;
+          border-radius: 4px;
+          color: #ccc;
+          padding: 5px 5px;
+          font-size: 14px;
+          width: 150px;
+
+          outline: none;
+      }
+
+      .input-username::placeholder {
+          color: #888;
+      }
+
+      .input-username:focus {
+          border-color: #777;
+      }
+
+
+      .btn-private {
+          background-color: #2a3a4b;
+          border: 1px solid #4a5a6b;
+          border-radius: 4px;
+          color: #ccc;
+          padding: 5px 10px;
+          margin-top: 10px;
+          font-size: 14px;
+          cursor: pointer;
+          outline: none;
+          transition: background-color 0.3s, border-color 0.3s;
+      }
+
+      .btn-private:hover {
+          background-color: #3a4b5b;
+          border-color: #5a6b7b;
+      }
+
+      .btn-private:active {
+          background-color: #1a2b3b;
+          border-color: #3a4b5b;
+      }
+</style>
+        <link rel="stylesheet" href="./Сообщения - LiftLink_files/achievements.css">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* #1a202c */
+  #chat-container {
+    width: 670px;
+    background-color: #1d1f33;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  #message-container {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-bottom: 1px solid #2C2F33;
+  }
+  
+  .message {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #FFF;
+    position: relative;
+  }
+  
+  .message .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+  }
+  
+  .message .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .message .message-content {
+    max-width: calc(100% - 60px);
+  }
+  
+  .message .message-content strong {
+    color: #7289DA;
+    margin-bottom: 5px;
+  }
+  
+  .message .message-content p {
+    margin: 0;
+  }
+  
+  .message #delete-btn {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    border-radius: 3px;
+    color: #FFF;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 12px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    display: none;
+  }
+  
+  .message:hover #delete-btn {
+    display: block;
+  }
+  
+  #message-form {
+    display: flex;
+    padding: 20px;
+    background-color: #212230;
+  }
+  
+  #message-form textarea {
+    flex: 1;
+    resize: none;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #30313b;
+    color: #FFF;
+    font-size: 14px;
+    outline: none;
+  }
+  
+  #message-form button {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0 20px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+  
+  /* #message-form button:hover {
+    background-color: #677BC4;
+  } */
+
+  .message-date {
+    color: #72767d;
+    font-size: 9.5px;
+}
+
+#header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #131525;
+  height: 61px;
+  border-bottom: 1px solid rgb(30, 35, 39);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.user-info .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-info .user-details {
+  color: #FFF;
+  margin-left: 7px;
+}
+
+#settings-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+
+.settings-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.settings-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+  </style>
+  
+  <div id="chat-container">
+    <div id="header-container">
+      <div class="user-info" onclick="redirectToProfile(&#39;milmak13&#39;)" style="cursor: pointer;" title="Профиль">
+        <div style="position: relative; width: 40px; height: 40px;" data-username="milmak13">
+          <img src="./Сообщения - LiftLink_files/milmak13.png" class="profile-img" style="margin-right: 0px; width: 40px; height: 40px;">
+          
+          <span class="status-indicator status-indicator-other offline"></span>
+          
+        </div>
+        <div class="user-details">
+          <strong>milmak13</strong>
+        </div>
+        
+        
+        <div class="info-item rating-chat-panel" title="Рейтинг пользователя" style="cursor: pointer; margin-top: 10px; margin-left: 7px;" onclick="ratingActive()">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#ccc" version="1.1" id="Layer_1" width="40px" height="40px" viewBox="0 0 63 63" enable-background="new 0 0 70 70" xml:space="preserve" style="margin-top: -15px; cursor:pointer; margin-right: 4px;" title="Оценить пользователя">
+            <g>
+              <path d="M65.208,62.583h-1.625v-44.21c0-4.115-3.664-7.592-8-7.592c-4.338,0-8,3.477-8,7.592v44.21h-2v-33.21   c0-4.115-3.664-7.592-8-7.592c-4.337,0-8,3.477-8,7.592v33.21h-2V40.372c0-4.115-3.663-7.591-8-7.591c-4.336,0-8,3.477-8,7.591   v22.211h-5v-4h2.625c0.552,0,1-0.447,1-1s-0.448-1-1-1H6.583v-8h2.625c0.552,0,1-0.447,1-1s-0.448-1-1-1H6.583v-6h2.625   c0.552,0,1-0.447,1-1s-0.448-1-1-1H6.583v-6h2.625c0.552,0,1-0.447,1-1s-0.448-1-1-1H6.583v-8h2.625c0.552,0,1-0.447,1-1   s-0.448-1-1-1H6.583v-8h2.625c0.552,0,1-0.447,1-1s-0.448-1-1-1H6.583V5.208c0-1.104-0.896-2-2-2s-2,0.896-2,2v60   c0,1.105,1.521,1.375,2.625,1.375h60c1.105,0,2-0.896,2-2C67.208,63.478,66.313,62.583,65.208,62.583z M51.583,18.373   c0-1.913,1.869-3.592,4-3.592s4,1.679,4,3.592v44.21h-8V18.373z M33.583,29.373c0-1.913,1.869-3.592,4-3.592s4,1.679,4,3.592v33.21   h-8V29.373z M15.583,40.372c0-1.913,1.869-3.591,4-3.591s4,1.679,4,3.591v22.211h-8V40.372z"></path>
+              <path d="M56.583,21.208c-0.553,0-1,0.447-1,1v14c0,0.553,0.447,1,1,1c0.551,0,1-0.447,1-1v-14   C57.583,21.656,57.134,21.208,56.583,21.208z"></path>
+              <path d="M38.583,33.208c-0.552,0-1,0.447-1,1v10c0,0.553,0.448,1,1,1c0.551,0,1-0.447,1-1v-10   C39.583,33.656,39.134,33.208,38.583,33.208z"></path>
+              <path d="M20.583,42.208c-0.552,0-1,0.447-1,1v7c0,0.553,0.448,1,1,1c0.552,0,1-0.447,1-1v-7   C21.583,42.655,21.135,42.208,20.583,42.208z"></path>
+            </g>
+            </svg>
+             
+                 <span>?</span>
+             
+        </div>
+        
+      </div>
+      <div style="display: flex;" class="settings-chat-panel" id="settings-chat-panel">
+        
+        <button id="settings-btn" class="call-chat-panel" onclick="redirect(&#39;/voicechat/tester2/milmak13&#39;)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 24 24" fill="none">
+            <path d="M15 4V5C15 6.88562 15 7.82843 15.5858 8.41421C16.1716 9 17.1144 9 19 9H20.5M20.5 9L18 7M20.5 9L18 11" stroke="#ccc" stroke-width="1.5" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M10.0376 5.31617L10.6866 6.4791C11.2723 7.52858 11.0372 8.90532 10.1147 9.8278C10.1147 9.8278 10.1147 9.8278 10.1147 9.8278C10.1146 9.82792 8.99588 10.9468 11.0245 12.9755C13.0525 15.0035 14.1714 13.8861 14.1722 13.8853C14.1722 13.8853 14.1722 13.8853 14.1722 13.8853C15.0947 12.9628 16.4714 12.7277 17.5209 13.3134L18.6838 13.9624C20.2686 14.8468 20.4557 17.0692 19.0628 18.4622C18.2258 19.2992 17.2004 19.9505 16.0669 19.9934C14.1588 20.0658 10.9183 19.5829 7.6677 16.3323C4.41713 13.0817 3.93421 9.84122 4.00655 7.93309C4.04952 6.7996 4.7008 5.77423 5.53781 4.93723C6.93076 3.54428 9.15317 3.73144 10.0376 5.31617Z" fill="#ccc"></path>
+        </svg>
+        </button>
+        <button id="clickMenuInEvent" class="settings-btn" data-post-id="milmak13" data-post-sender="tester2" data-post-status-ban="">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="5" r="2" fill="#FFF"></circle>
+            <circle cx="12" cy="12" r="2" fill="#FFF"></circle>
+            <circle cx="12" cy="19" r="2" fill="#FFF"></circle>
+          </svg>
+        </button>
+      </div>
+    </div>
+  
+    <div id="message-container">
+      <div id="lovely-things-list-chats" style="background-color: rgba(255, 255, 255, 0);">
+        
+        <ul class="list messagesList" id="chatList" style="margin-left: -40px;"><div class="message" data-delete-id="57" sender-delete="milmak13" data-id="57">
+              <div class="avatar">
+                <img src="./Сообщения - LiftLink_files/milmak13.png" alt="milmak13">
+              </div>
+              <div class="message-content">
+                <strong class="clickable">milmak13</strong>
+                <span class="message-date" style="margin-left: 5px;">2024-07-28, 23:20</span>
+                <p class="name no-translate">ВЕРЕФИЦИРУЕТСЯ ОН</p>
+                
+              </div>
+            </div><div class="message" data-delete-id="58" sender-delete="milmak13" data-id="58">
+              <div class="avatar">
+                <img src="./Сообщения - LiftLink_files/milmak13.png" alt="milmak13">
+              </div>
+              <div class="message-content">
+                <strong class="clickable">milmak13</strong>
+                <span class="message-date" style="margin-left: 5px;">2024-07-28, 23:20</span>
+                <p class="name no-translate">АХЕРЕЛ</p>
+                
+              </div>
+            </div><div class="message" data-delete-id="62" sender-delete="milmak13" data-id="62">
+              <div class="avatar">
+                <img src="./Сообщения - LiftLink_files/milmak13.png" alt="milmak13">
+              </div>
+              <div class="message-content">
+                <strong class="clickable">milmak13</strong>
+                <span class="message-date" style="margin-left: 5px;">2024-07-28, 23:27</span>
+                <p class="name no-translate">цйайайайцайцуйцуйуцйцуйцвйцвйцв</p>
+                
+              </div>
+            </div><div class="message" data-delete-id="63" sender-delete="milmak13" data-id="63">
+              <div class="avatar">
+                <img src="./Сообщения - LiftLink_files/milmak13.png" alt="milmak13">
+              </div>
+              <div class="message-content">
+                <strong class="clickable">milmak13</strong>
+                <span class="message-date" style="margin-left: 5px;">2024-07-28, 23:32</span>
+                <p class="name no-translate">wdqweqwe</p>
+                
+              </div>
+            </div><div class="message" data-delete-id="64" sender-delete="milmak13" data-id="64">
+              <div class="avatar">
+                <img src="./Сообщения - LiftLink_files/milmak13.png" alt="milmak13">
+              </div>
+              <div class="message-content">
+                <strong class="clickable">milmak13</strong>
+                <span class="message-date" style="margin-left: 5px;">2024-07-29, 17:55</span>
+                <p class="name no-translate">qwfqwfqwfw12e12eqdqwdqwdqwfqwцуацуацуацуааццуацуацуаdqwdqwdqdwdqdqwfqwdqwdqwqewfwfwdvsdvqwvevqwevqw</p>
+                
+              </div>
+            </div></ul>
+      </div>
+    </div>
+    <div id="typing-indicator" style="position: relative; display: none; margin-left: 20px;">milmak13 пишет...</div>
+    
+    
+    
+    
+    <form id="message-form">
+      
+      <input type="hidden" name="receiver" id="receiver" value="milmak13">
+      <textarea name="content" id="content" placeholder="Type your message..." maxlength="1000" onchange="saveToLocalStorage()" required=""></textarea>
+      <!-- <button type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" viewBox="0 0 24 24" fill="none">
+          <path d="M20.7639 12H10.0556M3 8.00003H5.5M4 12H5.5M4.5 16H5.5M9.96153 12.4896L9.07002 15.4486C8.73252 16.5688 8.56376 17.1289 8.70734 17.4633C8.83199 17.7537 9.08656 17.9681 9.39391 18.0415C9.74792 18.1261 10.2711 17.8645 11.3175 17.3413L19.1378 13.4311C20.059 12.9705 20.5197 12.7402 20.6675 12.4285C20.7961 12.1573 20.7961 11.8427 20.6675 11.5715C20.5197 11.2598 20.059 11.0295 19.1378 10.5689L11.3068 6.65342C10.2633 6.13168 9.74156 5.87081 9.38789 5.95502C9.0808 6.02815 8.82627 6.24198 8.70128 6.53184C8.55731 6.86569 8.72427 7.42461 9.05819 8.54246L9.96261 11.5701C10.0137 11.7411 10.0392 11.8266 10.0493 11.9137C10.0583 11.991 10.0582 12.069 10.049 12.1463C10.0387 12.2334 10.013 12.3188 9.96153 12.4896Z" stroke="#ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button> -->
+      <button class="send-button" type="submit" style="">
+        <span class="default-button">        
+        <svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" viewBox="0 0 24 24" fill="none">
+          <path d="M20.7639 12H10.0556M3 8.00003H5.5M4 12H5.5M4.5 16H5.5M9.96153 12.4896L9.07002 15.4486C8.73252 16.5688 8.56376 17.1289 8.70734 17.4633C8.83199 17.7537 9.08656 17.9681 9.39391 18.0415C9.74792 18.1261 10.2711 17.8645 11.3175 17.3413L19.1378 13.4311C20.059 12.9705 20.5197 12.7402 20.6675 12.4285C20.7961 12.1573 20.7961 11.8427 20.6675 11.5715C20.5197 11.2598 20.059 11.0295 19.1378 10.5689L11.3068 6.65342C10.2633 6.13168 9.74156 5.87081 9.38789 5.95502C9.0808 6.02815 8.82627 6.24198 8.70128 6.53184C8.55731 6.86569 8.72427 7.42461 9.05819 8.54246L9.96261 11.5701C10.0137 11.7411 10.0392 11.8266 10.0493 11.9137C10.0583 11.991 10.0582 12.069 10.049 12.1463C10.0387 12.2334 10.013 12.3188 9.96153 12.4896Z" stroke="#ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        </span>
+        <span class="success-button"></span>
+        <div class="left-button"></div>
+        <div class="right-button"></div>
+    </button>
+      
+    </form>
+  </div>
+
+
+    
+
+  <br>
+  <div class="right-side" :class="{ &#39;active&#39;: rightSide }">
+    <div class="account">
+      <button class="account-button">
+        <svg stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1" viewBox="0 0 24 24">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <path d="M22 6l-10 7L2 6"></path>
+        </svg>
+      </button>
+      <button class="account-button account-button-not" onclick="toggleSettings()">
+        <svg stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1" viewBox="0 0 24 24">
+          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"></path>
+        </svg>
+      </button>
+      <button class="account-button" onclick="toggleBurgerAccount()">
+        <span class="account-user">
+            tester2
+            <img src="./Сообщения - LiftLink_files/tester2.png" alt="" class="account-profile">
+        </span>
+      </button>
+    </div>
+
+    <div id="burger-account" class="burger-popup">
+      <div class="modal-settings-menu">
+        
+
+
+  
+  <title>Viewport Version Switch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" id="default-viewport">
+  <link rel="stylesheet" href="./Сообщения - LiftLink_files/main.css">
+  <style>
+@media screen and (width: 1024px) {
+  .for-mobile {
+    display: block !important;
+  }
+  #desktop-version-btn {
+      display: none !important;
+  }
+}
+  </style>
+
+
+
+<a href="http://localhost:3000/profile" class="modal-settings-menu-item"><span class="menu-icon">😊</span> Моя страница</a>
+<a href="http://localhost:3000/settings" class="modal-settings-menu-item"><span class="menu-icon">⚙️</span> Настройки</a>
+<a href="http://localhost:3000/messenger/with/milmak13#" class="modal-settings-menu-item for-mobile" id="desktop-version-btn" style="display: block;"><span class="menu-icon">💻</span> Версия для компьютера</a>
+<a href="http://localhost:3000/messenger/with/milmak13#" class="modal-settings-menu-item for-mobile" id="mobile-version-btn" style="display: none;"><span class="menu-icon">📱</span> Версия для мобильного телефона</a>
+<a href="http://localhost:3000/shop" class="modal-settings-menu-item"><span class="menu-icon">🛒</span> Покупки</a>
+<a href="http://localhost:3000/logout" class="modal-settings-menu-item"><span class="menu-icon">🚪</span> Выйти</a>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const desktopVersionBtn = document.getElementById('desktop-version-btn');
+  const mobileVersionBtn = document.getElementById('mobile-version-btn');
+
+  desktopVersionBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    setViewportVersion('desktop');
+    applyViewport('desktop');
+  });
+
+  mobileVersionBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    setViewportVersion('mobile');
+    applyViewport('mobile');
+  });
+
+  function setViewportVersion(version) {
+    localStorage.setItem('viewportVersion', version);
+  }
+
+  function applyViewport(version) {
+    const viewportMeta = document.getElementById('default-viewport');
+    if (version === 'desktop') {
+      viewportMeta.setAttribute('content', 'width=1024');
+      localStorage.setItem('viewportVersion', 'desktop');
+    } else if (version === 'mobile') {
+      viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
+      localStorage.setItem('viewportVersion', 'mobile');
+    }
+    toggleVersionButtons();
+  }
+
+  function toggleVersionButtons() {
+    const currentVersion = localStorage.getItem('viewportVersion');
+    if (currentVersion === 'desktop') {
+      document.getElementById('desktop-version-btn').style.display = 'none';
+      document.getElementById('mobile-version-btn').style.display = 'block';
+    } else {
+      document.getElementById('desktop-version-btn').style.display = 'block';
+      document.getElementById('mobile-version-btn').style.display = 'none';
+    }
+  }
+
+  // При загрузке страницы проверяем текущую версию и применяем соответствующий viewport
+  const initialVersion = localStorage.getItem('viewportVersion') || 'mobile';
+  applyViewport(initialVersion);
+  if (window.innerWidth < 360) {
+    const viewportMeta = document.getElementById('default-viewport');
+    viewportMeta.setAttribute('content', 'width=401');
+  }
+});
+
+</script>
+
+
+
+
+    </div>
+
+  </div>
+  <div class="search-menu" style="background-color: rgba(0, 0, 0, 0);"><input type="text" placeholder="Search" id="search-users" class="search-att" style="margin-top: -5px;"></div>
+  
+    
+  
+
+    <div class="notification-panel" id="settings-popup" style="display: none; position: static;">
+      
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+  
+
+
+
+
+<style>
+.account-button:not(.right-side-button) + .account-button:before {
+content: "1";
+}
+</style>
+
+
+<div class="notification-category">
+    <a href="http://localhost:3000/notifications" class="notification-link">
+      <span class="category-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none"><path d="M3 18a1 1 0 0 1-.894-1.447L4 12.763V10a8 8 0 1 1 16 0v2.764l1.894 3.789A1 1 0 0 1 21 18H3ZM12 22a4.002 4.002 0 0 1-3.874-3h7.748A4.002 4.002 0 0 1 12 22Z" fill="#ffd700"></path></svg>
+      </span>
+      <span class="category-text">Все уведомления</span>
+    </a>
+  </div>
+  
+  <form action="http://localhost:3000/profile/tester2/notifications/isRead" method="post">
+  <div class="notification-category">
+    <a href="http://localhost:3000/messenger/with/milmak13#" class="notification-link">
+      <span class="category-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#008000" width="20px" height="20px" viewBox="0 0 1024 1024"><path d="M351.605 663.268l481.761-481.761c28.677-28.677 75.171-28.677 103.847 0s28.677 75.171 0 103.847L455.452 767.115l.539.539-58.592 58.592c-24.994 24.994-65.516 24.994-90.51 0L85.507 604.864c-28.677-28.677-28.677-75.171 0-103.847s75.171-28.677 103.847 0l162.25 162.25z"></path></svg>
+      </span>
+      <span class="category-text" onclick="submitForm(&#39;/profile/tester2/notifications/isRead&#39;)">Пометить прочитанными</span>
+    </a>
+  </div>
+</form>
+
+  
+
+  
+  
+  
+  
+  
+  
+  <div class="notification-category">
+    <a class="notification-link" style="cursor: default;">
+      <span class="category-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 64 64" stroke-width="3" stroke="#90aa01" fill="none"><path d="M32.39,7.32,14,15a1,1,0,0,0-.61.92V32.23h0A22.87,22.87,0,0,0,24.58,51.9l8.17,4.86,8.06-4.84A22.89,22.89,0,0,0,51.9,32.31V15a1,1,0,0,0-.65-.94L33.12,7.3A1,1,0,0,0,32.39,7.32Z"></path><path d="M32.83,17.92l3.64,7.37a.16.16,0,0,0,.1.08l8.14,1.18a.13.13,0,0,1,.07.23L38.9,32.51a.12.12,0,0,0,0,.12l1.39,8.1a.14.14,0,0,1-.2.15l-7.27-3.83a.15.15,0,0,0-.13,0l-7.27,3.83a.14.14,0,0,1-.2-.15l1.39-8.1a.15.15,0,0,0,0-.12l-5.88-5.73a.13.13,0,0,1,.07-.23l8.13-1.18a.15.15,0,0,0,.11-.08l3.63-7.37A.13.13,0,0,1,32.83,17.92Z" stroke-linecap="round"></path></svg>
+      </span>
+      <span class="category-text">System</span>
+      <span class="notification-badge">1</span>
+    </a>
+    <div class="notification-details">
+        <p>Добрый день, tester2! Рады вам сообщить, что ваша заявка на верификацию аккаунта была рассмотрена и принята! Теперь ваш аккаунт имеет статус верифицированного!</p>
+        
+    </div>
+  </div>
+  
+    </div>
+    <a class="following-me" target="_blank" style="position: absolute; bottom: -5px; cursor: pointer; padding: 5 35px;">
+    <span class="following-text">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <path d="M21.9348 15.6583L18.6383 3.37924C18.2799 2.0442 16.6391 1.55235 15.603 2.46935L13.5253 4.30818C11.2132 6.35446 8.45556 7.83537 5.47068 8.63362C2.97216 9.30181 1.49142 11.8725 2.16089 14.3662C2.83037 16.8599 5.40053 18.3472 7.89906 17.679C10.8839 16.8807 14.014 16.787 17.0415 17.4054L19.762 17.961C21.1187 18.2381 22.2932 16.9933 21.9348 15.6583Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M7.71747 8L11.5 22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+     Хотите разместить рекламу?
+   </span>
+    <span class="develop">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <path d="M21.9348 15.6583L18.6383 3.37924C18.2799 2.0442 16.6391 1.55235 15.603 2.46935L13.5253 4.30818C11.2132 6.35446 8.45556 7.83537 5.47068 8.63362C2.97216 9.30181 1.49142 11.8725 2.16089 14.3662C2.83037 16.8599 5.40053 18.3472 7.89906 17.679C10.8839 16.8807 14.014 16.787 17.0415 17.4054L19.762 17.961C21.1187 18.2381 22.2932 16.9933 21.9348 15.6583Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M7.71747 8L11.5 22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      По коммерческим вопросам — securmailsupp@gmail.com
+    </span>
+  </a>
+
+    <!-- const parsedDate = moment.tz(message.timestamp, 'YYYY-MM-DD, HH:mm', 'Europe/Warsaw');
+
+    // Проверяем, корректно ли распозналась дата
+    if (!parsedDate.isValid()) {
+        console.error('Invalid date format received:', message.timestamp);
+        return;
+    }
+
+    // Преобразуем дату в часовой пояс пользователя
+    const formattedDate = parsedDate.tz(userTimeZone).format('YYYY-MM-DD, HH:mm'); -->
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+  let currentPage = 1;
+  const loadMoreButton = document.getElementById('load-more-button');
+  const messageContainer = document.getElementById('message-container');
+  const chatList = document.querySelector('.messagesList');
+
+  loadMoreButton.addEventListener('click', async () => {
+    currentPage++;
+    const previousScrollHeight = messageContainer.scrollHeight;
+    const previousScrollTop = messageContainer.scrollTop;
+
+    const response = await fetch(`/messenger/with/milmak13?page=${currentPage}`);
+    const data = await response.text();
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = data;
+    const newMessages = tempDiv.querySelectorAll('.message');
+    const fragment = document.createDocumentFragment();
+
+    newMessages.forEach(msg => {
+      fragment.appendChild(msg);
+    });
+
+    chatList.insertBefore(fragment, chatList.firstChild);
+
+    if (!tempDiv.querySelector('#load-more-button')) {
+      loadMoreButton.style.display = 'none';
+    }
+
+    messageContainer.scrollTop = previousScrollTop + (messageContainer.scrollHeight - previousScrollHeight);
+
+    // Вызов функции форматирования дат для новых сообщений после вставки
+    formatNewMessageDates(newMessages);
+
+    // Добавление обработчиков контекстного меню для новых сообщений
+    newMessages.forEach(msg => {
+      addContextMenuHandler(msg);
+    });
+  });
+
+  function addContextMenuHandler(element) {
+    element.addEventListener('contextmenu', function(event) {
+      if (window.innerWidth <= 900) {
+        event.preventDefault();
+        event.stopPropagation();
+        const postID = this.getAttribute('data-delete-id');
+        const sender = this.getAttribute('sender-delete');
+        showDeleteMenu(event.clientX, event.clientY, postID, sender);
+        return false;
+      }
+    });
+  }
+
+  function formatNewMessageDates(newMessages) {
+    const userTimezone = 'Africa/Lagos'; // Временная зона пользователя
+
+    newMessages.forEach(msg => {
+      const dateElement = msg.querySelector('.message-date');
+      const serverDate = dateElement.textContent.trim();
+      const userFormattedDate = formatDateForUser(serverDate);
+      dateElement.textContent = userFormattedDate;
+
+      // Помечаем, что это сообщение уже было отформатировано
+      msg.setAttribute('data-formatted', 'true');
+    });
+
+    function formatDateForUser(dateString) {
+      const format = 'YYYY-MM-DD, HH:mm:ss.SSS';
+      const momentDate = moment.tz(dateString, format, 'Europe/Warsaw');
+      if (momentDate.isValid()) {
+        const userTime = momentDate.clone().tz(userTimezone);
+        return userTime.format('YYYY-MM-DD, HH:mm');
+      } else {
+        console.error('Invalid date format:', dateString);
+        return dateString;
+      }
+    }
+  }
+
+  // Добавление обработчиков контекстного меню для существующих сообщений
+  document.querySelectorAll('.message').forEach(msg => {
+    addContextMenuHandler(msg);
+  });
+});
+      </script>
+      
+      
+    <script src="./Сообщения - LiftLink_files/moment.min.js.Без названия"></script>
+    <script src="./Сообщения - LiftLink_files/moment-timezone-with-data.min.js.Без названия"></script>
+    <script>
+      function redirectToProfile(username) {
+          const profileUrl = `/profile/${username}`;
+          window.location.href = profileUrl;
+      }
+
+document.addEventListener('DOMContentLoaded', () => {
+const userTimezone = 'Africa/Lagos'; // Временная зона пользователя
+
+// Получаем все элементы с классом .message-date
+const messageDates = document.querySelectorAll('.message-date');
+
+// Проходим по каждому элементу и форматируем дату
+messageDates.forEach(dateElement => {
+  const serverDate = dateElement.textContent.trim(); // Получаем дату с сервера
+  const userFormattedDate = formatDateForUser(serverDate); // Форматируем дату для пользователя
+  dateElement.textContent = userFormattedDate; // Устанавливаем отформатированную дату
+});
+
+function formatDateForUser(dateString) {
+  const format = 'YYYY-MM-DD, HH:mm:ss.SSS';
+  const momentDate = moment.tz(dateString, format, 'Europe/Warsaw');
+  // console.log(dateString, momentDate)
+  
+  if (momentDate.isValid()) {
+      // Конвертируем дату в часовой пояс пользователя
+      const userTime = momentDate.clone().tz(userTimezone);
+      return userTime.format('YYYY-MM-DD, HH:mm'); // Возвращаем дату в формате пользователя
+  } else {
+      console.error('Invalid date format:', dateString);
+      return dateString; // Возвращаем оригинальную дату в случае ошибки
+  }
+}
+});
+
+
+clientSocket.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  const { username, isOnline } = data;
+
+  const chatElements = document.querySelectorAll(`li[data-username="${username}"], div[data-username="${username}"]`);
+  
+  chatElements.forEach(chatElement => { 
+    const statusIndicators = chatElement.querySelectorAll('.status-indicator');
+ 
+    statusIndicators.forEach(statusIndicator => {
+      if (username === "milmak13") {
+        if (isOnline) {
+          console.log(`${username} вошел в сеть`);
+          statusIndicator.classList.add('online');
+          statusIndicator.classList.remove('offline');
+        } else {
+          console.log(`${username} вышел из сети`);
+          statusIndicator.classList.add('offline');
+          statusIndicator.classList.remove('online');
+        }
+      }
+    });
+  });
+};
+</script>
+    <script src="./Сообщения - LiftLink_files/socket.io.min.js.Без названия"></script>
+   <script>
+const socket = io();
+
+// Обработчик для отправки события `typing`
+const sendTypingEvent = () => {
+  if (!typing) {
+    typing = true;
+    console.log('typing...');
+    socket.emit('typing', { receiver: 'milmak13', sender: 'tester2' });
+    timeout = setTimeout(stopTypingEvent, 4000);
+  }
+};
+
+// Обработчик для отправки события `stopTyping`
+const stopTypingEvent = () => {
+  typing = false;
+  socket.emit('stopTyping', { receiver: 'milmak13', sender: 'tester2' });
+  clearTimeout(timeout);
+};
+
+// Добавление обработчиков событий для текстового поля
+const messageInput = document.querySelector('textarea[name="content"]');
+messageInput.addEventListener('keydown', sendTypingEvent);
+messageInput.addEventListener('keyup', () => {
+  clearTimeout(timeout);
+  timeout = setTimeout(stopTypingEvent, 4000);
+});
+
+socket.on('connect', () => {
+  console.log('Connected to server');
+  socket.emit('register', 'tester2');
+});
+
+socket.on('typing', (data) => {
+  if (data.sender === 'milmak13' && data.receiver === 'tester2') {
+    console.log('typing-indicator - block')
+    document.getElementById('typing-indicator').style.display = 'block';
+  } else {
+    console.log(`Received typing event for another user: ${data.sender}`);
+  }
+});
+
+socket.on('stopTyping', (data) => {
+  if (data.sender === 'milmak13' && data.receiver === 'tester2') {
+    console.log('typing-indicator - none')
+    document.getElementById('typing-indicator').style.display = 'none';
+  } else {
+    console.log(`Received stopTyping event for another user: ${data.sender}`);
+  }
+});
+
+
+
+
+   socket.on('newMessage', (message) => {
+  const { sender, receiver } = message;
+  const otherUser = 'milmak13';
+
+  if (sender !== currentUsername) {
+    document.getElementById('typing-indicator').style.display = 'none'
+    setTimeout(function() {
+      document.getElementById('typing-indicator').style.display = 'block'
+    }, 4000)
+  }
+  if ((currentUsername === sender || currentUsername === receiver) && (otherUser === receiver || sender === otherUser)) {
+    console.log('milmak13', sender, receiver, currentUsername)
+  const messageContainer = document.getElementById('message-container');
+  const messageElement = document.createElement('div');
+  messageElement.classList.add('message');
+  messageElement.classList.add('margin-left');
+  messageElement.setAttribute('data-id', message.id);
+  messageElement.setAttribute('data-delete-id', message.id);
+  messageElement.setAttribute('sender-delete', sender);
+  const userTimeZone = 'Africa/Lagos'; // Получаем временную зону пользователя
+
+    // Используем Moment.js для парсинга даты в часовом поясе сервера (центральноевропейское время)
+    const parsedDate = moment.tz(message.timestamp, 'YYYY-MM-DD, HH:mm', 'Europe/Warsaw');
+
+    // Проверяем, корректно ли распозналась дата
+    if (!parsedDate.isValid()) {
+        console.error('Invalid date format received:', message.timestamp);
+        return;
+    }
+
+    // Преобразуем дату в часовой пояс пользователя
+    const formattedDate = parsedDate.tz(userTimeZone).format('YYYY-MM-DD, HH:mm');
+
+  messageElement.innerHTML = `
+    <div class="avatar">
+      <img src="/avatars/${sender}.png" alt="${sender}">
+    </div>
+    <div class="message-content">
+      <strong>${sender} </strong>
+      <span class="message-date" style="margin-left: 5px;"> ${formattedDate}</span>
+      <p>${message.content}</p>
+      ${sender === 'tester2' ? `
+        <div class="delete-btn" id="delete-btn" data-id="${message.id}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" class="delete-btn" data-id="${message.id}">
+                  <path d="M10 12V17" stroke="#ff4d4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M14 12V17" stroke="#ff4d4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M4 7H20" stroke="#ff4d4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10" stroke="#ff4d4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#ff4d4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+        </div>
+      ` : ''}
+    </div>
+  `;
+  messageContainer.appendChild(messageElement);
+  messageContainer.scrollTop = messageContainer.scrollHeight;
+  addContextMenuHandler(messageElement);
+   }
+});
+
+socket.on('deleteMessage', (messageId) => {
+  const messageElement = document.querySelector(`.message[data-id="${messageId}"]`);
+  if (messageElement) {
+    messageElement.remove();
+  }
+});
+
+const messageForm = document.getElementById('message-form');
+
+const sendMessage = () => {
+  const receiver = messageForm.querySelector('input[name="receiver"]').value;
+  const content = messageInput.value.trim();
+  let chatItemReceiver = document.getElementById(`chat-${receiver}`);
+  
+  if (!chatItemReceiver) {
+    const newChat = {
+      otherUser: receiver,
+      isOnline: false,
+      latestMessage: content,
+      unreadCount: 0,
+      isBlocked: false,
+      isMuted: false,
+      timestamp: Date.now()
+    };
+    createChatElement(newChat);
+    chatItemReceiver = document.getElementById(`chat-${receiver}`);
+  }
+
+
+  const currentPath = window.location.pathname;
+
+  const chatItem = document.getElementById(`chat-${receiver}`);
+
+  if (chatItem) {
+    const lowerPanel = chatItem.querySelector('.lowerPanel');
+    if (lowerPanel) {
+      lowerPanel.style.display = 'none';
+    } else {
+      console.error('Element .lowerPanel not found.');
+    }
+
+    const latestMessage = chatItem.querySelector('#latest-message-' + receiver);
+    if (latestMessage) {
+      latestMessage.textContent = content;
+    } else {
+      console.error(`Element #latest-message-${receiver} not found.`);
+    }
+  } else {
+    console.error(`Element #chat-${receiver} not found.`);
+  }
+  let unreadCount = chatItem.querySelector('#unreadCount');
+          if (!unreadCount) {
+            unreadCount = document.createElement('div');
+            unreadCount.id = 'unreadCount';
+            chatItem.appendChild(unreadCount);
+            console.log('Element #unreadCount added.');
+          }
+
+          let unreadCountInt = parseInt(unreadCount.textContent, 10) || 0;
+          unreadCountInt = 0;
+          unreadCount.textContent = unreadCountInt;
+
+          // Удаляем элемент после установки значения
+          setTimeout(() => {
+            chatItem.removeChild(unreadCount);
+            console.log('Element #unreadCount removed.');
+          }, 100);
+  chatItem.querySelector('.status').style.backgroundColor = '#1c1f33';
+  moveChatToTop(chatItem);
+
+
+
+  if (content !== '') {
+    fetch('/send-message', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ receiver, content })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Message sending failed');
+      }
+      messageInput.value = '';
+      clearLocalStorage()
+    })
+    .catch(error => {
+      console.error('Error sending message:', error);
+    });
+  }
+};
+document.addEventListener('DOMContentLoaded', function() {
+
+  messageForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    sendMessage();
+  });
+
+  const messageContainer = document.getElementById('message-container');
+  messageContainer.scrollTop = messageContainer.scrollHeight;
+
+  const observer = new MutationObserver(() => {
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+  });
+
+    observer.observe(messageContainer, { childList: true });
+
+    messageContainer.addEventListener('click', function(event) {
+  const deleteBtn = event.target.closest('.delete-btn');
+  if (deleteBtn) {
+    const messageId = deleteBtn.getAttribute('data-id');
+    
+    fetch(`/delete-message/${messageId}`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        socket.emit('deleteMessage', messageId);
+      } else {
+        console.error('Error deleting message');
+      }
+    })
+    .catch(error => {
+      console.error('Error deleting message:', error);
+    });
+  }
+});
+
+  });
+
+</script>
+    
+    
+
+  </div>
+  <div class="impose-overlay" @click="rightSide = false; leftSide = false" :class="{ &#39;active&#39;: rightSide || leftSide }"></div>
+</div>
+
+</section>
+
+<div id="myModal" class="modal" style="display: none;">
+  <div class="modal-content">
+      <span class="close" onclick="closeModal()">×</span>
+      <p id="modalMessage"></p>
+  </div>
+</div>
+
+<style>
+  #volver {
+    padding-top: 7px;
+    cursor: pointer;
+    margin-top: -40px;
+    font-weight: 600;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    padding-bottom: 7px;
+  }
+
+.survey {
+margin: 20px 0;
+padding: 15px;
+border: 1px solid #ccc;
+border-radius: 5px;
+max-width: 600px;
+}
+
+.option {
+display: flex;
+align-items: center;
+padding: 10px;
+margin: 5px 0;
+border: 1px solid #ddd;
+border-radius: 5px;
+transition: background-color 0.3s;
+cursor: pointer;
+}
+
+.option:hover {
+background-color: #f9f9f9;
+}
+
+.option input[type="radio"] {
+display: none; /* Скрываем радио-кнопки */
+}
+
+.option.voted {
+background-color: #e0f7fa;
+font-weight: bold;
+color: #15172a;
+}
+
+.option input[type="radio"]:checked + label {
+background-color: #e0f7fa; /* Цвет фона для выбранного элемента */
+border-radius: 5px;
+display: block;
+width: 100%;
+padding: 10px;
+box-sizing: border-box;
+}
+
+#surveyNoVoted, #surveyVoted {
+margin-bottom: 15px;
+}
+
+.vote-button {
+display: block;
+margin: 10px 0;
+padding: 10px 20px;
+background-color: #007bff;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+.vote-button:hover {
+background-color: #0056b3;
+}
+
+.vote-button {
+display: inline-block;
+padding: 8px 16px;
+font-size: 14px;
+font-weight: bold;
+color: #ffffff;
+background-color: #333;
+border: 2px solid #555;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.vote-button:hover {
+background-color: #555;
+box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+transform: scale(1.05);
+}
+
+.vote-button:active {
+background-color: #777;
+box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+transform: scale(0.95);
+}
+
+.vote-button:focus {
+outline: none;
+box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+
+#vote-header {
+margin-top: 20px;
+margin-bottom: 10px;
+font-size: 1.2em;
+color: #cccccc;
+}
+.input-vote {
+background-color: #333;
+border: 2px solid #444444;
+color: #ffffff;
+padding: 5px;
+margin: 5px 0;
+width: calc(100% - 22px);
+box-sizing: border-box;
+transition: border-color 0.3s;
+}
+
+.input-vote::placeholder {
+color: #888888;
+opacity: 1;
+}
+
+.input-vote:focus::placeholder {
+color: #bbbbbb;
+}
+
+.input-vote:focus {
+border-color: #888888;
+outline: none;
+}
+
+#add-input-voting {
+fill: #cccccc;
+transition: fill 0.3s;
+}
+
+#add-input-voting:hover {
+fill: #ffffff;
+}
+
+.alert {
+color: #ff0000;
+margin-top: 10px;
+}
+</style>
+  <div class="reserved-elements" style="display: none;">
+    <div id="chat-reserved">
+      <div class="lowerPanel">Lower Panel Content</div>
+      <div id="latest-message-reserved">Latest Message Content</div>
+      <div id="unreadCount">unreadCount</div>
+    </div>
+  </div>
+
+<script>
+
+var savedMessages = localStorage.getItem('message' + 'milmak13', messageInput.value)
+if (savedMessages) {
+  console.log('Text uploaded from local storage')
+  messageInput.value = savedMessages;
+}
+
+function saveToLocalStorage() {
+  console.log('Save to local storage')
+  localStorage.setItem('message' + 'milmak13', messageInput.value)
+}
+
+function clearLocalStorage() {
+  console.log('Clear local storage')
+  localStorage.removeItem('message' + 'milmak13', messageInput.value)
+}
+
+// document.getElementById('create-forum-input').addEventListener('click', function(event) {
+//         // Проверяем, не является ли целевой элемент (или его родитель) элементом с id search-users
+//         if (event.target.closest('#search-users')) {
+//           return; // Прерываем выполнение, если клик был внутри элемента с id search-users
+//         }
+//         document.getElementById('forumName').focus();
+//       });
+
+
+const url = window.location.href;
+
+// Добавляем его в скрытое поле формы
+const hiddenInput = document.createElement('input');
+hiddenInput.type = 'hidden';
+hiddenInput.name = 'currentUrl';
+hiddenInput.value = url;
+</script>
+
+<script src="./Сообщения - LiftLink_files/jquery-3.6.0.min.js.Без названия"></script>
+<script>
+
+
+  $(document).ready(function () {
+  let currentSubscribersCount = null;
+  let currentSubscribersList = null;
+
+  $('.subscribeBtn').click(function () {
+      const forumId = $(this).closest('form').data('forum-id');
+      console.log(forumId)
+      subscribeOrUnsubscribe(forumId, 'subscribe');
+  });
+
+  $('.unsubscribeBtn').click(function () {
+      const forumId = $(this).closest('form').data('forum-id');
+      console.log(forumId)
+      subscribeOrUnsubscribe(forumId, 'unsubscribe');
+  });
+
+  function subscribeOrUnsubscribe(forumId, action) {
+  console.log(forumId + " sub");
+  const currentSubscribersCount = $('#subscribersCount' + forumId);
+  const currentSubscribersList = $('#subscribersList');
+  $.ajax({
+      type: 'POST',
+      url: `/${action}InForum/${forumId}`,
+      success: function (data) {
+          if (data.error) {
+              alert(data.error);
+          } else {
+              // Обновляем данные на странице
+              currentSubscribersCount.text(data.subscribersCount);
+              currentSubscribersList.text(data.action === 'subscribe' ? data.subscribersList : '');
+
+              // Обновляем кнопки подписки/отписки
+              console.log(forumId + " sub2");
+              $('.subscribeForm[data-forum-id="' + forumId + '"] .subscribeBtn').prop('disabled', data.action === 'subscribe');
+              $('.unsubscribeForm[data-forum-id="' + forumId + '"] .unsubscribeBtn').prop('disabled', data.action === 'unsubscribe');
+          }
+      },
+      error: function (err) {
+          console.error(err);
+      }
+  });
+}
+
+});
+</script>
+<script>
+  function openModal(message) {
+      document.getElementById('modalMessage').innerHTML = message;
+      document.getElementById('myModal').style.display = 'block';
+  }
+
+  function closeModal() {
+      document.getElementById('myModal').style.display = 'none';
+  }
+
+  // document.getElementById('submitBtn').addEventListener('click', function () {
+  //     checkTagsAndSubmit();
+  // });
+
+
+  // var privateForumsBtn = document.getElementById("privateForumsBtn")
+  // var publicForumsBtn = document.getElementById("publicForumsBtn")
+  // var privateForum = document.getElementById("private-forums")
+  // var publicForum = document.getElementById("public-forums")
+
+  // privateForumsBtn.addEventListener("click", function() {
+  //        publicForum.style.display = "none"
+  //        privateForum.style.display = "block"
+  //        privateForumsBtn.style.display = "none"
+  //        publicForumsBtn.style.display = "block"
+  // })
+  // publicForumsBtn.addEventListener("click", function() {
+  //        publicForum.style.display = "block"
+  //        privateForum.style.display = "none"
+  //        privateForumsBtn.style.display = "block"
+  //        publicForumsBtn.style.display = "none"
+  // })
+
+//   document.getElementById('createForumForm').addEventListener('submit', function(event) {
+//   event.preventDefault(); // Отменяет стандартное поведение отправки формы
+
+//   // Вызовите функцию для проверки тегов перед отправкой формы
+//   checkTagsAndSubmit();
+// });
+
+  // function checkTagsAndSubmit() {
+  //     const selectedTags = document.querySelectorAll('input[name="tagName[]"]:checked');
+
+  //     if (selectedTags.length === 0) {
+  //         openModal('Выберите хотя бы один тег к форуму.');
+  //         return;
+  //     }
+  //     document.getElementById('createForumForm').submit();
+  // }
+
+  function formatLastMessageDate(lastMessageDate) {
+      const now = new Date();
+      const messageDate = new Date(lastMessageDate);
+      const timeDifference = now - messageDate;
+      
+      const seconds = Math.floor(timeDifference / 1000);
+      const minutes = Math.floor(seconds / 60);
+      const hours = Math.floor(minutes / 60);
+      const days = Math.floor(hours / 24);
+
+      if (seconds < 60) {
+          return seconds + ' seconds ago';
+      } else if (minutes < 60) {
+          return minutes + ' minutes ago';
+      } else if (hours < 24) {
+          return hours + ' hours ago';
+      } else {
+          // Use your preferred date formatting library or method here for dates older than a day
+          const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+          return messageDate.toLocaleDateString('en-US', options);
+      }
+  }
+</script>
+<script>
+
+function showPostMenu(x, y, sender, forumId, statusMute) {
+const contextMenu = document.createElement('div');
+const languageUser = 'ru'
+contextMenu.className = 'context-menu';
+
+const options = [
+  { label: 'ㅤㅤЗаглушить на 15 минут', action: `/messenger/with/${forumId}/mute-15m` },
+  { label: 'ㅤㅤЗаглушить на 1 час', action: `/messenger/with/${forumId}/mute-1h` },
+  { label: 'ㅤㅤЗаглушить навсегда', action: `/messenger/with/${forumId}/mute-forever` }
+];
+
+if (statusMute) {
+  options.length = 0;
+  options.push({ label: 'ㅤㅤВключить уведомления', action: `/messenger/with/${forumId}/unmute` });
+}
+
+options.forEach(option => {
+  const div = document.createElement('div');
+  div.innerHTML = option.label;
+  div.classList.add('mute-not-option');
+  div.addEventListener('click', () => submitForm(option.action));
+  contextMenu.appendChild(div);
+});
+
+contextMenu.style.top = y + 'px';
+contextMenu.style.right = (window.innerWidth - x) + 'px';
+                      
+document.body.appendChild(contextMenu);
+
+
+const option1 = document.createElement('div');
+                    option1.textContent = 'ㅤㅤПожаловаться на спам';
+        
+                    option1.setAttribute('data-post-id', `/create-report-forum?forumName=Жалоба%20на%20пользователя%20${forumId}`);
+                    option1.classList.add('report-option');
+                    option1.addEventListener('click', function() {
+                      const nameFr = this.getAttribute('data-post-id'); // Получаем URL из атрибута data-link
+                      window.location.href = nameFr; // Перенаправляем на полученный URL
+                    });
+                    contextMenu.appendChild(option1);
+
+const option6 = document.createElement('div');
+option6.innerHTML = `ㅤㅤ${
+  languageUser === "en" ? "Block user" :
+  languageUser === "es" ? "Bloquear usuario" :
+  "Заблокировать пользователя"
+}`;
+
+option6.classList.add('block-user');
+option6.addEventListener('click', function() {
+  const form = document.createElement('form');
+  form.action = `/add-to-blacklist/${forumId}`; // Устанавливаем action формы с учетом идентификатора таба
+  form.method = 'post'; // Устанавливаем метод отправки
+
+  const input = document.createElement('input');
+  input.value = forumId;
+
+  // Создаем кнопку для отправки формы
+  const button = document.createElement('button');
+  button.type = 'submit'; // Устанавливаем тип кнопки
+  button.textContent = 'Delete Friend'; // Устанавливаем текст на кнопке
+
+  // Добавляем кнопку в форму
+  form.appendChild(input);
+  form.appendChild(button);
+
+  // Добавляем форму на страницу
+  document.body.appendChild(form);
+
+  // Отправляем форму
+  form.submit();
+});
+
+contextMenu.appendChild(option6);
+
+
+function hideContextMenu(event) {
+  if (!contextMenu.contains(event.target)) {
+    contextMenu.remove();
+    document.removeEventListener('mousedown', hideContextMenu);
+    document.removeEventListener('mouseup', hideContextMenu);
+    document.removeEventListener('mousemove', hideContextMenu);
+  }
+}
+
+document.addEventListener('mousedown', hideContextMenu);
+document.addEventListener('mouseup', hideContextMenu);
+document.addEventListener('mousemove', hideContextMenu);
+}
+
+document.querySelectorAll('#clickMenuInEvent').forEach(link => {
+link.addEventListener('click', function(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const forumId = this.getAttribute('data-post-id');
+  const sender = this.getAttribute('data-post-sender');
+  const statusBan = this.getAttribute('data-post-status-ban') === 'true'; // Change to boolean
+  showPostMenu(event.clientX, event.clientY, sender, forumId, statusBan);
+});
+});
+
+
+        
+
+
+        function submitForm(action) {
+        var form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', action);
+        document.body.appendChild(form);
+        form.submit();
+      }
+
+      function showChatMenu(x, y, sender, forumId, statusMute) {
+                    // Создаем элемент контекстного меню
+                    const contextMenu = document.createElement('div');
+                    contextMenu.className = 'context-menu';
+                    
+                    const option2 = document.createElement('div');
+                    option2.textContent = 'ㅤㅤСкопировать ссылку';
+        
+        option2.setAttribute('data-post-id', `/forum-vote/${voteId}`);
+        option2.classList.add('link-option');
+        
+        option2.addEventListener('click', function() {
+            const voteId = this.getAttribute('data-post-id'); // Получаем URL из атрибута data-post-id
+            const tempInput = document.createElement('input'); // Создаем временный input элемент
+            document.body.appendChild(tempInput); // Добавляем временный input на страницу
+            tempInput.setAttribute('value', voteId); // Устанавливаем значение для временного input
+            tempInput.select(); // Выделяем текст внутри input
+            document.execCommand('copy'); // Копируем текст в буфер обмена
+            document.body.removeChild(tempInput); // Удаляем временный input из DOM
+            alert('Ссылка скопирована в буфер обмена'); // Опционально: выводим сообщение о успешном копировании
+        });
+        
+        contextMenu.appendChild(option2);
+        
+        const currentUsername = 'tester2'
+                  const userUsername = 'tester2'
+                  const currentLevelUser = 'Junior'
+
+                  const option1 = document.createElement('div');
+                    option1.textContent = 'ㅤㅤПожаловаться';
+        
+                    option1.setAttribute('data-post-id', `/create-report-forum?forumName=Жалоба%20на%20нарушение%20условий%20проведения%20голосований%20с%20ID%20${voteId}`);
+                    option1.classList.add('report-option');
+                    option1.addEventListener('click', function() {
+                      const nameFr = this.getAttribute('data-post-id'); // Получаем URL из атрибута data-link
+                      window.location.href = nameFr; // Перенаправляем на полученный URL
+                    });
+                    contextMenu.appendChild(option1);
+                  
+
+                  if ((currentUsername === sender || currentLevelUser === 'Admin' || currentLevelUser === 'Moderator')) {
+              
+                    const option3 = document.createElement('div');
+                    option3.textContent = 'ㅤㅤУдалить';
+        
+                    option3.classList.add('delete-option');
+                    option3.addEventListener('click', function() {
+                      const form = document.createElement('form');
+                      form.action = `/delete-survey/${voteId}`; // Устанавливаем action формы с учетом идентификатора таба
+                      form.method = 'post'; // Устанавливаем метод отправки
+                      // Создаем кнопку для отправки формы
+                      const button = document.createElement('button');
+                      button.type = 'submit'; // Устанавливаем тип кнопки
+                      button.textContent = 'Delete Post'; // Устанавливаем текст на кнопке
+                       // Добавляем кнопку в форму
+                      form.appendChild(button);
+                      // Добавляем форму на страницу
+                      document.body.appendChild(form);
+                      // Отправляем форму
+                      form.submit();
+                    });
+                    contextMenu.appendChild(option3);
+                  
+                  }
+                    // Позиционируем контекстное меню по координатам щелчка мыши
+                    contextMenu.style.top = y + 'px';
+                    contextMenu.style.right = (window.innerWidth - x) + 'px';
+                    
+        
+                    document.body.appendChild(contextMenu);
+        
+                    
+        // Функция для скрытия контекстного меню
+        function hideContextMenu(event) {
+            if (!contextMenu.contains(event.target)) {
+                contextMenu.remove(); // Удаляем контекстное меню со страницы
+            }
+        }
+        
+        // Добавляем обработчик для всех остальных действий в документе (кроме клика, контекстного меню, прокрутки и изменения размера окна)
+        document.addEventListener('mousedown', hideContextMenu);
+        document.addEventListener('mouseup', hideContextMenu);
+        document.addEventListener('mousemove', hideContextMenu);
+        
+        
+        
+                  }
+                  document.querySelectorAll('#clickMenuInEvent').forEach(link => {
+link.addEventListener('click', function(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const forumId = this.getAttribute('data-post-id');
+  const sender = this.getAttribute('data-post-sender');
+  const statusBan = this.getAttribute('data-post-status-ban') === 'true'; // Change to boolean
+  showPostMenu(event.clientX, event.clientY, sender, forumId, statusBan);
+});
+        });
+
+
+
+
+        function showDeleteMenu(x, y, postID, sender) {
+    const currentUsername = 'tester2';
+    if (currentUsername === sender) {
+      const contextMenu = document.createElement('div');
+      contextMenu.classList.add('context-menu');
+      contextMenu.style.position = 'absolute';
+      contextMenu.style.top = `${y}px`;
+      contextMenu.style.left = `${x}px`;
+
+      const option3 = document.createElement('div');
+      option3.innerHTML = 'Удалить';
+      option3.classList.add('.(*$(()#6*&*%#$))');
+      option3.style.padding = '10px';
+      option3.style.cursor = 'pointer';
+
+      option3.addEventListener('click', function() {
+        fetch(`/delete-message/${postID}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          if (response.ok) {
+            // Уведомление через WebSocket
+            const socket = io.connect();
+            socket.emit('deleteMessage', postID);
+            // Удаление элемента сообщения из DOM
+            const messageElement = document.querySelector(`.message[data-delete-id="${postID}"]`);
+            if (messageElement) {
+              messageElement.remove();
+            }
+          } else {
+            console.error('Error deleting message');
+          }
+        })
+        .catch(error => {
+          console.error('Error deleting message:', error);
+        });
+      });
+
+      contextMenu.appendChild(option3);
+      document.body.appendChild(contextMenu);
+
+      function hideContextMenu(event) {
+        if (!contextMenu.contains(event.target)) {
+          contextMenu.remove();
+        }
+      }
+
+      document.addEventListener('mousedown', hideContextMenu);
+      document.addEventListener('mouseup', hideContextMenu);
+      document.addEventListener('mousemove', hideContextMenu);
+    }
+  }
+
+  function addContextMenuHandler(element) {
+    element.addEventListener('contextmenu', function(event) {
+      if (window.innerWidth <= 900) {
+        event.preventDefault();
+        event.stopPropagation();
+        const postID = this.getAttribute('data-delete-id');
+        const sender = this.getAttribute('sender-delete');
+        showDeleteMenu(event.clientX, event.clientY, postID, sender);
+        return false;
+      }
+    });
+  }
+
+  document.querySelectorAll('.message').forEach(link => {
+    console.log('sdf')
+    addContextMenuHandler(link);
+  });
+</script>
+<script src="./Сообщения - LiftLink_files/list.min.js.Без названия"></script>
+  <script id="rendered-js">
+var options = {
+      valueNames: ['name', 'description', 'category']
+    };
+
+
+    var featureList = new List('lovely-things-list-chats', options);
+
+    $('.search-att').on('input', function() {
+var searchString = $(this).val(); // Получаем значение из поля поиска
+featureList.search(searchString); // Применяем поиск
+});
+
+
+    $('#filter-games').click(function () {
+      featureList.filter(function (item) {
+        if (item.values().category == "Game") {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      return false;
+    });
+
+    $('#filter-beverages').click(function () {
+      featureList.filter(function (item) {
+        if (item.values().category == "Beverage") {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      return false;
+    });
+    $('#filter-none').click(function () {
+      featureList.filter();
+      return false;
+    });
+  </script>
+<script src="./Сообщения - LiftLink_files/gsap.min.js.Без названия"></script>
+<script id="rendered-js">
+document.querySelectorAll('.send-button').forEach(sendButton => {
+
+  let getVar = variable => getComputedStyle(sendButton).getPropertyValue(variable);
+
+  function animateSendButton() {
+    if (!sendButton.classList.contains('active')) {
+
+      sendButton.classList.add('active');
+
+      gsap.to(sendButton, {
+        keyframes: [{
+          '--left-button-wing-first-x': 50,
+          '--left-button-wing-first-y': 100,
+          '--right-button-wing-second-x': 50,
+          '--right-button-wing-second-y': 100,
+          duration: .2,
+          onComplete() {
+            gsap.set(sendButton, {
+              '--left-button-wing-first-y': 0,
+              '--left-button-wing-second-x': 40,
+              '--left-button-wing-second-y': 100,
+              '--left-button-wing-third-x': 0,
+              '--left-button-wing-third-y': 100,
+              '--left-button-body-third-x': 40,
+              '--right-button-wing-first-x': 50,
+              '--right-button-wing-first-y': 0,
+              '--right-button-wing-second-x': 60,
+              '--right-button-wing-second-y': 100,
+              '--right-button-wing-third-x': 100,
+              '--right-button-wing-third-y': 100,
+              '--right-button-body-third-x': 60 });
+
+          } },
+        {
+          '--left-button-wing-third-x': 20,
+          '--left-button-wing-third-y': 90,
+          '--left-button-wing-second-y': 90,
+          '--left-button-body-third-y': 90,
+          '--right-button-wing-third-x': 80,
+          '--right-button-wing-third-y': 90,
+          '--right-button-body-third-y': 90,
+          '--right-button-wing-second-y': 90,
+          duration: .2 },
+        {
+          '--rotate': 50,
+          '--left-button-wing-third-y': 95,
+          '--left-button-wing-third-x': 27,
+          '--right-button-body-third-x': 45,
+          '--right-button-wing-second-x': 45,
+          '--right-button-wing-third-x': 60,
+          '--right-button-wing-third-y': 83,
+          duration: .25 },
+        {
+          '--rotate': 55,
+          '--plane-x': -8,
+          '--plane-y': 24,
+          duration: .2 },
+        {
+          '--rotate': 40,
+          '--plane-x': 45,
+          '--plane-y': -180,
+          '--plane-opacity': 0,
+          duration: .3,
+          onComplete() {
+            setTimeout(() => {
+              sendButton.removeAttribute('style');
+              gsap.fromTo(sendButton, {
+                opacity: 0,
+                y: -8 },
+              {
+                opacity: 1,
+                y: 0,
+                clearProps: true,
+                duration: .3,
+                onComplete() {
+                  sendButton.classList.remove('active');
+                } });
+
+            }, 50);
+          } }] });
+
+      gsap.to(sendButton, {
+        keyframes: [{
+          '--text-opacity': 0,
+          '--border-radius': 0,
+          '--left-button-wing-background': getVar('--primary-darkest'),
+          '--right-button-wing-background': getVar('--primary-darkest'),
+          duration: .1 },
+        {
+          '--left-button-wing-background': getVar('--primary'),
+          '--right-button-wing-background': getVar('--primary'),
+          duration: .1 },
+        {
+          '--left-button-body-background': getVar('--primary-dark'),
+          '--right-button-body-background': getVar('--primary-darkest'),
+          duration: .4 },
+        {
+          '--success-button-opacity': 1,
+          '--success-button-scale': 1,
+          duration: .25,
+          delay: .25 }] });
+
+    }
+  }
+
+  sendButton.addEventListener('click', e => {
+    animateSendButton();
+  });
+
+  
+  messageInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      animateSendButton();
+      sendMessage();
+    }
+  });
+});
+//# sourceURL=pen.js
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  translatePage('ru');
+});
+
+const otherUser = 'milmak13'
+    window.addEventListener('beforeunload', function(event) {
+      fetch('/leave-messenger-with', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ otherUser: otherUser }),
+        keepalive: true // Это важно для выполнения запроса даже при покидании страницы
+      });
+    });
+</script>
+<script src="./Сообщения - LiftLink_files/main.js.Без названия"></script>
+
+</body></html>

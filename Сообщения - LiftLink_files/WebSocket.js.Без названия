@@ -1,0 +1,59 @@
+// Устанавливаем WebSocket соединение
+const clientSocket = new WebSocket(`ws://${window.location.host}/?username=${currentUsername}`);
+
+console.log(currentUsername)
+
+// Отладочная информация о состоянии соединения
+clientSocket.onopen = () => {
+  console.log('WebSocket соединение установлено');
+};
+
+clientSocket.onclose = (event) => {
+  console.log('WebSocket соединение закрыто:', event.code, event.reason);
+};
+
+clientSocket.onerror = (error) => {
+  console.error('WebSocket ошибка:', error);
+};
+
+clientSocket.onmessage = (event) => {
+  console.log('WebSocket получено сообщение:', event.data);
+  
+  const data = JSON.parse(event.data);
+  const { username, isOnline } = data;
+
+  // Обновляем статус пользователя на всех страницах
+  updateStatus(username, isOnline); // Функция, которая обновляет интерфейс на текущей странице
+};
+
+// Функция для обновления интерфейса на текущей странице
+function updateStatus(username, isOnline) {
+  const chatElement = document.querySelector(`li[data-username="${username}"]`);
+  if (chatElement) {
+    const statusIndicator = chatElement.querySelector('.status-indicator');
+    if (isOnline) {
+      statusIndicator.classList.add('online');
+      statusIndicator.classList.remove('offline');
+    } else {
+      statusIndicator.classList.add('offline');
+      statusIndicator.classList.remove('online');
+    }
+  }
+}
+
+
+function showBrowserNotificationMessage(username, content) {
+  console.log('d')
+  if (Notification.permission === "granted") {
+    console.log('NOT ' + username, content)
+    var notification = new Notification(`${username}`, {
+      icon: `/avatars/${username}.png`,
+      body: `${content}`,
+    });
+
+    notification.onclick = function () {
+      window.focus();
+    };
+  }
+}
+
