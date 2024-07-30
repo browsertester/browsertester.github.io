@@ -1707,7 +1707,7 @@ background-color: #606568; /* Темный синий цвет при навед
     width: 86vw !important;
   }
 }
-@media screen and (max-width: 710px) and (min-width: 371px) {
+@media screen and (max-width: 710px) {
   .settings-chat-panel {
     margin-right: auto !important;
   }
@@ -1715,6 +1715,16 @@ background-color: #606568; /* Темный синий цвет при навед
     margin-left: 30px !important;
   }
 }
+
+/* @media screen and (max-width: 350px) {
+  .settings-chat-panel {
+    margin-left: 10px !important;
+    margin-right: auto !important;
+  }
+  .rating-chat-panel {
+    display: none !important;
+  }
+} */
 
 @media screen and (max-width: 500px) {
   .status-menu {
@@ -1948,9 +1958,9 @@ background-color: #606568; /* Темный синий цвет при навед
   #chat-container #header-container {
     margin: 0 -13px !important;
   }
-  .settings-chat-panel {
+  /* .settings-chat-panel {
     margin-right: 75px !important;
-  }
+  } */
 }
 @media screen and (max-width: 335px) {
 .rating-chat-panel {
@@ -1981,6 +1991,10 @@ background-color: #606568; /* Темный синий цвет при навед
   }
   .i7vb4b {
     margin-bottom: 4px !important;
+  }
+
+  body {
+    overflow-y: auto !important;
   }
 }
   
